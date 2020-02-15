@@ -7,13 +7,211 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/game"
+        <ImageView
+            android:id="@+id/top_image"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            tools:src="@drawable/cover"
+            android:scaleType="centerCrop"/>
+
+        <!-- Game cover and details -->
+        <LinearLayout
+            android:id="@+id/layout_details"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/top_image">
+
+            <ImageView
+                android:id="@+id/game_cover"
+                android:layout_width="120dp"
+                android:layout_height="160dp"
+                tools:src="@drawable/cover"
+                android:layout_margin="5dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/game_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="The Witcher 3: Wild Hunt" />
+
+                <TextView
+                    android:id="@+id/game_publisher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/game_title"
+                    tools:text="EA Sports"
+                    android:textSize="15sp"
+                    android:textColor="@color/text_black"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/game_release_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/game_publisher"
+                    android:textColor="@color/text_black"
+                    tools:text="2015"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/game_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/game_title"
+                    android:layout_alignParentRight="true"
+                    tools:text="98"
+                    android:textSize="22sp"
+                    android:layout_margin="10dp"/>
+
+                <TextView
+                    android:id="@+id/game_rating_count"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/game_rating"
+                    android:layout_alignParentRight="true"
+                    tools:text="Based on 1564 votes"
+                    android:lines="2"
+                    android:textSize="12sp"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <!-- Add-to-lists buttons -->
+        <LinearLayout
+            android:id="@+id/layout_add_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="GAMEEE"/>
+            android:orientation="horizontal"
+            android:layout_below="@+id/layout_details"
+            android:layout_margin="10dp">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add"
+                android:layout_weight="1"
+                android:layout_marginRight="15dp"
+                android:onClick="onAddButtonClick"/>
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_added"
+                android:layout_weight="1"
+                android:layout_marginRight="15dp"
+                android:onClick="onAddButtonClick"/>
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:onClick="onAddButtonClick"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/game_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_add_buttons"
+            tools:text="@string/lorem_ipsum"
+            android:padding="10dp"/>
+
+        <!-- PLATFORMS -->
+        <LinearLayout
+            android:id="@+id/layout_platfomrs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/game_description"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/platforms_rv"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/platforms_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!-- GENRES -->
+        <LinearLayout
+            android:id="@+id/layout_genres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_platfomrs"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/genres"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/genres_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!-- THEMES -->
+        <LinearLayout
+            android:id="@+id/layout_themes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_genres"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/themes"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/themes_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/reviews_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/check_game_reviews"
+            android:layout_below="@id/layout_themes"
+            android:layout_margin="10dp"
+            android:onClick="onReviewsClick"/>
+
+        <TextView
+            android:id="@+id/screenshots_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/screenshots"
+            android:layout_below="@id/reviews_button"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/text_black"/>
     </RelativeLayout>
 
 </ScrollView>

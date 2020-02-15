@@ -9,4 +9,11 @@
     <string name="loading_games_please_wait">Loading games... please wait</string>
     <string name="platforms">Platforms</string>
 
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="genres">Genres:</string>
+    <string name="platforms_rv">Platforms:</string>
+    <string name="themes">Themes:</string>
+    <string name="check_game_reviews">CHECK GAME REVIEWS</string>
+    <string name="screenshots">Screenshots:</string>
+
 </resources>
