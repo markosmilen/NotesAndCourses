@@ -6,5 +6,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="loading_games_please_wait">Loading games... please wait</string>
+    <string name="platforms">Platforms</string>
 
 </resources>

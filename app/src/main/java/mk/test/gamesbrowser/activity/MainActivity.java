@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.fragment.HomeFragment;
 import mk.test.gamesbrowser.fragment.ListsFragment;
+import mk.test.gamesbrowser.fragment.PlatformsFragment;
 import mk.test.gamesbrowser.fragment.SearchFragment;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -42,6 +43,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.menu_search:
                 ft.replace(R.id.frame_container, SearchFragment.newInstance(new Bundle()), SearchFragment.TAG);
                 ft.addToBackStack(SearchFragment.TAG);
+                ft.commit();
+                return true;
+            case R.id.menu_platforms:
+                ft.replace(R.id.frame_container, PlatformsFragment.newInstance(new Bundle()), PlatformsFragment.TAG);
+                ft.addToBackStack(PlatformsFragment.TAG);
                 ft.commit();
                 return true;
             case R.id.menu_lists:

@@ -24,11 +24,15 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
     private ArrayList<Game> games;
     private GameClickInterface clickInterface;
 
-    public GameAdapter(Context context, ArrayList<Game> games){
+    public GameAdapter(Context context, ArrayList<Game> games, GameClickInterface clickInterface){
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.games = games;
         this.clickInterface = clickInterface;
+    }
+
+    public void setGames (ArrayList<Game> games){
+        this.games = games;
     }
 
     @NonNull

@@ -10,14 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -48,6 +45,7 @@ public class HomeFragment extends Fragment implements GameClickInterface {
     public static final String TAG = HomeFragment.class.getSimpleName();
     private static final String API_KEY = "00c0d1eda626d2b49c0f0b6ecbc90b9e";
 
+    private RelativeLayout progressBarLayout;
     private RecyclerView recyclerView;
     private GameAdapter adapter;
     private ArrayList<Game> games = new ArrayList<>();
@@ -74,13 +72,15 @@ public class HomeFragment extends Fragment implements GameClickInterface {
         // Inflate the layout for this fragment
         gson = new Gson();
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        progressBarLayout = view.findViewById(R.id.progress_bar_layout);
         recyclerView = view.findViewById(R.id.home_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
 
+        adapter = new GameAdapter(getContext(), games, this);
+        recyclerView.setAdapter(adapter);
+
         loadGames();
 
-        adapter = new GameAdapter(getContext(), games);
-        recyclerView.setAdapter(adapter);
         return view;
     }
 
@@ -119,15 +119,17 @@ public class HomeFragment extends Fragment implements GameClickInterface {
                     gson = new Gson();
                     Type listType = new TypeToken<ArrayList<Game>>(){}.getType();
                     games = gson.fromJson(jsonString, listType);
+                    adapter.setGames(games);
 
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
-                            adapter = new GameAdapter(getActivity(), games);
-                            recyclerView.setAdapter(adapter);
-                        }
-                    });
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                                progressBarLayout.setVisibility(View.GONE);
+                            }
+                        });
+                    }
                 }}
         });
     }
@@ -135,6 +137,7 @@ public class HomeFragment extends Fragment implements GameClickInterface {
     @Override
     public void onGameClick(Game game) {
         Intent intent = new Intent(getActivity(), GameActivity.class);
+        intent.putExtra("game", game);
         startActivity(intent);
     }
 }

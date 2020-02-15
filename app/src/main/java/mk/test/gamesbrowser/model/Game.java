@@ -1,8 +1,11 @@
 package mk.test.gamesbrowser.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
-public class Game {
+public class Game implements Parcelable {
 
     private int id;
     private Cover cover;
@@ -21,6 +24,29 @@ public class Game {
     private String storyline;
     private ArrayList<GameVideo> videos;
     private TimeToBeat time_to_beat;
+
+    protected Game(Parcel in) {
+        id = in.readInt();
+        first_release_date = in.readInt();
+        name = in.readString();
+        popularity = in.readDouble();
+        rating = in.readDouble();
+        rating_count = in.readDouble();
+        similar_games = in.createTypedArrayList(Game.CREATOR);
+        storyline = in.readString();
+    }
+
+    public static final Creator<Game> CREATOR = new Creator<Game>() {
+        @Override
+        public Game createFromParcel(Parcel in) {
+            return new Game(in);
+        }
+
+        @Override
+        public Game[] newArray(int size) {
+            return new Game[size];
+        }
+    };
 
     public TimeToBeat getTime_to_beat() {
         return time_to_beat;
@@ -158,5 +184,22 @@ public class Game {
 
     public void setVideos(ArrayList<GameVideo> videos) {
         this.videos = videos;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeInt(first_release_date);
+        parcel.writeString(name);
+        parcel.writeDouble(popularity);
+        parcel.writeDouble(rating);
+        parcel.writeDouble(rating_count);
+        parcel.writeTypedList(similar_games);
+        parcel.writeString(storyline);
     }
 }
