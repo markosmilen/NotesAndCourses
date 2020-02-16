@@ -50,6 +50,15 @@ public class GameActivity extends AppCompatActivity {
         if (game.getCover().getUrl() != null) {
             Glide
                     .with(this)
+                    .load("https:" + game.getScreenshots().get(0).getUrl())
+                    .centerCrop()
+                    .placeholder(getResources().getDrawable(R.drawable.ic_home))
+                    .into(topImage);
+        }
+
+        if (game.getCover().getUrl() != null) {
+            Glide
+                    .with(this)
                     .load("https:" + game.getCover().getUrl())
                     .centerCrop()
                     .placeholder(getResources().getDrawable(R.drawable.ic_home))
@@ -60,10 +69,10 @@ public class GameActivity extends AppCompatActivity {
         gamePublisher.setText("Publisher");
         gameReleaseYear.setText(game.getFirst_release_date() + "");
         gameRating.setText((int) game.getRating() + "");
-        gameRatingCount.setText("Based on " + game.getRating_count() + "ratings");
+        gameRatingCount.setText((int) game.getRating_count() + " ratings");
         gameDescription.setText(game.getStoryline());
 
-        /*ArrayList<String> platforms = getPlatforms(game.getPlatforms());
+        ArrayList<String> platforms = getPlatforms(game.getPlatforms());
         ArrayList<String> genres = getStrings(game.getGenres());
         ArrayList<String> themes = getStrings(game.getThemes());
 
@@ -77,7 +86,7 @@ public class GameActivity extends AppCompatActivity {
 
         platformsRecyclerView.setAdapter(platformsAdapter);
         genresRecyclerView.setAdapter(genresAdapter);
-        themesRecyclerView.setAdapter(themeAdapter);*/
+        themesRecyclerView.setAdapter(themeAdapter);
 
     }
 

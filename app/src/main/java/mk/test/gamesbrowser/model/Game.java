@@ -25,15 +25,26 @@ public class Game implements Parcelable {
     private ArrayList<GameVideo> videos;
     private TimeToBeat time_to_beat;
 
+    public Game () {}
+
     protected Game(Parcel in) {
         id = in.readInt();
+        cover = in.readParcelable(Cover.class.getClassLoader());
         first_release_date = in.readInt();
         name = in.readString();
+        game_modes = in.createTypedArrayList(GamePhrase.CREATOR);
+        genres = in.createTypedArrayList(GamePhrase.CREATOR);
+        player_perspectives = in.createTypedArrayList(GamePhrase.CREATOR);
+        themes = in.createTypedArrayList(GamePhrase.CREATOR);
+        platforms = in.createTypedArrayList(Platform.CREATOR);
         popularity = in.readDouble();
         rating = in.readDouble();
         rating_count = in.readDouble();
+        screenshots = in.createTypedArrayList(GameImage.CREATOR);
         similar_games = in.createTypedArrayList(Game.CREATOR);
         storyline = in.readString();
+        videos = in.createTypedArrayList(GameVideo.CREATOR);
+        time_to_beat = in.readParcelable(TimeToBeat.class.getClassLoader());
     }
 
     public static final Creator<Game> CREATOR = new Creator<Game>() {
@@ -47,16 +58,6 @@ public class Game implements Parcelable {
             return new Game[size];
         }
     };
-
-    public TimeToBeat getTime_to_beat() {
-        return time_to_beat;
-    }
-
-    public void setTime_to_beat(TimeToBeat time_to_beat) {
-        this.time_to_beat = time_to_beat;
-    }
-
-    public Game() {}
 
     public int getId() {
         return id;
@@ -186,6 +187,14 @@ public class Game implements Parcelable {
         this.videos = videos;
     }
 
+    public TimeToBeat getTime_to_beat() {
+        return time_to_beat;
+    }
+
+    public void setTime_to_beat(TimeToBeat time_to_beat) {
+        this.time_to_beat = time_to_beat;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -194,12 +203,21 @@ public class Game implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
+        parcel.writeParcelable(cover, i);
         parcel.writeInt(first_release_date);
         parcel.writeString(name);
+        parcel.writeTypedList(game_modes);
+        parcel.writeTypedList(genres);
+        parcel.writeTypedList(player_perspectives);
+        parcel.writeTypedList(themes);
+        parcel.writeTypedList(platforms);
         parcel.writeDouble(popularity);
         parcel.writeDouble(rating);
         parcel.writeDouble(rating_count);
+        parcel.writeTypedList(screenshots);
         parcel.writeTypedList(similar_games);
         parcel.writeString(storyline);
+        parcel.writeTypedList(videos);
+        parcel.writeParcelable(time_to_beat, i);
     }
 }

@@ -1,11 +1,32 @@
 package mk.test.gamesbrowser.model;
 
-public class GamePhrase {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class GamePhrase implements Parcelable {
     private int id;
     private String name;
     private String url;
 
     public GamePhrase() {}
+
+    protected GamePhrase(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        url = in.readString();
+    }
+
+    public static final Creator<GamePhrase> CREATOR = new Creator<GamePhrase>() {
+        @Override
+        public GamePhrase createFromParcel(Parcel in) {
+            return new GamePhrase(in);
+        }
+
+        @Override
+        public GamePhrase[] newArray(int size) {
+            return new GamePhrase[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -29,5 +50,17 @@ public class GamePhrase {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeString(url);
     }
 }

@@ -1,13 +1,36 @@
 package mk.test.gamesbrowser.model;
 
-public class Platform {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Platform implements Parcelable {
     private int id;
     private String abbreviation;
     private String name;
-    private GameImage platform_logo;
+    private int platform_logo;
     private String url;
 
     public Platform() {}
+
+    protected Platform(Parcel in) {
+        id = in.readInt();
+        abbreviation = in.readString();
+        name = in.readString();
+        platform_logo = in.readInt();
+        url = in.readString();
+    }
+
+    public static final Creator<Platform> CREATOR = new Creator<Platform>() {
+        @Override
+        public Platform createFromParcel(Parcel in) {
+            return new Platform(in);
+        }
+
+        @Override
+        public Platform[] newArray(int size) {
+            return new Platform[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -33,19 +56,33 @@ public class Platform {
         this.name = name;
     }
 
-    public GameImage getPlatform_logo() {
-        return platform_logo;
-    }
-
-    public void setPlatform_logo(GameImage platform_logo) {
-        this.platform_logo = platform_logo;
-    }
-
     public String getUrl() {
         return url;
     }
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public int getPlatform_logo() {
+        return platform_logo;
+    }
+
+    public void setPlatform_logo(int platform_logo) {
+        this.platform_logo = platform_logo;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(abbreviation);
+        parcel.writeString(name);
+        parcel.writeInt(platform_logo);
+        parcel.writeString(url);
     }
 }
