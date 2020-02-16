@@ -1,6 +1,9 @@
 package mk.test.gamesbrowser.model;
 
-public class Cover {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Cover implements Parcelable {
     private int id, game;
     private boolean alpha_channel, animated;
     private int width, height;
@@ -8,6 +11,29 @@ public class Cover {
     private String url;
 
     public Cover () {}
+
+    protected Cover(Parcel in) {
+        id = in.readInt();
+        game = in.readInt();
+        alpha_channel = in.readByte() != 0;
+        animated = in.readByte() != 0;
+        width = in.readInt();
+        height = in.readInt();
+        image_id = in.readString();
+        url = in.readString();
+    }
+
+    public static final Creator<Cover> CREATOR = new Creator<Cover>() {
+        @Override
+        public Cover createFromParcel(Parcel in) {
+            return new Cover(in);
+        }
+
+        @Override
+        public Cover[] newArray(int size) {
+            return new Cover[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -71,5 +97,22 @@ public class Cover {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeInt(game);
+        parcel.writeByte((byte) (alpha_channel ? 1 : 0));
+        parcel.writeByte((byte) (animated ? 1 : 0));
+        parcel.writeInt(width);
+        parcel.writeInt(height);
+        parcel.writeString(image_id);
+        parcel.writeString(url);
     }
 }

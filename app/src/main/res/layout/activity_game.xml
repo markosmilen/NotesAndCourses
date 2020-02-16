@@ -25,7 +25,7 @@
             android:layout_below="@+id/top_image">
 
             <ImageView
-                android:id="@+id/game_cover"
+                android:id="@+id/game_cover_act"
                 android:layout_width="120dp"
                 android:layout_height="160dp"
                 tools:src="@drawable/cover"

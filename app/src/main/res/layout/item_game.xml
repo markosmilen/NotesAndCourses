@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_height="150dp"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:elevation="5dp"
+    android:layout_margin="5dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/game_cover"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:layout_margin="5dp"
+            tools:src="@drawable/cover"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/game_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="The Witcher 3"
+                android:textColor="@color/text_black"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/game_release_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="2000"/>
+
+                <TextView
+                    android:id="@+id/game_publisher"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Activision"
+                    android:layout_marginLeft="20dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_star"/>
+
+                <TextView
+                    android:id="@+id/game_rating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_black"
+                    android:textSize="16sp"
+                    tools:text="95.6"
+                    android:layout_marginLeft="5dp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
