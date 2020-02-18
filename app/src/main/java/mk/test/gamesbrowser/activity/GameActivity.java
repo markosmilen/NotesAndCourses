@@ -72,7 +72,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         gameTitle.setText(game.getName());
-        gamePublisher.setText("Publisher");
+        gamePublisher.setText("Publisher"); //TODO Publisher
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
         String dateString = formatter.format((new Date((long) game.getFirst_release_date() * 1000)));

@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.interfaces.GameClickInterface;
@@ -43,17 +45,22 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameLi
     public void onBindViewHolder(@NonNull GameListViewHolder holder, int position) {
         Game game = games.get(position);
 
-        Glide
-                .with(context)
-                .load("https:" + game.getCover().getUrl())
-                .centerCrop()
-                .placeholder(context.getResources().getDrawable(R.drawable.ic_home))
-                .into(holder.gameCover);
-
+        if (game.getCover().getUrl() != null) {
+            Glide
+                    .with(context)
+                    .load(context.getString(R.string.cover_url) + game.getCover().getImage_id() + ".jpg")
+                    .centerCrop()
+                    //.placeholder(context.getResources().getDrawable(R.drawable.ic_home))
+                    .into(holder.gameCover);
+        }
         holder.gameTitle.setText(game.getName());
-        holder.gameYear.setText(game.getFirst_release_date());
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+        String dateString = formatter.format((new Date((long) game.getFirst_release_date() * 1000)));
+        holder.gameYear.setText(dateString);
+
         holder.gamePublisher.setText("Publisher");//TODO Publisher
-        holder.gameRating.setText(game.getRating() + "");
+        holder.gameRating.setText((int) game.getRating() + "");
     }
 
     @Override

@@ -3,6 +3,7 @@ package mk.test.gamesbrowser.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,7 +46,7 @@ public class HomeFragment extends Fragment implements GameClickInterface {
     public static final String TAG = HomeFragment.class.getSimpleName();
     private static final String API_KEY = "00c0d1eda626d2b49c0f0b6ecbc90b9e";
 
-    private RelativeLayout progressBarLayout;
+    private CardView progressBarLayout;
     private RecyclerView recyclerView;
     private GameAdapter adapter;
     private ArrayList<Game> games = new ArrayList<>();
