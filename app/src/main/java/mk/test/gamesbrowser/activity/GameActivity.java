@@ -13,7 +13,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Random;
 
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.adapter.ThemeAdapter;
@@ -47,19 +50,22 @@ public class GameActivity extends AppCompatActivity {
 
         game = getIntent().getParcelableExtra("game");
 
-        if (game.getCover().getUrl() != null) {
+        if (game.getScreenshots() != null) {
+            Random random = new Random();
+            int randomScreenshot = random.nextInt(game.getScreenshots().size());
+
             Glide
                     .with(this)
-                    .load("https:" + game.getScreenshots().get(0).getUrl())
+                    .load(getResources().getString(R.string.screenshot_url) + game.getScreenshots().get(randomScreenshot).getImage_id() + ".jpg")
                     .centerCrop()
-                    .placeholder(getResources().getDrawable(R.drawable.ic_home))
+                    //.placeholder(getResources().getDrawable(R.drawable.ic_home))
                     .into(topImage);
         }
 
         if (game.getCover().getUrl() != null) {
             Glide
                     .with(this)
-                    .load("https:" + game.getCover().getUrl())
+                    .load(getString(R.string.cover_url) + game.getCover().getImage_id() + ".jpg")
                     .centerCrop()
                     .placeholder(getResources().getDrawable(R.drawable.ic_home))
                     .into(gameCoverAct);
@@ -67,10 +73,14 @@ public class GameActivity extends AppCompatActivity {
 
         gameTitle.setText(game.getName());
         gamePublisher.setText("Publisher");
-        gameReleaseYear.setText(game.getFirst_release_date() + "");
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+        String dateString = formatter.format((new Date((long) game.getFirst_release_date() * 1000)));
+        gameReleaseYear.setText(dateString);
+
         gameRating.setText((int) game.getRating() + "");
         gameRatingCount.setText((int) game.getRating_count() + " ratings");
-        gameDescription.setText(game.getStoryline());
+        gameDescription.setText(game.getSummary());
 
         ArrayList<String> platforms = getPlatforms(game.getPlatforms());
         ArrayList<String> genres = getStrings(game.getGenres());

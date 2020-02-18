@@ -4,7 +4,6 @@
     <string name="nav_search">Search</string>
     <string name="nav_my_lists">My Lists</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="loading_games_please_wait">Loading games... please wait</string>
     <string name="platforms">Platforms</string>
@@ -15,5 +14,8 @@
     <string name="themes">Themes:</string>
     <string name="check_game_reviews">CHECK GAME REVIEWS</string>
     <string name="screenshots">Screenshots:</string>
+
+    <string name="cover_url">https://images.igdb.com/igdb/image/upload/t_cover_big/</string>
+    <string name="screenshot_url">https://images.igdb.com/igdb/image/upload/t_screenshot_big/</string>
 
 </resources>

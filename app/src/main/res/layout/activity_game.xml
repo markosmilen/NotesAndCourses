@@ -12,7 +12,7 @@
         <ImageView
             android:id="@+id/top_image"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="200dp"
             tools:src="@drawable/cover"
             android:scaleType="centerCrop"/>
 
@@ -21,6 +21,7 @@
             android:id="@+id/layout_details"
             android:layout_width="match_parent"
             android:layout_height="160dp"
+            android:elevation="10dp"
             android:orientation="horizontal"
             android:layout_below="@+id/top_image">
 
@@ -35,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:gravity="center_vertical"
                 android:padding="10dp">
 
                 <TextView
@@ -74,7 +76,10 @@
                     android:layout_alignParentRight="true"
                     tools:text="98"
                     android:textSize="22sp"
-                    android:layout_margin="10dp"/>
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"/>
 
                 <TextView
                     android:id="@+id/game_rating_count"
@@ -144,6 +149,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/platforms_rv"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"/>
 
@@ -165,6 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/genres"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"/>
 
@@ -186,6 +193,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/themes"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"/>
 

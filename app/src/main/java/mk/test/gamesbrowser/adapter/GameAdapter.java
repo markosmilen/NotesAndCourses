@@ -49,9 +49,9 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
         if (game.getCover().getUrl() != null) {
             Glide
                     .with(context)
-                    .load("https:" + game.getCover().getUrl())
+                    .load(context.getString(R.string.cover_url) + game.getCover().getImage_id() + ".jpg")
                     .centerCrop()
-                    .placeholder(context.getResources().getDrawable(R.drawable.ic_home))
+                    //.placeholder(context.getResources().getDrawable(R.drawable.ic_home))
                     .into(holder.gameCover);
         }
         holder.gameName.setText(game.getName());

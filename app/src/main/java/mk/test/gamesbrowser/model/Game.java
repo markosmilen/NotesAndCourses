@@ -22,6 +22,7 @@ public class Game implements Parcelable {
     private ArrayList<GameImage> screenshots;
     private ArrayList<Game> similar_games;
     private String storyline;
+    private String summary;
     private ArrayList<GameVideo> videos;
     private TimeToBeat time_to_beat;
 
@@ -43,9 +44,24 @@ public class Game implements Parcelable {
         screenshots = in.createTypedArrayList(GameImage.CREATOR);
         similar_games = in.createTypedArrayList(Game.CREATOR);
         storyline = in.readString();
+        summary = in.readString();
         videos = in.createTypedArrayList(GameVideo.CREATOR);
         time_to_beat = in.readParcelable(TimeToBeat.class.getClassLoader());
     }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public static Creator<Game> getCREATOR() {
+        return CREATOR;
+    }
+
+
 
     public static final Creator<Game> CREATOR = new Creator<Game>() {
         @Override
@@ -217,6 +233,7 @@ public class Game implements Parcelable {
         parcel.writeTypedList(screenshots);
         parcel.writeTypedList(similar_games);
         parcel.writeString(storyline);
+        parcel.writeString(summary);
         parcel.writeTypedList(videos);
         parcel.writeParcelable(time_to_beat, i);
     }
