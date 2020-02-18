@@ -59,7 +59,7 @@ public class GameActivity extends AppCompatActivity {
                     .with(this)
                     .load(getResources().getString(R.string.screenshot_url) + game.getScreenshots().get(randomScreenshot).getImage_id() + ".jpg")
                     .centerCrop()
-                    //.placeholder(getResources().getDrawable(R.drawable.ic_home))
+                    .placeholder(getResources().getDrawable(R.drawable.placeholder))
                     .into(topImage);
         }
 
@@ -68,7 +68,7 @@ public class GameActivity extends AppCompatActivity {
                     .with(this)
                     .load(getString(R.string.cover_url) + game.getCover().getImage_id() + ".jpg")
                     .centerCrop()
-                    .placeholder(getResources().getDrawable(R.drawable.ic_home))
+                    .placeholder(getResources().getDrawable(R.drawable.placeholder))
                     .into(gameCoverAct);
         }
 

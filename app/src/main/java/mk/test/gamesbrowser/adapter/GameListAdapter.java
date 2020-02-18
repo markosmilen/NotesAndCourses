@@ -50,7 +50,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameLi
                     .with(context)
                     .load(context.getString(R.string.cover_url) + game.getCover().getImage_id() + ".jpg")
                     .centerCrop()
-                    //.placeholder(context.getResources().getDrawable(R.drawable.ic_home))
+                    .placeholder(context.getResources().getDrawable(R.drawable.placeholder))
                     .into(holder.gameCover);
         }
         holder.gameTitle.setText(game.getName());

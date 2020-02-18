@@ -118,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_add"
-                    android:backgroundTint="@color/colorAccent"
+                    android:backgroundTint="@color/button_blue"
                     android:onClick="onAddButtonClick"/>
 
                 <TextView
@@ -144,7 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_add"
-                    android:backgroundTint="@color/colorAccent"
+                    android:backgroundTint="@color/button_blue"
                     android:onClick="onAddButtonClick"/>
 
                 <TextView
@@ -170,7 +170,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_add"
-                    android:backgroundTint="@color/colorAccent"
+                    android:backgroundTint="@color/button_blue"
                     android:onClick="onAddButtonClick"/>
 
                 <TextView
@@ -266,7 +266,7 @@
             android:layout_below="@id/layout_themes"
             android:layout_margin="10dp"
             android:textColor="@color/text_white"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/button_blue"
             android:onClick="onReviewsClick"/>
 
         <TextView
