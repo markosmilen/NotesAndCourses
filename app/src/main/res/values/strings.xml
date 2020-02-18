@@ -17,5 +17,8 @@
 
     <string name="cover_url">https://images.igdb.com/igdb/image/upload/t_cover_big/</string>
     <string name="screenshot_url">https://images.igdb.com/igdb/image/upload/t_screenshot_big/</string>
+    <string name="want">WANT</string>
+    <string name="playing">PLAYING</string>
+    <string name="played">PLAYED</string>
 
 </resources>

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -101,7 +102,19 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onAddButtonClick(View view) {
-        Toast.makeText(this, "Add Button Clicked", Toast.LENGTH_SHORT).show();
+        String buttonPressed="";
+        switch(view.getId()){
+            case R.id.add_want:
+                buttonPressed = "WANT";
+                break;
+            case R.id.add_playing:
+                buttonPressed = "PLAYING";
+                break;
+            case R.id.add_played:
+                buttonPressed = "PLAYED";
+                break;
+        }
+        Toast.makeText(this, buttonPressed, Toast.LENGTH_SHORT).show();
     }
 
     public void onReviewsClick(View view) {

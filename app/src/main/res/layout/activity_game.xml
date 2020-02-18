@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.GameActivity">
 
     <RelativeLayout
@@ -43,10 +44,10 @@
                     android:id="@+id/game_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:textColor="@color/text_black"
                     android:textSize="18sp"
                     android:textStyle="bold"
+                    android:layout_marginBottom="10dp"
                     tools:text="The Witcher 3: Wild Hunt" />
 
                 <TextView
@@ -76,20 +77,19 @@
                     android:layout_alignParentRight="true"
                     tools:text="98"
                     android:textSize="22sp"
+                    android:textColor="@color/colorAccent"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"/>
 
                 <TextView
                     android:id="@+id/game_rating_count"
-                    android:layout_width="50dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/game_rating"
                     android:layout_alignParentRight="true"
-                    tools:text="Based on 1564 votes"
-                    android:lines="2"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp"
+                    tools:text="1564 votes" />
 
             </RelativeLayout>
         </LinearLayout>
@@ -103,29 +103,84 @@
             android:layout_below="@+id/layout_details"
             android:layout_margin="10dp">
 
-            <ImageButton
+            <!-- WANT -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_add"
+                android:gravity="center_horizontal"
                 android:layout_weight="1"
-                android:layout_marginRight="15dp"
-                android:onClick="onAddButtonClick"/>
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:orientation="vertical">
 
-            <ImageButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_added"
-                android:layout_weight="1"
-                android:layout_marginRight="15dp"
-                android:onClick="onAddButtonClick"/>
+                <ImageButton
+                    android:id="@+id/add_want"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add"
+                    android:backgroundTint="@color/colorAccent"
+                    android:onClick="onAddButtonClick"/>
 
-            <ImageButton
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/want"
+                    android:textColor="@color/text_black"
+                    android:gravity="center"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_add"
-                android:layout_marginLeft="15dp"
                 android:layout_weight="1"
-                android:onClick="onAddButtonClick"/>
+                android:gravity="center_horizontal"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/add_playing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add"
+                    android:backgroundTint="@color/colorAccent"
+                    android:onClick="onAddButtonClick"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/playing"
+                    android:gravity="center"
+                    android:textColor="@color/text_black"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/add_played"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add"
+                    android:backgroundTint="@color/colorAccent"
+                    android:onClick="onAddButtonClick"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/played"
+                    android:gravity="center"
+                    android:textColor="@color/text_black"
+                    android:textSize="16sp"/>
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -210,6 +265,8 @@
             android:text="@string/check_game_reviews"
             android:layout_below="@id/layout_themes"
             android:layout_margin="10dp"
+            android:textColor="@color/text_white"
+            android:backgroundTint="@color/colorAccent"
             android:onClick="onReviewsClick"/>
 
         <TextView
