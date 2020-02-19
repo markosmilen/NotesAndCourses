@@ -34,6 +34,10 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameLi
         this.gameClickInterface = clickInterface;
     }
 
+    public void setGames (ArrayList<Game> games){
+        this.games = games;
+    }
+
     @NonNull
     @Override
     public GameListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -45,7 +49,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameLi
     public void onBindViewHolder(@NonNull GameListViewHolder holder, int position) {
         Game game = games.get(position);
 
-        if (game.getCover().getUrl() != null) {
+        if (game.getCover().getImage_id() != null) {
             Glide
                     .with(context)
                     .load(context.getString(R.string.cover_url) + game.getCover().getImage_id() + ".jpg")
@@ -81,6 +85,13 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameLi
             gameYear = itemView.findViewById(R.id.game_release_year);
             gamePublisher = itemView.findViewById(R.id.game_publisher);
             gameRating = itemView.findViewById(R.id.game_rating);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    gameClickInterface.onGameClick(games.get(getAdapterPosition()));
+                }
+            });
         }
     }
 }

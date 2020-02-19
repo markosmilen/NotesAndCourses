@@ -46,7 +46,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
     public void onBindViewHolder(@NonNull GameViewHolder holder, int position) {
         Game game = games.get(position);
 
-        if (game.getCover().getUrl() != null) {
+        if (game.getCover().getImage_id() != null) {
             Glide
                     .with(context)
                     .load(context.getString(R.string.cover_url) + game.getCover().getImage_id() + ".jpg")
