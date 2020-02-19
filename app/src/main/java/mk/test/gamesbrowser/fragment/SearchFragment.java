@@ -26,6 +26,7 @@ import java.util.ArrayList;
 
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.activity.GameActivity;
+import mk.test.gamesbrowser.activity.MainActivity;
 import mk.test.gamesbrowser.adapter.GameListAdapter;
 import mk.test.gamesbrowser.interfaces.GameClickInterface;
 import mk.test.gamesbrowser.model.Game;
@@ -46,6 +47,7 @@ public class SearchFragment extends Fragment implements GameClickInterface {
     private ArrayList<Game> searchedGames = new ArrayList<>();
     private GameListAdapter searchAdapter;
     private Gson gson;
+    String queryString = "";
 
     public SearchFragment() {
         // Required empty public constructor
@@ -71,11 +73,11 @@ public class SearchFragment extends Fragment implements GameClickInterface {
         searchEditText = view.findViewById(R.id.search_games_et);
         searchRecyclerView = view.findViewById(R.id.search_recycler_view);
 
-        loadSearchedGames(""); //load from local DB
+        loadSearchedGames("hitman"); //load from local DB
 
         searchAdapter = new GameListAdapter(getActivity(), searchedGames, this);
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-        //searchRecyclerView.setAdapter(searchAdapter);
+        searchRecyclerView.setAdapter(searchAdapter);
 
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -90,16 +92,14 @@ public class SearchFragment extends Fragment implements GameClickInterface {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                String searchString = editable.toString();
-
-                if (searchString.length() >= 3 ) {
-                    loadSearchedGames(searchString);
-
-                    if(searchedGames != null) {
-                        searchAdapter.setGames(searchedGames);
-                        searchRecyclerView.setAdapter(searchAdapter);
-                        searchAdapter.notifyDataSetChanged();
-                    }
+                queryString = editable.toString();
+                if (editable.toString().length() > 3){
+                    loadSearchedGames(queryString);
+                } else{
+                    searchedGames = new ArrayList<>();
+                    searchAdapter.setGames(searchedGames);
+                    searchRecyclerView.setAdapter(searchAdapter);
+                    searchAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -110,9 +110,8 @@ public class SearchFragment extends Fragment implements GameClickInterface {
     private void loadSearchedGames(String searchString){
         OkHttpClient client = new OkHttpClient();
 
-        String bodyString = "search \"" + searchString + "\"; fields name, id, cover.*, summary, first_release_date, game_modes.*, genres.*, platforms.*, " +
-                "player_perspectives.*, popularity, rating, rating_count, screenshots.*, game_engines.*, themes.*, videos.*, " +
-                "storyline, url;";
+        String bodyString = "fields name, id, cover.*, summary, first_release_date, game_modes.*, genres.*, platforms.*, player_perspectives.*, popularity, rating, rating_count, screenshots.*, game_engines.*, themes.*, videos.*, storyline, url;\n" +
+                "              search \"" + searchString + "\";";
 
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(JSON, bodyString);

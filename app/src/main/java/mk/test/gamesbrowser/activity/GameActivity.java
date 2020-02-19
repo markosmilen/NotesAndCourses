@@ -63,7 +63,7 @@ public class GameActivity extends AppCompatActivity {
                     .into(topImage);
         }
 
-        if (game.getCover().getUrl() != null) {
+        if (game.getCover() != null) {
             Glide
                     .with(this)
                     .load(getString(R.string.cover_url) + game.getCover().getImage_id() + ".jpg")
@@ -123,16 +123,20 @@ public class GameActivity extends AppCompatActivity {
 
     public ArrayList<String> getStrings(ArrayList<GamePhrase> phrases){
         ArrayList<String> strings = new ArrayList<>();
-        for(GamePhrase phrase : phrases){
-            strings.add(phrase.getName());
+        if(phrases != null) {
+            for (GamePhrase phrase : phrases) {
+                strings.add(phrase.getName());
+            }
         }
         return strings;
     }
 
     public ArrayList<String> getPlatforms(ArrayList<Platform> platforms){
         ArrayList<String> strings = new ArrayList<>();
-        for(Platform platform : platforms){
-            strings.add(platform.getName());
+        if (platforms != null) {
+            for (Platform platform : platforms) {
+                strings.add(platform.getName());
+            }
         }
         return strings;
     }
