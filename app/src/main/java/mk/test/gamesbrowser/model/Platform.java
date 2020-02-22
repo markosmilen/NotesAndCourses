@@ -7,7 +7,7 @@ public class Platform implements Parcelable {
     private int id;
     private String abbreviation;
     private String name;
-    private int platform_logo;
+    private String platform_logo;
     private String url;
 
     public Platform() {}
@@ -16,7 +16,7 @@ public class Platform implements Parcelable {
         id = in.readInt();
         abbreviation = in.readString();
         name = in.readString();
-        platform_logo = in.readInt();
+        platform_logo = in.readString();
         url = in.readString();
     }
 
@@ -64,11 +64,11 @@ public class Platform implements Parcelable {
         this.url = url;
     }
 
-    public int getPlatform_logo() {
+    public String getPlatform_logo() {
         return platform_logo;
     }
 
-    public void setPlatform_logo(int platform_logo) {
+    public void setPlatform_logo(String platform_logo) {
         this.platform_logo = platform_logo;
     }
 
@@ -82,7 +82,7 @@ public class Platform implements Parcelable {
         parcel.writeInt(id);
         parcel.writeString(abbreviation);
         parcel.writeString(name);
-        parcel.writeInt(platform_logo);
+        parcel.writeString(platform_logo);
         parcel.writeString(url);
     }
 }

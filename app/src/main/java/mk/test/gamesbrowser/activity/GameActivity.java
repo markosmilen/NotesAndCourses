@@ -59,7 +59,7 @@ public class GameActivity extends AppCompatActivity {
                     .with(this)
                     .load(getResources().getString(R.string.screenshot_url) + game.getScreenshots().get(randomScreenshot).getImage_id() + ".jpg")
                     .centerCrop()
-                    .placeholder(getResources().getDrawable(R.drawable.placeholder))
+                    .placeholder(getResources().getDrawable(R.drawable.placeholderhoriz))
                     .into(topImage);
         }
 

@@ -5,17 +5,30 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import mk.test.gamesbrowser.R;
+import mk.test.gamesbrowser.adapter.GameListAdapter;
+import mk.test.gamesbrowser.model.Game;
 
 public class ListsFragment extends Fragment {
     public static final String TAG = ListsFragment.class.getSimpleName();
+
+    private TabLayout listsTabLayout;
+    private RecyclerView listsRecyclerView;
+    private GameListAdapter gameAdapter;
+    private ArrayList<Game> games;
 
     public ListsFragment() {
         // Required empty public constructor
@@ -36,6 +49,35 @@ public class ListsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lists, container, false);
+        View view = inflater.inflate(R.layout.fragment_lists, container, false);
+
+        listsTabLayout = view.findViewById(R.id.lists_tab_layout);
+        listsRecyclerView = view.findViewById(R.id.lists_recycler_view);
+
+        listsTabLayout.addTab(listsTabLayout.newTab().setText(getString(R.string.want)));
+        listsTabLayout.addTab(listsTabLayout.newTab().setText(getString(R.string.playing)));
+        listsTabLayout.addTab(listsTabLayout.newTab().setText(getString(R.string.played)));
+        listsTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        listsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+
+        listsTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Toast.makeText(getActivity(), tab.getText(), Toast.LENGTH_SHORT).show();
+                //TODO load different lists
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        return view;
     }
 }

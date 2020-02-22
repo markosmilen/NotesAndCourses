@@ -47,7 +47,7 @@ public class SearchFragment extends Fragment implements GameClickInterface {
     private ArrayList<Game> searchedGames = new ArrayList<>();
     private GameListAdapter searchAdapter;
     private Gson gson;
-    String queryString = "";
+    private String queryString;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -93,7 +93,7 @@ public class SearchFragment extends Fragment implements GameClickInterface {
             @Override
             public void afterTextChanged(Editable editable) {
                 queryString = editable.toString();
-                if (editable.toString().length() > 3){
+                if (queryString.length() > 3){
                     loadSearchedGames(queryString);
                 } else{
                     searchedGames = new ArrayList<>();
@@ -111,7 +111,7 @@ public class SearchFragment extends Fragment implements GameClickInterface {
         OkHttpClient client = new OkHttpClient();
 
         String bodyString = "fields name, id, cover.*, summary, first_release_date, game_modes.*, genres.*, platforms.*, player_perspectives.*, popularity, rating, rating_count, screenshots.*, game_engines.*, themes.*, videos.*, storyline, url;\n" +
-                "              search \"" + searchString + "\";";
+                "              search \"" + searchString + "\"; limit 30;";
 
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(JSON, bodyString);
