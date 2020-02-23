@@ -22,6 +22,7 @@ import java.util.Date;
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.interfaces.GameClickInterface;
 import mk.test.gamesbrowser.model.Game;
+import mk.test.gamesbrowser.model.InvolvedCompany;
 import mk.test.gamesbrowser.model.Platform;
 
 public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameListViewHolder> {
@@ -67,8 +68,12 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameLi
         String dateString = formatter.format((new Date((long) game.getFirst_release_date() * 1000)));
         holder.gameYear.setText(dateString);
 
-        if (game.getGame_engines() != null) {
-            holder.gamePublisher.setText(game.getGame_engines().get(0).getName());
+        if (game.getInvolved_companies() != null) {
+            for (InvolvedCompany involvedCompany : game.getInvolved_companies()) {
+                if (involvedCompany.isPublisher()) {
+                    holder.gamePublisher.setText(involvedCompany.getCompany().getName());
+                }
+            }
         }
 
         if (game.getRating() != 0) {

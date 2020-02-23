@@ -23,6 +23,7 @@ import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.adapter.ThemeAdapter;
 import mk.test.gamesbrowser.model.Game;
 import mk.test.gamesbrowser.model.GamePhrase;
+import mk.test.gamesbrowser.model.InvolvedCompany;
 import mk.test.gamesbrowser.model.Platform;
 
 public class GameActivity extends AppCompatActivity {
@@ -57,82 +58,91 @@ public class GameActivity extends AppCompatActivity {
         gameModesLayout = findViewById(R.id.layout_game_modes);
         themesLayout = findViewById(R.id.layout_themes);
 
-
         game = getIntent().getParcelableExtra("game");
 
-        if (game.getScreenshots() != null) {
-            Random random = new Random();
-            int randomScreenshot = random.nextInt(game.getScreenshots().size());
+        if (game != null) {
 
-            Glide
-                    .with(this)
-                    .load(getResources().getString(R.string.screenshot_url) + game.getScreenshots().get(randomScreenshot).getImage_id() + ".jpg")
-                    .centerCrop()
-                    .placeholder(getResources().getDrawable(R.drawable.placeholderhoriz))
-                    .into(topImage);
-        }
+            if (game.getScreenshots() != null) {
+                Random random = new Random();
+                int randomScreenshot = random.nextInt(game.getScreenshots().size());
 
-        if (game.getCover() != null) {
-            Glide
-                    .with(this)
-                    .load(getString(R.string.cover_url) + game.getCover().getImage_id() + ".jpg")
-                    .centerCrop()
-                    .placeholder(getResources().getDrawable(R.drawable.placeholder))
-                    .into(gameCoverAct);
-        }
+                Glide
+                        .with(this)
+                        .load(getResources().getString(R.string.screenshot_url) + game.getScreenshots().get(randomScreenshot).getImage_id() + ".jpg")
+                        .centerCrop()
+                        .placeholder(getResources().getDrawable(R.drawable.placeholderhoriz))
+                        .into(topImage);
+            } else {
+                topImage.setVisibility(View.GONE);
+            }
 
-        gameTitle.setText(game.getName());
-        gamePublisher.setText(game.getGame_engines().get(0).getName());
+            if (game.getCover() != null) {
+                Glide
+                        .with(this)
+                        .load(getString(R.string.cover_url) + game.getCover().getImage_id() + ".jpg")
+                        .centerCrop()
+                        .placeholder(getResources().getDrawable(R.drawable.placeholder))
+                        .into(gameCoverAct);
+            }
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
-        String dateString = formatter.format((new Date((long) game.getFirst_release_date() * 1000)));
-        gameReleaseYear.setText(dateString);
+            gameTitle.setText(game.getName());
 
-        if(game.getRating() != 0) {
-            gameRating.setText((int) game.getRating() + "");
-            gameRatingCount.setText((int) game.getRating_count() + " ratings");
-        }else {
-            gameRating.setText(getString(R.string.not_applicable));
-            gameRatingCount.setText(getString(R.string.need_more_ratings));
-        }
+            for (InvolvedCompany involvedCompany : game.getInvolved_companies()){
+                if (involvedCompany.isPublisher()){
+                    gamePublisher.setText(involvedCompany.getCompany().getName());
+                }
+            }
 
-        gameDescription.setText(game.getSummary());
+            SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+            String dateString = formatter.format((new Date((long) game.getFirst_release_date() * 1000)));
+            gameReleaseYear.setText(dateString);
 
-        ArrayList<String> platforms = getPlatforms(game.getPlatforms());
-        platformsRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-        ThemeAdapter platformsAdapter = new ThemeAdapter(this, platforms);
-        platformsRecyclerView.setAdapter(platformsAdapter);
+            if (game.getRating() != 0) {
+                gameRating.setText((int) game.getRating() + "");
+                gameRatingCount.setText((int) game.getRating_count() + " ratings");
+            } else {
+                gameRating.setText(getString(R.string.not_applicable));
+                gameRatingCount.setText(getString(R.string.need_more_ratings));
+            }
 
-        ArrayList<String> gamePerspectives = getStrings(game.getPlayer_perspectives());
-        perspectivesRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-        ThemeAdapter perspectivesAdapter = new ThemeAdapter(this, gamePerspectives);
-        perspectivesRecyclerView.setAdapter(perspectivesAdapter);
+            gameDescription.setText(game.getSummary());
 
-        if(game.getGenres() != null) {
-            ArrayList<String> genres = getStrings(game.getGenres());
-            genresRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-            ThemeAdapter genresAdapter = new ThemeAdapter(this, genres);
-            genresRecyclerView.setAdapter(genresAdapter);
-        }else {
-            genresLayout.setVisibility(View.GONE);
-        }
+            ArrayList<String> platforms = getPlatforms(game.getPlatforms());
+            platformsRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+            ThemeAdapter platformsAdapter = new ThemeAdapter(this, platforms);
+            platformsRecyclerView.setAdapter(platformsAdapter);
 
-        if(game.getThemes() != null) {
-            ArrayList<String> themes = getStrings(game.getThemes());
-            themesRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-            ThemeAdapter themeAdapter = new ThemeAdapter(this, themes);
-            themesRecyclerView.setAdapter(themeAdapter);
-        }else {
-            themesLayout.setVisibility(View.GONE);
-        }
+            ArrayList<String> gamePerspectives = getStrings(game.getPlayer_perspectives());
+            perspectivesRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+            ThemeAdapter perspectivesAdapter = new ThemeAdapter(this, gamePerspectives);
+            perspectivesRecyclerView.setAdapter(perspectivesAdapter);
 
-        if (game.getGame_modes() != null) {
-            ArrayList<String> gameModes = getStrings(game.getGame_modes());
-            gameModesRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-            ThemeAdapter gameModesAdapter = new ThemeAdapter(this, gameModes);
-            gameModesRecyclerView.setAdapter(gameModesAdapter);
-        }else {
-            gameModesLayout.setVisibility(View.GONE);
+            if (game.getGenres() != null) {
+                ArrayList<String> genres = getStrings(game.getGenres());
+                genresRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+                ThemeAdapter genresAdapter = new ThemeAdapter(this, genres);
+                genresRecyclerView.setAdapter(genresAdapter);
+            } else {
+                genresLayout.setVisibility(View.GONE);
+            }
+
+            if (game.getThemes() != null) {
+                ArrayList<String> themes = getStrings(game.getThemes());
+                themesRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+                ThemeAdapter themeAdapter = new ThemeAdapter(this, themes);
+                themesRecyclerView.setAdapter(themeAdapter);
+            } else {
+                themesLayout.setVisibility(View.GONE);
+            }
+
+            if (game.getGame_modes() != null) {
+                ArrayList<String> gameModes = getStrings(game.getGame_modes());
+                gameModesRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+                ThemeAdapter gameModesAdapter = new ThemeAdapter(this, gameModes);
+                gameModesRecyclerView.setAdapter(gameModesAdapter);
+            } else {
+                gameModesLayout.setVisibility(View.GONE);
+            }
         }
     }
 

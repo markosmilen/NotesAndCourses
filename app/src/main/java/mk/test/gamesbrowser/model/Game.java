@@ -11,6 +11,7 @@ public class Game implements Parcelable {
     private Cover cover;
     private int first_release_date;
     private String name;
+    private ArrayList<InvolvedCompany> involved_companies;
     private ArrayList<GamePhrase> game_modes;
     private ArrayList<GamePhrase> genres;
     private ArrayList<GamePhrase> player_perspectives;
@@ -34,6 +35,7 @@ public class Game implements Parcelable {
         cover = in.readParcelable(Cover.class.getClassLoader());
         first_release_date = in.readInt();
         name = in.readString();
+        involved_companies = in.createTypedArrayList(InvolvedCompany.CREATOR);
         game_modes = in.createTypedArrayList(GamePhrase.CREATOR);
         genres = in.createTypedArrayList(GamePhrase.CREATOR);
         player_perspectives = in.createTypedArrayList(GamePhrase.CREATOR);
@@ -50,20 +52,6 @@ public class Game implements Parcelable {
         videos = in.createTypedArrayList(GameVideo.CREATOR);
         time_to_beat = in.readParcelable(TimeToBeat.class.getClassLoader());
     }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
-    public static Creator<Game> getCREATOR() {
-        return CREATOR;
-    }
-
-
 
     public static final Creator<Game> CREATOR = new Creator<Game>() {
         @Override
@@ -109,6 +97,14 @@ public class Game implements Parcelable {
         this.name = name;
     }
 
+    public ArrayList<InvolvedCompany> getInvolved_companies() {
+        return involved_companies;
+    }
+
+    public void setInvolved_companies(ArrayList<InvolvedCompany> involved_companies) {
+        this.involved_companies = involved_companies;
+    }
+
     public ArrayList<GamePhrase> getGame_modes() {
         return game_modes;
     }
@@ -139,6 +135,14 @@ public class Game implements Parcelable {
 
     public void setThemes(ArrayList<GamePhrase> themes) {
         this.themes = themes;
+    }
+
+    public ArrayList<GamePhrase> getGame_engines() {
+        return game_engines;
+    }
+
+    public void setGame_engines(ArrayList<GamePhrase> game_engines) {
+        this.game_engines = game_engines;
     }
 
     public ArrayList<Platform> getPlatforms() {
@@ -181,14 +185,6 @@ public class Game implements Parcelable {
         this.screenshots = screenshots;
     }
 
-    public ArrayList<GamePhrase> getGame_engines() {
-        return game_engines;
-    }
-
-    public void setGame_engines(ArrayList<GamePhrase> game_engines) {
-        this.game_engines = game_engines;
-    }
-
     public ArrayList<Game> getSimilar_games() {
         return similar_games;
     }
@@ -203,6 +199,14 @@ public class Game implements Parcelable {
 
     public void setStoryline(String storyline) {
         this.storyline = storyline;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public ArrayList<GameVideo> getVideos() {
@@ -232,6 +236,7 @@ public class Game implements Parcelable {
         parcel.writeParcelable(cover, i);
         parcel.writeInt(first_release_date);
         parcel.writeString(name);
+        parcel.writeTypedList(involved_companies);
         parcel.writeTypedList(game_modes);
         parcel.writeTypedList(genres);
         parcel.writeTypedList(player_perspectives);
