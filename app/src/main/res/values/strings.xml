@@ -16,10 +16,14 @@
     <string name="screenshots">Screenshots:</string>
 
     <string name="cover_url">https://images.igdb.com/igdb/image/upload/t_cover_big/</string>
-    <string name="screenshot_url">https://images.igdb.com/igdb/image/upload/t_screenshot_big/</string>
+    <string name="screenshot_url">https://images.igdb.com/igdb/image/upload/t_screenshot_med/</string>
     <string name="want">WANT</string>
     <string name="playing">PLAYING</string>
     <string name="played">PLAYED</string>
     <string name="search_your_game">Search your game</string>
+    <string name="time_to_beat">Time to beat</string>
+    <string name="game_modes">Game modes:</string>
+    <string name="not_applicable">N/A</string>
+    <string name="need_more_ratings">Need more ratings</string>
 
 </resources>

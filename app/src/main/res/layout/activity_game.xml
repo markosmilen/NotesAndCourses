@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.GameActivity">
 
     <RelativeLayout
@@ -47,7 +46,6 @@
                     android:textColor="@color/text_black"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:layout_marginBottom="10dp"
                     tools:text="The Witcher 3: Wild Hunt" />
 
                 <TextView
@@ -69,30 +67,49 @@
                     tools:text="2015"
                     android:layout_marginTop="10dp"/>
 
-                <TextView
-                    android:id="@+id/game_rating"
-                    android:layout_width="wrap_content"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/platforms_recycler_view"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/game_title"
-                    android:layout_alignParentRight="true"
-                    tools:text="98"
-                    android:textSize="22sp"
-                    android:textColor="@color/colorAccent"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_below="@id/game_release_year"
+                    android:layout_marginTop="10dp"/>
 
-                <TextView
-                    android:id="@+id/game_rating_count"
+                <RelativeLayout
+                    android:id="@+id/ratings_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/game_rating"
-                    android:layout_alignParentRight="true"
-                    android:textSize="12sp"
-                    tools:text="1564 votes" />
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:id="@+id/game_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        tools:text="98"
+                        android:textSize="22sp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginRight="20dp"/>
+
+                    <TextView
+                        android:id="@+id/game_rating_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/game_rating"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="12sp"
+                        tools:text="1564 votes" />
+                </RelativeLayout>
 
             </RelativeLayout>
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/perspectives_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_details"
+            android:layout_marginTop="10dp"/>
 
         <!-- Add-to-lists buttons -->
         <LinearLayout
@@ -100,7 +117,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@+id/layout_details"
+            android:layout_below="@+id/perspectives_recycler_view"
             android:layout_margin="10dp">
 
             <!-- WANT -->
@@ -192,9 +209,9 @@
             tools:text="@string/lorem_ipsum"
             android:padding="10dp"/>
 
-        <!-- PLATFORMS -->
+        <!-- GAME MODES -->
         <LinearLayout
-            android:id="@+id/layout_platfomrs"
+            android:id="@+id/layout_game_modes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/game_description"
@@ -203,13 +220,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/platforms_rv"
+                android:text="@string/game_modes"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/platforms_recycler_view"
+                android:id="@+id/game_modes_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -219,7 +236,7 @@
             android:id="@+id/layout_genres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/layout_platfomrs"
+            android:layout_below="@id/layout_game_modes"
             android:layout_marginTop="10dp">
 
             <TextView
@@ -275,8 +292,16 @@
             android:layout_height="wrap_content"
             android:text="@string/screenshots"
             android:layout_below="@id/reviews_button"
+            android:textSize="15sp"
             android:layout_marginLeft="10dp"
             android:textColor="@color/text_black"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/screenshots_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/screenshots_text"
+            android:layout_marginTop="10dp"/>
     </RelativeLayout>
 
 </ScrollView>

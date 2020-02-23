@@ -27,7 +27,8 @@ import mk.test.gamesbrowser.model.Platform;
 
 public class GameActivity extends AppCompatActivity {
 
-    Game game;
+    private Game game;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +36,8 @@ public class GameActivity extends AppCompatActivity {
 
         ImageView topImage, gameCoverAct;
         TextView gameTitle, gamePublisher, gameReleaseYear, gameRating, gameRatingCount, gameDescription;
-        RecyclerView genresRecyclerView, platformsRecyclerView, themesRecyclerView;
+        RecyclerView genresRecyclerView, platformsRecyclerView, themesRecyclerView, gameModesRecyclerView, perspectivesRecyclerView;
+        LinearLayout genresLayout, themesLayout, gameModesLayout;
 
         topImage = findViewById(R.id.top_image);
         gameCoverAct = findViewById(R.id.game_cover_act);
@@ -48,6 +50,13 @@ public class GameActivity extends AppCompatActivity {
         genresRecyclerView = findViewById(R.id.genres_recycler_view);
         platformsRecyclerView = findViewById(R.id.platforms_recycler_view);
         themesRecyclerView = findViewById(R.id.themes_recycler_view);
+        gameModesRecyclerView = findViewById(R.id.game_modes_recycler_view);
+        perspectivesRecyclerView = findViewById(R.id.perspectives_recycler_view);
+
+        genresLayout = findViewById(R.id.layout_genres);
+        gameModesLayout = findViewById(R.id.layout_game_modes);
+        themesLayout = findViewById(R.id.layout_themes);
+
 
         game = getIntent().getParcelableExtra("game");
 
@@ -73,32 +82,58 @@ public class GameActivity extends AppCompatActivity {
         }
 
         gameTitle.setText(game.getName());
-        gamePublisher.setText("Publisher"); //TODO Publisher
+        gamePublisher.setText(game.getGame_engines().get(0).getName());
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
         String dateString = formatter.format((new Date((long) game.getFirst_release_date() * 1000)));
         gameReleaseYear.setText(dateString);
 
-        gameRating.setText((int) game.getRating() + "");
-        gameRatingCount.setText((int) game.getRating_count() + " ratings");
+        if(game.getRating() != 0) {
+            gameRating.setText((int) game.getRating() + "");
+            gameRatingCount.setText((int) game.getRating_count() + " ratings");
+        }else {
+            gameRating.setText(getString(R.string.not_applicable));
+            gameRatingCount.setText(getString(R.string.need_more_ratings));
+        }
+
         gameDescription.setText(game.getSummary());
 
         ArrayList<String> platforms = getPlatforms(game.getPlatforms());
-        ArrayList<String> genres = getStrings(game.getGenres());
-        ArrayList<String> themes = getStrings(game.getThemes());
-
         platformsRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-        genresRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-        themesRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-
         ThemeAdapter platformsAdapter = new ThemeAdapter(this, platforms);
-        ThemeAdapter genresAdapter = new ThemeAdapter(this, genres);
-        ThemeAdapter themeAdapter = new ThemeAdapter(this, themes);
-
         platformsRecyclerView.setAdapter(platformsAdapter);
-        genresRecyclerView.setAdapter(genresAdapter);
-        themesRecyclerView.setAdapter(themeAdapter);
 
+        ArrayList<String> gamePerspectives = getStrings(game.getPlayer_perspectives());
+        perspectivesRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        ThemeAdapter perspectivesAdapter = new ThemeAdapter(this, gamePerspectives);
+        perspectivesRecyclerView.setAdapter(perspectivesAdapter);
+
+        if(game.getGenres() != null) {
+            ArrayList<String> genres = getStrings(game.getGenres());
+            genresRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+            ThemeAdapter genresAdapter = new ThemeAdapter(this, genres);
+            genresRecyclerView.setAdapter(genresAdapter);
+        }else {
+            genresLayout.setVisibility(View.GONE);
+        }
+
+        if(game.getThemes() != null) {
+            ArrayList<String> themes = getStrings(game.getThemes());
+            themesRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+            ThemeAdapter themeAdapter = new ThemeAdapter(this, themes);
+            themesRecyclerView.setAdapter(themeAdapter);
+        }else {
+            themesLayout.setVisibility(View.GONE);
+        }
+
+        if (game.getGame_modes() != null) {
+            ArrayList<String> gameModes = getStrings(game.getGame_modes());
+            gameModesRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+            ThemeAdapter gameModesAdapter = new ThemeAdapter(this, gameModes);
+            gameModesRecyclerView.setAdapter(gameModesAdapter);
+        }else {
+            gameModesLayout.setVisibility(View.GONE);
+        }
     }
 
     public void onAddButtonClick(View view) {
