@@ -4,13 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class TimeToBeat implements Parcelable {
-    private int game;
+    private Game game;
     private int completely, normally;
 
     public TimeToBeat() {}
 
     protected TimeToBeat(Parcel in) {
-        game = in.readInt();
+        game = in.readParcelable(Game.class.getClassLoader());
         completely = in.readInt();
         normally = in.readInt();
     }
@@ -27,11 +27,11 @@ public class TimeToBeat implements Parcelable {
         }
     };
 
-    public int getGame() {
+    public Game getGame() {
         return game;
     }
 
-    public void setGame(int game) {
+    public void setGame(Game game) {
         this.game = game;
     }
 
@@ -58,7 +58,7 @@ public class TimeToBeat implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(game);
+        parcel.writeParcelable(game, i);
         parcel.writeInt(completely);
         parcel.writeInt(normally);
     }
