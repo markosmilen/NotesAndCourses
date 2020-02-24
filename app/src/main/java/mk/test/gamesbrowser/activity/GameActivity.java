@@ -61,7 +61,6 @@ public class GameActivity extends AppCompatActivity {
         game = getIntent().getParcelableExtra("game");
 
         if (game != null) {
-
             if (game.getScreenshots() != null) {
                 Random random = new Random();
                 int randomScreenshot = random.nextInt(game.getScreenshots().size());
@@ -87,9 +86,11 @@ public class GameActivity extends AppCompatActivity {
 
             gameTitle.setText(game.getName());
 
-            for (InvolvedCompany involvedCompany : game.getInvolved_companies()){
-                if (involvedCompany.isPublisher()){
-                    gamePublisher.setText(involvedCompany.getCompany().getName());
+            if (game.getInvolved_companies() != null) {
+                for (InvolvedCompany involvedCompany : game.getInvolved_companies()) {
+                    if (involvedCompany.isPublisher()) {
+                        gamePublisher.setText(involvedCompany.getCompany().getName());
+                    }
                 }
             }
 

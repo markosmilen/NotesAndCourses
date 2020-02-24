@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,7 +104,6 @@ public class SearchFragment extends Fragment implements GameClickInterface {
                 }
             }
         });
-
         return view;
     }
 
@@ -116,7 +116,7 @@ public class SearchFragment extends Fragment implements GameClickInterface {
                 "              search \"" + searchString + "\"; limit 30; ";
 
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        RequestBody requestBody = RequestBody.create(JSON, bodyString);
+        RequestBody requestBody = RequestBody.create(bodyString, JSON);
 
         final Request request = new Request.Builder()
                 .url("https://api-v3.igdb.com/games")
@@ -141,17 +141,21 @@ public class SearchFragment extends Fragment implements GameClickInterface {
                     String jsonString = response.body().string();
                     gson = new Gson();
                     Type listType = new TypeToken<ArrayList<Game>>(){}.getType();
-                    searchedGames = gson.fromJson(jsonString, listType);
-                    searchAdapter.setGames(searchedGames);
+                    try {
+                        searchedGames = gson.fromJson(jsonString, listType);
+                        searchAdapter.setGames(searchedGames);
 
-                    if (getActivity() != null) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                searchAdapter.notifyDataSetChanged();
-                                //progressBarLayout.setVisibility(View.GONE);
-                            }
-                        });
+                        if (getActivity() != null) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    searchAdapter.notifyDataSetChanged();
+                                    //progressBarLayout.setVisibility(View.GONE);
+                                }
+                            });
+                        }
+                    }catch (Exception e){
+                        Log.d("LOG", e.toString());
                     }
                 }}
         });
