@@ -74,7 +74,7 @@ public class SearchFragment extends Fragment implements GameClickInterface {
         searchEditText = view.findViewById(R.id.search_games_et);
         searchRecyclerView = view.findViewById(R.id.search_recycler_view);
 
-        loadSearchedGames("hitman"); //load from local DB
+        loadSearchedGames("hitman");
 
         searchAdapter = new GameListAdapter(getActivity(), searchedGames, this);
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
@@ -141,10 +141,10 @@ public class SearchFragment extends Fragment implements GameClickInterface {
                     String jsonString = response.body().string();
                     gson = new Gson();
                     Type listType = new TypeToken<ArrayList<Game>>(){}.getType();
+                    //TODO FIX EXCEPTION
                     try {
                         searchedGames = gson.fromJson(jsonString, listType);
                         searchAdapter.setGames(searchedGames);
-
                         if (getActivity() != null) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
