@@ -12,6 +12,12 @@ public class Platform implements Parcelable {
 
     public Platform() {}
 
+    public Platform(int id, String name, String logo){
+        this.id = id;
+        this.name = name;
+        this.platform_logo = logo;
+    }
+
     protected Platform(Parcel in) {
         id = in.readInt();
         abbreviation = in.readString();

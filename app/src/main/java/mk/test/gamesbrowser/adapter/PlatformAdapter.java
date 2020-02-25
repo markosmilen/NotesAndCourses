@@ -70,6 +70,13 @@ public class PlatformAdapter extends RecyclerView.Adapter<PlatformAdapter.Platfo
 
             platformLogo = itemView.findViewById(R.id.platform_logo);
             platformName = itemView.findViewById(R.id.platform_name);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clickInterface.onPlatformClick(platforms.get(getAdapterPosition()));
+                }
+            });
         }
     }
 }

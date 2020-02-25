@@ -5,22 +5,28 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import mk.test.gamesbrowser.R;
+import mk.test.gamesbrowser.adapter.PlatformAdapter;
+import mk.test.gamesbrowser.interfaces.PlatformClickInterface;
 import mk.test.gamesbrowser.model.Platform;
 
 
-public class PlatformsFragment extends Fragment {
+public class PlatformsFragment extends Fragment implements PlatformClickInterface {
+
     public static final String TAG = PlatformsFragment.class.getSimpleName();
 
     private ArrayList<Platform> platforms = new ArrayList<>();
-
 
     public PlatformsFragment() {
         // Required empty public constructor
@@ -42,16 +48,45 @@ public class PlatformsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_platforms, container, false);
+        View view = inflater.inflate(R.layout.fragment_platforms, container, false);
+
+        loadPlatforms();
+        RecyclerView platformsRecyclerView = view.findViewById(R.id.platforms_recycler_view);
+        platformsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+
+        PlatformAdapter platformAdapter = new PlatformAdapter(getActivity(), platforms, this);
+        platformsRecyclerView.setAdapter(platformAdapter);
+
+        return view;
     }
 
     public void loadPlatforms(){
-        Platform ps4 = new Platform();
-        ps4.setName("Play Station");
-        ps4.setPlatform_logo("https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/PlayStation_logo.svg/1200px-PlayStation_logo.svg.png");
+        Platform pc = new Platform(6, "PC (Microsoft Windows)", "https://images.igdb.com/igdb/image/upload/t_cover_big/irwvwpl023f8y19tidgq.png");
+        Platform macos = new Platform(14, "Mac", "https://images.igdb.com/igdb/image/upload/t_cover_big/jl4t4o64uv2gizj2dxsy.png");
+        Platform ps4 = new Platform(48, "Play Station 4", "https://images.igdb.com/igdb/image/upload/t_cover_big/pl6f.png");
+        Platform ps5 = new Platform(167, "Play Station 5", "https://images.igdb.com/igdb/image/upload/t_cover_big/nocover_qhhlj6.jpg");
+        Platform xboxone = new Platform(49, "Xbox One", "https://images.igdb.com/igdb/image/upload/t_cover_big/pl95.png");
+        Platform xboxx = new Platform(169, "Xbox Series X", "https://images.igdb.com/igdb/image/upload/t_cover_big/plbw.png");
+        Platform android = new Platform(34, "Android", "https://f0.pngfuel.com/png/22/187/android-logo-clip-art-png-clip-art.png");
+        Platform ios = new Platform(39, "iOS", "https://images.igdb.com/igdb/image/upload/t_cover_big/pl6w.png");
+        Platform linux = new Platform(3, "Linux", "https://images.igdb.com/igdb/image/upload/t_cover_big/plak.png");
+        Platform arcade = new Platform(52, "Arcade", "https://www.recroommasters.com/v/vspfiles/photos/RM-XT-ALPHA-JAMMA-2T.jpg");
 
+        platforms.add(pc);
+        platforms.add(macos);
         platforms.add(ps4);
+        platforms.add(ps5);
+        platforms.add(xboxone);
+        platforms.add(xboxx);
+        platforms.add(android);
+        platforms.add(ios);
+        platforms.add(linux);
+        platforms.add(arcade);
     }
 
 
+    @Override
+    public void onPlatformClick(Platform platform) {
+        Toast.makeText(getActivity(), platform.getName() + " " + platform.getId(), Toast.LENGTH_SHORT).show();
+    }
 }
