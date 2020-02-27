@@ -63,9 +63,9 @@ public class PlatformsFragment extends Fragment implements PlatformClickInterfac
 
     public void loadPlatforms(){
         Platform pc = new Platform(6, "PC (Microsoft Windows)", "https://images.igdb.com/igdb/image/upload/t_cover_big/irwvwpl023f8y19tidgq.png");
-        Platform macos = new Platform(14, "Mac", "https://images.igdb.com/igdb/image/upload/t_cover_big/jl4t4o64uv2gizj2dxsy.png");
+        Platform mac = new Platform(14, "Mac", "https://images.igdb.com/igdb/image/upload/t_cover_big/jl4t4o64uv2gizj2dxsy.png");
         Platform ps4 = new Platform(48, "Play Station 4", "https://images.igdb.com/igdb/image/upload/t_cover_big/pl6f.png");
-        //Platform ps5 = new Platform(167, "Play Station 5", "https://images.igdb.com/igdb/image/upload/t_cover_big/nocover_qhhlj6.jpg");
+        Platform ps5 = new Platform(167, "Play Station 5", "https://images.igdb.com/igdb/image/upload/t_cover_big/nocover_qhhlj6.jpg");
         Platform xboxone = new Platform(49, "Xbox One", "https://images.igdb.com/igdb/image/upload/t_cover_big/pl95.png");
         Platform xboxx = new Platform(169, "Xbox Series X", "https://images.igdb.com/igdb/image/upload/t_cover_big/plbw.png");
         Platform android = new Platform(34, "Android", "https://f0.pngfuel.com/png/22/187/android-logo-clip-art-png-clip-art.png");
@@ -74,7 +74,7 @@ public class PlatformsFragment extends Fragment implements PlatformClickInterfac
         Platform arcade = new Platform(52, "Arcade", "https://www.recroommasters.com/v/vspfiles/photos/RM-XT-ALPHA-JAMMA-2T.jpg");
 
         platforms.add(pc);
-        platforms.add(macos);
+        platforms.add(mac);
         platforms.add(ps4);
         //platforms.add(ps5);
         platforms.add(xboxone);
@@ -82,7 +82,7 @@ public class PlatformsFragment extends Fragment implements PlatformClickInterfac
         platforms.add(android);
         platforms.add(ios);
         platforms.add(linux);
-        platforms.add(arcade);
+        //platforms.add(arcade);
     }
 
 
