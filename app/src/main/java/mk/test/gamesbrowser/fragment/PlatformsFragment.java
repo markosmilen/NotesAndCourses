@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,7 +65,7 @@ public class PlatformsFragment extends Fragment implements PlatformClickInterfac
         Platform pc = new Platform(6, "PC (Microsoft Windows)", "https://images.igdb.com/igdb/image/upload/t_cover_big/irwvwpl023f8y19tidgq.png");
         Platform macos = new Platform(14, "Mac", "https://images.igdb.com/igdb/image/upload/t_cover_big/jl4t4o64uv2gizj2dxsy.png");
         Platform ps4 = new Platform(48, "Play Station 4", "https://images.igdb.com/igdb/image/upload/t_cover_big/pl6f.png");
-        Platform ps5 = new Platform(167, "Play Station 5", "https://images.igdb.com/igdb/image/upload/t_cover_big/nocover_qhhlj6.jpg");
+        //Platform ps5 = new Platform(167, "Play Station 5", "https://images.igdb.com/igdb/image/upload/t_cover_big/nocover_qhhlj6.jpg");
         Platform xboxone = new Platform(49, "Xbox One", "https://images.igdb.com/igdb/image/upload/t_cover_big/pl95.png");
         Platform xboxx = new Platform(169, "Xbox Series X", "https://images.igdb.com/igdb/image/upload/t_cover_big/plbw.png");
         Platform android = new Platform(34, "Android", "https://f0.pngfuel.com/png/22/187/android-logo-clip-art-png-clip-art.png");
@@ -75,7 +76,7 @@ public class PlatformsFragment extends Fragment implements PlatformClickInterfac
         platforms.add(pc);
         platforms.add(macos);
         platforms.add(ps4);
-        platforms.add(ps5);
+        //platforms.add(ps5);
         platforms.add(xboxone);
         platforms.add(xboxx);
         platforms.add(android);
@@ -87,6 +88,13 @@ public class PlatformsFragment extends Fragment implements PlatformClickInterfac
 
     @Override
     public void onPlatformClick(Platform platform) {
-        Toast.makeText(getActivity(), platform.getName() + " " + platform.getId(), Toast.LENGTH_SHORT).show();
+        if (getActivity() != null) {
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            Bundle bundle = new Bundle();
+            bundle.putInt("platform_id", platform.getId());
+            ft.replace(R.id.frame_container, PlatformGamesFragment.newInstance(bundle), PlatformGamesFragment.TAG);
+            ft.addToBackStack(SearchFragment.TAG);
+            ft.commit();
+        }
     }
 }

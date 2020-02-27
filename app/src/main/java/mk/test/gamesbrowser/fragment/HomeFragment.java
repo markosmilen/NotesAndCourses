@@ -110,6 +110,7 @@ public class HomeFragment extends Fragment implements GameClickInterface {
                     @Override
                     public void run() {
                         Toast.makeText(getActivity(), "Failed request", Toast.LENGTH_SHORT).show();
+                        progressBarLayout.setVisibility(View.GONE);
                     }
                 });
             }
