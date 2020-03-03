@@ -156,13 +156,27 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
             }
 
             if (game.getScreenshots() != null){
+                ArrayList<GameImage> images = game.getScreenshots();
+                if (game.getArtworks() != null) {
+                    images.addAll(game.getArtworks());
+                }
+
                 screenshotsRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-                ScreenshotAdapter screenshotAdapter = new ScreenshotAdapter(this, game.getScreenshots(), GameActivity.this);
+                ScreenshotAdapter screenshotAdapter = new ScreenshotAdapter(this, images, GameActivity.this);
                 screenshotsRecyclerView.setAdapter(screenshotAdapter);
             } else {
                 screenshotsText.setVisibility(View.GONE);
                 screenshotsRecyclerView.setVisibility(View.GONE);
             }
+
+            /*if (game.getVideos() != null){
+                videosRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+                ScreenshotAdapter screenshotAdapter = new ScreenshotAdapter(this, game.getScreenshots(), GameActivity.this);
+                videosRecyclerView.setAdapter(screenshotAdapter);
+            } else {
+                videosText.setVisibility(View.GONE);
+                videosRecyclerView.setVisibility(View.GONE);
+            }*/
         }
     }
 
@@ -215,7 +229,7 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
                 Glide
                         .with(getApplicationContext())
                         .load(getString(R.string.screenshot_url) + screenshot.getImage_id() + ".jpg")
-                        .placeholder(getResources().getDrawable(R.drawable.placeholderhoriz))
+                        //.placeholder(getResources().getDrawable(R.drawable.placeholderhoriz))
                         .into(imageView);
             }
         }).withStartPosition(position)

@@ -23,7 +23,7 @@ public class Game extends SugarRecord implements Parcelable {
     private double popularity;
     private double rating;
     private double rating_count;
-    private ArrayList<GameImage> screenshots;
+    private ArrayList<GameImage> screenshots, artworks;
     private ArrayList<Game> similar_games;
     private String storyline;
     private String summary;
@@ -48,6 +48,7 @@ public class Game extends SugarRecord implements Parcelable {
         rating = in.readDouble();
         rating_count = in.readDouble();
         screenshots = in.createTypedArrayList(GameImage.CREATOR);
+        artworks = in.createTypedArrayList(GameImage.CREATOR);
         similar_games = in.createTypedArrayList(Game.CREATOR);
         storyline = in.readString();
         summary = in.readString();
@@ -227,6 +228,14 @@ public class Game extends SugarRecord implements Parcelable {
         this.time_to_beat = time_to_beat;
     }
 
+    public ArrayList<GameImage> getArtworks() {
+        return artworks;
+    }
+
+    public void setArtworks(ArrayList<GameImage> artworks) {
+        this.artworks = artworks;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -249,6 +258,7 @@ public class Game extends SugarRecord implements Parcelable {
         parcel.writeDouble(rating);
         parcel.writeDouble(rating_count);
         parcel.writeTypedList(screenshots);
+        parcel.writeTypedList(artworks);
         parcel.writeTypedList(similar_games);
         parcel.writeString(storyline);
         parcel.writeString(summary);

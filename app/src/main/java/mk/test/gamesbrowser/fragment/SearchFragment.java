@@ -114,7 +114,7 @@ public class SearchFragment extends Fragment implements GameClickInterface {
     private void loadSearchedGames(String searchString){
         OkHttpClient client = new OkHttpClient();
 
-        String bodyString = "fields name, id, cover.*, summary, first_release_date, game_modes.*, genres.*, platforms.*, " +
+        String bodyString = "fields name, id, cover.*, summary, first_release_date, artworks.*, game_modes.*, genres.*, platforms.*, " +
                 "player_perspectives.*, popularity, rating, rating_count, screenshots.*, game_engines.*, themes.*, videos.*, " +
                 "storyline, involved_companies.*, involved_companies.company.*, url;\n" +
                 "              search \"" + searchString + "\"; limit 30; ";
