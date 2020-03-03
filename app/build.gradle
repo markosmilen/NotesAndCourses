@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "mk.test.gamesbrowser"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -35,4 +35,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
     implementation("com.squareup.okhttp3:okhttp:4.2.2")
+
+    implementation 'com.github.satyan:sugar:1.4'
+
+    implementation 'com.github.stfalcon:stfalcon-imageviewer:1.0.0'
 }

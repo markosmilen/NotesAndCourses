@@ -8,11 +8,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.stfalcon.imageviewer.StfalconImageViewer;
+import com.stfalcon.imageviewer.loader.ImageLoader;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,13 +21,16 @@ import java.util.Date;
 import java.util.Random;
 
 import mk.test.gamesbrowser.R;
+import mk.test.gamesbrowser.adapter.ScreenshotAdapter;
 import mk.test.gamesbrowser.adapter.ThemeAdapter;
+import mk.test.gamesbrowser.interfaces.ScreenshotClickInterface;
 import mk.test.gamesbrowser.model.Game;
+import mk.test.gamesbrowser.model.GameImage;
 import mk.test.gamesbrowser.model.GamePhrase;
 import mk.test.gamesbrowser.model.InvolvedCompany;
 import mk.test.gamesbrowser.model.Platform;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements ScreenshotClickInterface {
 
     private Game game;
 
@@ -37,7 +41,9 @@ public class GameActivity extends AppCompatActivity {
 
         ImageView topImage, gameCoverAct;
         TextView gameTitle, gamePublisher, gameReleaseYear, gameRating, gameRatingCount, gameDescription;
+        TextView screenshotsText, videosText;
         RecyclerView genresRecyclerView, platformsRecyclerView, themesRecyclerView, gameModesRecyclerView, perspectivesRecyclerView;
+        RecyclerView screenshotsRecyclerView, videosRecyclerView;
         LinearLayout genresLayout, themesLayout, gameModesLayout;
 
         topImage = findViewById(R.id.top_image);
@@ -53,6 +59,10 @@ public class GameActivity extends AppCompatActivity {
         themesRecyclerView = findViewById(R.id.themes_recycler_view);
         gameModesRecyclerView = findViewById(R.id.game_modes_recycler_view);
         perspectivesRecyclerView = findViewById(R.id.perspectives_recycler_view);
+        screenshotsRecyclerView = findViewById(R.id.screenshots_recycler_view);
+        videosRecyclerView = findViewById(R.id.videos_recycler_view);
+        screenshotsText = findViewById(R.id.screenshots_text);
+        videosText = findViewById(R.id.videos_text);
 
         genresLayout = findViewById(R.id.layout_genres);
         gameModesLayout = findViewById(R.id.layout_game_modes);
@@ -144,6 +154,15 @@ public class GameActivity extends AppCompatActivity {
             } else {
                 gameModesLayout.setVisibility(View.GONE);
             }
+
+            if (game.getScreenshots() != null){
+                screenshotsRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+                ScreenshotAdapter screenshotAdapter = new ScreenshotAdapter(this, game.getScreenshots(), GameActivity.this);
+                screenshotsRecyclerView.setAdapter(screenshotAdapter);
+            } else {
+                screenshotsText.setVisibility(View.GONE);
+                screenshotsRecyclerView.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -185,5 +204,22 @@ public class GameActivity extends AppCompatActivity {
             }
         }
         return strings;
+    }
+
+    @Override
+    public void onScreenshotClick(final int position) {
+        new StfalconImageViewer.Builder<>(this, game.getScreenshots(), new ImageLoader<GameImage>() {
+            @Override
+            public void loadImage(ImageView imageView, GameImage screenshot) {
+                imageView.setBackgroundColor(getResources().getColor(R.color.text_black));
+                Glide
+                        .with(getApplicationContext())
+                        .load(getString(R.string.screenshot_url) + screenshot.getImage_id() + ".jpg")
+                        .placeholder(getResources().getDrawable(R.drawable.placeholderhoriz))
+                        .into(imageView);
+            }
+        }).withStartPosition(position)
+                .withImageMarginPixels(30)
+                .show();
     }
 }

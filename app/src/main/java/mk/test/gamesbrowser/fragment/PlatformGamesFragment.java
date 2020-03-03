@@ -174,10 +174,10 @@ public class PlatformGamesFragment extends Fragment implements GameClickInterfac
         String bodyString = "fields name, id, cover.*, summary, first_release_date, game_modes.*, genres.*, platforms.*, " +
                 "player_perspectives.*, popularity, rating, rating_count, screenshots.*, game_engines.*, themes.*, videos.*, " +
                 "storyline, involved_companies.*, involved_companies.company.*, url; " +
-                "where platforms = " + platformId + ";";
+                "where platforms = (" + platformId + ");";
 
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        RequestBody requestBody = RequestBody.create(JSON, bodyString);
+        RequestBody requestBody = RequestBody.create(bodyString, JSON);
 
         final Request request = new Request.Builder()
                 .url("https://api-v3.igdb.com/games")

@@ -26,5 +26,6 @@
     <string name="not_applicable">N/A</string>
     <string name="need_more_ratings">Need more ratings</string>
     <string name="filter">FILTER</string>
+    <string name="videos">Videos:</string>
 
 </resources>
