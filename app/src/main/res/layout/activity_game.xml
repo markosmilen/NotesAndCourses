@@ -20,7 +20,7 @@
         <LinearLayout
             android:id="@+id/layout_details"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@+id/top_image">
 
@@ -30,12 +30,14 @@
                 android:layout_height="160dp"
                 tools:src="@drawable/cover"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="5dp"/>
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:gravity="center_vertical"
                 android:padding="10dp">
 
@@ -74,38 +76,55 @@
                     android:layout_below="@id/game_release_year"
                     android:layout_marginTop="15dp"/>
 
-                <RelativeLayout
-                    android:id="@+id/ratings_layout"
+            </RelativeLayout>
+        </LinearLayout>
+
+        <!-- RATINGS -->
+        <LinearLayout
+            android:id="@+id/ratings_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_below="@id/layout_details">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="35dp"
-                    android:layout_alignParentRight="true"
-                    android:gravity="center">
+                    android:padding="2dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/ic_star" />
 
                     <TextView
                         android:id="@+id/game_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="98"
-                        android:textSize="24sp"
-                        android:layout_centerHorizontal="true"
                         android:textColor="@color/colorAccent"
-                        android:layout_marginRight="20dp"/>
+                        android:textSize="28sp"
+                        tools:text="98" />
+                </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/game_rating_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/game_rating"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="3dp"
-                        android:layout_marginRight="3dp"
-                        android:layout_centerHorizontal="true"
-                        android:textSize="12sp"
-                        tools:text="1564 votes" />
-                </RelativeLayout>
-
-            </RelativeLayout>
+                <TextView
+                    android:id="@+id/game_rating_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
+                    tools:text="1564 ratings" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- Perspectives -->
@@ -113,7 +132,7 @@
             android:id="@+id/perspectives_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/layout_details"
+            android:layout_below="@id/ratings_layout"
             android:layout_centerVertical="true"
             android:layout_marginTop="10dp"/>
 
