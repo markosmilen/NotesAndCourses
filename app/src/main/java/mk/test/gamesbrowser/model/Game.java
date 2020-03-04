@@ -3,13 +3,18 @@ package mk.test.gamesbrowser.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.orm.SugarRecord;
 
 import java.util.ArrayList;
 
-public class Game extends SugarRecord implements Parcelable {
+public class Game implements Parcelable {
 
-    //private int id;
+    private int id;
     private Cover cover;
     private int first_release_date;
     private String name;
@@ -33,7 +38,7 @@ public class Game extends SugarRecord implements Parcelable {
     public Game () {}
 
     protected Game(Parcel in) {
-        //id = in.readInt();
+        id = in.readInt();
         cover = in.readParcelable(Cover.class.getClassLoader());
         first_release_date = in.readInt();
         name = in.readString();
@@ -68,13 +73,13 @@ public class Game extends SugarRecord implements Parcelable {
         }
     };
 
-    /*public int getGameId() {
+    public int getGameId() {
         return id;
     }
 
     public void setGameId(int id) {
         this.id = id;
-    }*/
+    }
 
     public Cover getCover() {
         return cover;
@@ -243,7 +248,7 @@ public class Game extends SugarRecord implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        //parcel.writeInt(id);
+        parcel.writeInt(id);
         parcel.writeParcelable(cover, i);
         parcel.writeInt(first_release_date);
         parcel.writeString(name);

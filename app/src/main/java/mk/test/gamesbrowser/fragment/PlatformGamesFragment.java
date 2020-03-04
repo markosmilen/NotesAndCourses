@@ -118,8 +118,8 @@ public class PlatformGamesFragment extends Fragment implements GameClickInterfac
 
         String bodyString = "fields name, id, cover.*, summary, first_release_date, artworks.*, game_modes.*, genres.*, platforms.*, " +
                 "player_perspectives.*, popularity, rating, rating_count, screenshots.*, game_engines.*, themes.*, videos.*, " +
-                "storyline, involved_companies.*, involved_companies.company.*, url;\n" +
-                "              search \"" + searchString + "\"; limit 30; ";
+                "storyline, involved_companies.*, involved_companies.company.*;\n" +
+                "              search \"" + searchString + "\"; limit 40; ";
 
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(bodyString, JSON);
@@ -172,9 +172,9 @@ public class PlatformGamesFragment extends Fragment implements GameClickInterfac
         OkHttpClient client = new OkHttpClient();
 
         String bodyString = "fields name, id, cover.*, summary, first_release_date, game_modes.*, genres.*, platforms.*, " +
-                "player_perspectives.*, popularity, rating, rating_count, screenshots.*, game_engines.*, themes.*, videos.*, " +
-                "storyline, involved_companies.*, involved_companies.company.*, url; " +
-                "where platforms = (" + platformId + ");";
+                "player_perspectives.*, popularity, rating, rating_count, screenshots.*, themes.*, videos.*, " +
+                "involved_companies.*, involved_companies.company.*; " +
+                "where platforms = (" + platformId + "); limit 100;";
 
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(bodyString, JSON);

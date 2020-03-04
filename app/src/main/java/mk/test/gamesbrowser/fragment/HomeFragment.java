@@ -83,8 +83,8 @@ public class HomeFragment extends Fragment implements GameClickInterface {
         OkHttpClient client = new OkHttpClient();
 
         String bodyString = "fields name, id, cover.*, summary, first_release_date, game_modes.*, artworks.*, genres.*, platforms.*, " +
-                "player_perspectives.*, popularity, rating, rating_count, screenshots.*, game_engines.*, involved_companies.*, involved_companies.company.*, themes.*, videos.*, " +
-                "storyline, url;\n" +
+                "player_perspectives.*, popularity, rating, rating_count, screenshots.*, game_engines.*, " +
+                "involved_companies.*, involved_companies.company.*, themes.*, videos.*;" +
                 " sort first_release_date desc; where id = (1942,15,6166,22,17447,72,114,55);";
 
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");

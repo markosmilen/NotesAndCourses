@@ -127,6 +127,7 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
             perspectivesRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
             ThemeAdapter perspectivesAdapter = new ThemeAdapter(this, gamePerspectives);
             perspectivesRecyclerView.setAdapter(perspectivesAdapter);
+            perspectivesRecyclerView.setVisibility(View.GONE);//TO BE PLACED ELSEWHERE
 
             if (game.getGenres() != null) {
                 ArrayList<String> genres = getStrings(game.getGenres());
@@ -229,7 +230,6 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
                 Glide
                         .with(getApplicationContext())
                         .load(getString(R.string.screenshot_url) + screenshot.getImage_id() + ".jpg")
-                        //.placeholder(getResources().getDrawable(R.drawable.placeholderhoriz))
                         .into(imageView);
             }
         }).withStartPosition(position)
