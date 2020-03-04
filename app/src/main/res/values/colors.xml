@@ -7,6 +7,7 @@
     <color name="text_black">#000</color>
     <color name="text_white">#fff</color>
     <color name="border_gray">#B3ADAD</color>
+    <color name="dark_gray">#444</color>
 
     <color name="button_blue">#097bed</color>
 </resources>

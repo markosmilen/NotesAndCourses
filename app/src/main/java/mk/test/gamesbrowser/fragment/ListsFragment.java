@@ -20,15 +20,18 @@ import java.util.List;
 
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.adapter.GameListAdapter;
+import mk.test.gamesbrowser.interfaces.GameClickInterface;
 import mk.test.gamesbrowser.model.Game;
 
-public class ListsFragment extends Fragment {
+public class ListsFragment extends Fragment implements GameClickInterface {
     public static final String TAG = ListsFragment.class.getSimpleName();
 
     private TabLayout listsTabLayout;
     private RecyclerView listsRecyclerView;
     private GameListAdapter gameAdapter;
-    private ArrayList<Game> games;
+    private ArrayList<Game> wantGames = new ArrayList<>();
+    private ArrayList<Game> playingGames = new ArrayList<>();
+    private ArrayList<Game> playedGames = new ArrayList<>();
 
     public ListsFragment() {
         // Required empty public constructor
@@ -60,12 +63,17 @@ public class ListsFragment extends Fragment {
         listsTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         listsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+        gameAdapter = new GameListAdapter(getActivity(), wantGames, this);
+        listsRecyclerView.setAdapter(gameAdapter);
 
+        TabLayout.Tab tab = listsTabLayout.getTabAt(0);
+        tab.select();
         listsTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Toast.makeText(getActivity(), tab.getText(), Toast.LENGTH_SHORT).show();
-                //TODO load different lists
+
+                gameAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -79,5 +87,10 @@ public class ListsFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onGameClick(Game game) {
+        Toast.makeText(getContext(), game.getName(), Toast.LENGTH_SHORT).show();
     }
 }

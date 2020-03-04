@@ -23,13 +23,13 @@ public class Game implements Parcelable {
     private ArrayList<GamePhrase> genres;
     private ArrayList<GamePhrase> player_perspectives;
     private ArrayList<GamePhrase> themes;
-    private ArrayList<GamePhrase> game_engines;
     private ArrayList<Platform> platforms;
     private double popularity;
     private double rating;
     private double rating_count;
     private ArrayList<GameImage> screenshots, artworks;
     private ArrayList<Game> similar_games;
+    private ArrayList<Game> expansions;
     private String storyline;
     private String summary;
     private ArrayList<GameVideo> videos;
@@ -47,7 +47,6 @@ public class Game implements Parcelable {
         genres = in.createTypedArrayList(GamePhrase.CREATOR);
         player_perspectives = in.createTypedArrayList(GamePhrase.CREATOR);
         themes = in.createTypedArrayList(GamePhrase.CREATOR);
-        game_engines = in.createTypedArrayList(GamePhrase.CREATOR);
         platforms = in.createTypedArrayList(Platform.CREATOR);
         popularity = in.readDouble();
         rating = in.readDouble();
@@ -55,6 +54,7 @@ public class Game implements Parcelable {
         screenshots = in.createTypedArrayList(GameImage.CREATOR);
         artworks = in.createTypedArrayList(GameImage.CREATOR);
         similar_games = in.createTypedArrayList(Game.CREATOR);
+        expansions = in.createTypedArrayList(Game.CREATOR);
         storyline = in.readString();
         summary = in.readString();
         videos = in.createTypedArrayList(GameVideo.CREATOR);
@@ -145,14 +145,6 @@ public class Game implements Parcelable {
         this.themes = themes;
     }
 
-    public ArrayList<GamePhrase> getGame_engines() {
-        return game_engines;
-    }
-
-    public void setGame_engines(ArrayList<GamePhrase> game_engines) {
-        this.game_engines = game_engines;
-    }
-
     public ArrayList<Platform> getPlatforms() {
         return platforms;
     }
@@ -241,6 +233,14 @@ public class Game implements Parcelable {
         this.artworks = artworks;
     }
 
+    public ArrayList<Game> getExpansions() {
+        return expansions;
+    }
+
+    public void setExpansions(ArrayList<Game> expansions) {
+        this.expansions = expansions;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -257,7 +257,6 @@ public class Game implements Parcelable {
         parcel.writeTypedList(genres);
         parcel.writeTypedList(player_perspectives);
         parcel.writeTypedList(themes);
-        parcel.writeTypedList(game_engines);
         parcel.writeTypedList(platforms);
         parcel.writeDouble(popularity);
         parcel.writeDouble(rating);
@@ -265,6 +264,7 @@ public class Game implements Parcelable {
         parcel.writeTypedList(screenshots);
         parcel.writeTypedList(artworks);
         parcel.writeTypedList(similar_games);
+        parcel.writeTypedList(expansions);
         parcel.writeString(storyline);
         parcel.writeString(summary);
         parcel.writeTypedList(videos);
