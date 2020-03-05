@@ -37,7 +37,7 @@ import okhttp3.Response;
 
 public class HomeFragment extends Fragment implements GameClickInterface {
     public static final String TAG = HomeFragment.class.getSimpleName();
-    private static final String API_KEY = "00c0d1eda626d2b49c0f0b6ecbc90b9e";
+    public static final String API_KEY = "00c0d1eda626d2b49c0f0b6ecbc90b9e";
 
     private CardView progressBarLayout;
     private RecyclerView recyclerView;

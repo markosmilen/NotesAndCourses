@@ -1,10 +1,13 @@
 package mk.test.gamesbrowser.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,6 +35,7 @@ import mk.test.gamesbrowser.model.Platform;
 
 public class GameActivity extends AppCompatActivity implements ScreenshotClickInterface {
 
+    private Toolbar toolbar;
     private Game game;
 
     @Override
@@ -46,6 +50,7 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
         RecyclerView screenshotsRecyclerView, videosRecyclerView;
         LinearLayout genresLayout, themesLayout, gameModesLayout;
 
+        toolbar = findViewById(R.id.toolbar);
         topImage = findViewById(R.id.top_image);
         gameCoverAct = findViewById(R.id.game_cover_act);
         gameTitle = findViewById(R.id.game_title);
@@ -68,7 +73,12 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
         gameModesLayout = findViewById(R.id.layout_game_modes);
         themesLayout = findViewById(R.id.layout_themes);
 
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         game = getIntent().getParcelableExtra("game");
+
+        getSupportActionBar().setTitle(game.getName());
 
         if (game != null) {
             if (game.getScreenshots() != null) {
@@ -198,7 +208,10 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
     }
 
     public void onReviewsClick(View view) {
-        Toast.makeText(this, "Reviews Button Clicked", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, ReviewsActivity.class);
+        intent.putExtra("game_id", game.getGameId());
+        intent.putExtra("game_name", game.getName());
+        startActivity(intent);
     }
 
     public ArrayList<String> getStrings(ArrayList<GamePhrase> phrases){
@@ -235,5 +248,15 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
         }).withStartPosition(position)
                 .withImageMarginPixels(30)
                 .show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

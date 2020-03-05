@@ -76,7 +76,7 @@ public class PlatformsFragment extends Fragment implements PlatformClickInterfac
         platforms.add(pc);
         platforms.add(mac);
         platforms.add(ps4);
-        //platforms.add(ps5);
+        platforms.add(ps5);
         platforms.add(xboxone);
         platforms.add(xboxx);
         platforms.add(android);
