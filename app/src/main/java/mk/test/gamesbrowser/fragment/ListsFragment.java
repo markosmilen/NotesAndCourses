@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +23,7 @@ import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.adapter.GameListAdapter;
 import mk.test.gamesbrowser.interfaces.GameClickInterface;
 import mk.test.gamesbrowser.model.Game;
+import mk.test.gamesbrowser.viewmodel.GameViewModel;
 
 public class ListsFragment extends Fragment implements GameClickInterface {
     public static final String TAG = ListsFragment.class.getSimpleName();
@@ -32,6 +34,8 @@ public class ListsFragment extends Fragment implements GameClickInterface {
     private ArrayList<Game> wantGames = new ArrayList<>();
     private ArrayList<Game> playingGames = new ArrayList<>();
     private ArrayList<Game> playedGames = new ArrayList<>();
+
+    private GameViewModel gameViewModel;
 
     public ListsFragment() {
         // Required empty public constructor

@@ -3,9 +3,19 @@ package mk.test.gamesbrowser.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "game_image")
 public class GameImage implements Parcelable {
+
+    @PrimaryKey
+    @ColumnInfo
     private int id;
+    @ColumnInfo
     private int width, height;
+    @ColumnInfo
     private String image_id, url;
 
     public GameImage() {}

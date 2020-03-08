@@ -3,13 +3,22 @@ package mk.test.gamesbrowser.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "time_to_beat")
 public class TimeToBeat implements Parcelable {
+
+    @PrimaryKey
+    @ColumnInfo
     private Game game;
+    @ColumnInfo
     private int completely, normally;
 
     public TimeToBeat() {}
 
-    protected TimeToBeat(Parcel in) {
+    private TimeToBeat(Parcel in) {
         game = in.readParcelable(Game.class.getClassLoader());
         completely = in.readInt();
         normally = in.readInt();

@@ -2,6 +2,8 @@ package mk.test.gamesbrowser.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,11 +35,12 @@ import mk.test.gamesbrowser.model.GameImage;
 import mk.test.gamesbrowser.model.GamePhrase;
 import mk.test.gamesbrowser.model.InvolvedCompany;
 import mk.test.gamesbrowser.model.Platform;
+import mk.test.gamesbrowser.viewmodel.GameViewModel;
 
 public class GameActivity extends AppCompatActivity implements ScreenshotClickInterface {
 
-    private Toolbar toolbar;
     private Game game;
+    private GameViewModel gameViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +53,9 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
         RecyclerView genresRecyclerView, platformsRecyclerView, themesRecyclerView, gameModesRecyclerView, perspectivesRecyclerView;
         RecyclerView screenshotsRecyclerView, videosRecyclerView;
         LinearLayout genresLayout, themesLayout, gameModesLayout;
+        ImageButton wantGame, playingGame, playedGame;
 
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         topImage = findViewById(R.id.top_image);
         gameCoverAct = findViewById(R.id.game_cover_act);
         gameTitle = findViewById(R.id.game_title);
@@ -73,8 +78,24 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
         gameModesLayout = findViewById(R.id.layout_game_modes);
         themesLayout = findViewById(R.id.layout_themes);
 
+        wantGame = findViewById(R.id.add_want);
+        playingGame = findViewById(R.id.add_playing);
+        playedGame = findViewById(R.id.add_played);
+
+        wantGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gameViewModel.insert(game);
+                Toast.makeText(GameActivity.this, "Added", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
 
         game = getIntent().getParcelableExtra("game");
 

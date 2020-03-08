@@ -3,9 +3,19 @@ package mk.test.gamesbrowser.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "game_video")
 public class GameVideo implements Parcelable {
+
+    @PrimaryKey
+    @ColumnInfo
     private int id, game;
+    @ColumnInfo
     private String name;
+    @ColumnInfo
     private String video_id;
 
     public GameVideo() {}

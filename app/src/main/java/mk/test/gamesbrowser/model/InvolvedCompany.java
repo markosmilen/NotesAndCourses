@@ -3,10 +3,19 @@ package mk.test.gamesbrowser.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "game_company")
 public class InvolvedCompany implements Parcelable {
 
+    @PrimaryKey
+    @ColumnInfo
     private int id;
+    @ColumnInfo
     private Company company;
+    @ColumnInfo
     private boolean developer, porting, publisher, supporting;
 
     public InvolvedCompany() {}

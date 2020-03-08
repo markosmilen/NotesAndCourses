@@ -3,13 +3,25 @@ package mk.test.gamesbrowser.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "game_review")
 public class Review implements Parcelable {
 
+    @ColumnInfo
     private String conclusion, content;
+    @ColumnInfo
     private double created_at;
+    @PrimaryKey
+    @ColumnInfo
     private int game;
+    @ColumnInfo
     private int likes, views;
+    @ColumnInfo
     private String title, introduction;
+    @ColumnInfo
     private String positive_points, negative_points;
 
     public Review() {}

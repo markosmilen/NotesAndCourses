@@ -3,36 +3,55 @@ package mk.test.gamesbrowser.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.orm.SugarRecord;
-
 import java.util.ArrayList;
 
+@Entity(tableName = "game_table")
 public class Game implements Parcelable {
 
+    @PrimaryKey
+    @ColumnInfo(name = "game_id")
     private int id;
+    @ColumnInfo(name = "game_cover")
     private Cover cover;
+    @ColumnInfo(name = "first_release_date")
     private int first_release_date;
+    @ColumnInfo(name = "game_name")
     private String name;
+    @ColumnInfo
     private ArrayList<InvolvedCompany> involved_companies;
+    @ColumnInfo
     private ArrayList<GamePhrase> game_modes;
+    @ColumnInfo
     private ArrayList<GamePhrase> genres;
+    @ColumnInfo
     private ArrayList<GamePhrase> player_perspectives;
+    @ColumnInfo
     private ArrayList<GamePhrase> themes;
+    @ColumnInfo
     private ArrayList<Platform> platforms;
+    @ColumnInfo
     private double popularity;
+    @ColumnInfo
     private double rating;
+    @ColumnInfo
     private double rating_count;
+    @ColumnInfo
     private ArrayList<GameImage> screenshots, artworks;
+    @ColumnInfo
     private ArrayList<Game> similar_games;
+    @ColumnInfo
     private ArrayList<Game> expansions;
+    @ColumnInfo
     private String storyline;
+    @ColumnInfo
     private String summary;
+    @ColumnInfo
     private ArrayList<GameVideo> videos;
+    @ColumnInfo
     private TimeToBeat time_to_beat;
 
     public Game () {}
@@ -73,11 +92,11 @@ public class Game implements Parcelable {
         }
     };
 
-    public int getGameId() {
-        return id;
+    public int getId() {
+        return this.id;
     }
 
-    public void setGameId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 

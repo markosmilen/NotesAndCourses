@@ -36,8 +36,6 @@ dependencies {
 
     implementation("com.squareup.okhttp3:okhttp:4.2.2")
 
-    implementation 'com.github.satyan:sugar:1.4'
-
     implementation 'com.github.stfalcon:stfalcon-imageviewer:1.0.0'
 
     // Room components
