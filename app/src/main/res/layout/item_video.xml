@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="280dp"
+    android:layout_height="180dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/video_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_black"
+        tools:text="Video name"
+        android:gravity="center"
+        android:layout_marginBottom="5dp"/>
+
+    <ImageView
+        android:id="@+id/video_thumbnail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/video_name"
+        tools:background="@color/button_blue"/>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_play"
+        android:elevation="5dp"
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>

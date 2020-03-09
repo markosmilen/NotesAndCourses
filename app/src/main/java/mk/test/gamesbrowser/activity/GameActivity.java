@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,7 @@ import java.util.Random;
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.adapter.ScreenshotAdapter;
 import mk.test.gamesbrowser.adapter.ThemeAdapter;
+import mk.test.gamesbrowser.adapter.VideoAdapter;
 import mk.test.gamesbrowser.interfaces.ScreenshotClickInterface;
 import mk.test.gamesbrowser.interfaces.VideoClickInterface;
 import mk.test.gamesbrowser.model.Game;
@@ -205,8 +207,9 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
 
             if (game.getVideos() != null){
                 videosRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-                ScreenshotAdapter screenshotAdapter = new ScreenshotAdapter(this, game.getScreenshots(), GameActivity.this);
-                videosRecyclerView.setAdapter(screenshotAdapter);
+                VideoAdapter videoAdapter = new VideoAdapter(this, this);
+                videoAdapter.setVideos(game.getVideos());
+                videosRecyclerView.setAdapter(videoAdapter);
             } else {
                 videosText.setVisibility(View.GONE);
                 videosRecyclerView.setVisibility(View.GONE);
@@ -285,6 +288,9 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
 
     @Override
     public void onVideoClick(GameVideo video) {
-
+        String videoId = video.getVideo_id();
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:"+videoId));
+        intent.putExtra("VIDEO_ID", videoId);
+        startActivity(intent);
     }
 }

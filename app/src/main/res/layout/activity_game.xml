@@ -250,12 +250,32 @@
                 tools:text="@string/lorem_ipsum"
                 android:padding="10dp"/>
 
+            <!-- VIDEOS -->
+            <TextView
+                android:id="@+id/videos_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/videos"
+                android:layout_below="@id/game_description"
+                android:textSize="15sp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/text_black"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/videos_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/videos_text"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+
             <!-- GAME MODES -->
             <LinearLayout
                 android:id="@+id/layout_game_modes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/game_description"
+                android:layout_below="@id/videos_recycler_view"
                 android:layout_marginTop="10dp">
 
                 <TextView
@@ -345,23 +365,7 @@
                 android:layout_below="@id/screenshots_text"
                 android:layout_marginTop="5dp"/>
 
-            <!-- VIDEOS -->
-            <TextView
-                android:id="@+id/videos_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/videos"
-                android:layout_below="@id/screenshots_recycler_view"
-                android:textSize="15sp"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/text_black"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/videos_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/videos_text"
-                android:layout_marginTop="5dp"/>
 
         </RelativeLayout>
     </ScrollView>
