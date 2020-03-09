@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public void onBackPressed() {
         if (bottomNavigationView.getSelectedItemId() == R.id.menu_home) {
+            finish();
             super.onBackPressed();
         } else {
             bottomNavigationView.setSelectedItemId(R.id.menu_home);

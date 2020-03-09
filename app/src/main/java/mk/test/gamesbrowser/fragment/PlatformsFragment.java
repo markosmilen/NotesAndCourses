@@ -73,16 +73,18 @@ public class PlatformsFragment extends Fragment implements PlatformClickInterfac
         Platform linux = new Platform(3, "Linux", "https://images.igdb.com/igdb/image/upload/t_cover_big/plak.png");
         Platform arcade = new Platform(52, "Arcade", "https://www.recroommasters.com/v/vspfiles/photos/RM-XT-ALPHA-JAMMA-2T.jpg");
 
-        platforms.add(pc);
-        platforms.add(mac);
-        platforms.add(ps4);
-        platforms.add(ps5);
-        platforms.add(xboxone);
-        platforms.add(xboxx);
-        platforms.add(android);
-        platforms.add(ios);
-        platforms.add(linux);
-        //platforms.add(arcade);
+        if (!platforms.contains(pc)) {
+            platforms.add(pc);
+            platforms.add(mac);
+            platforms.add(ps4);
+            platforms.add(ps5);
+            platforms.add(xboxone);
+            platforms.add(xboxx);
+            platforms.add(android);
+            platforms.add(ios);
+            platforms.add(linux);
+            platforms.add(arcade);
+        }
     }
 
 
@@ -93,7 +95,7 @@ public class PlatformsFragment extends Fragment implements PlatformClickInterfac
             Bundle bundle = new Bundle();
             bundle.putInt("platform_id", platform.getId());
             ft.replace(R.id.frame_container, PlatformGamesFragment.newInstance(bundle), PlatformGamesFragment.TAG);
-            ft.addToBackStack(SearchFragment.TAG);
+            //ft.addToBackStack(SearchFragment.TAG);
             ft.commit();
         }
     }

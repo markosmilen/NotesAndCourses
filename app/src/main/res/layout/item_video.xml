@@ -1,32 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="280dp"
-    android:layout_height="180dp"
-    android:layout_marginLeft="5dp"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="5dp"
+    android:layout_marginLeft="10dp"
     android:layout_marginRight="5dp"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_marginBottom="10dp">
 
-    <TextView
-        android:id="@+id/video_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/text_black"
-        tools:text="Video name"
-        android:gravity="center"
-        android:layout_marginBottom="5dp"/>
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="190dp">
 
-    <ImageView
-        android:id="@+id/video_thumbnail"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/video_name"
-        tools:background="@color/button_blue"/>
+        <TextView
+            android:id="@+id/video_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_black"
+            tools:text="Video name"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/video_thumbnail"/>
 
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_play"
-        android:elevation="5dp"
-        android:layout_centerInParent="true"/>
+        <ImageView
+            android:id="@+id/video_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            tools:background="@color/button_blue"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_play"
+            android:elevation="5dp"
+            android:layout_centerInParent="true"/>
 
 </RelativeLayout>
+</androidx.cardview.widget.CardView>
