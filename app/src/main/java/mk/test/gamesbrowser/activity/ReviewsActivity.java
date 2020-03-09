@@ -1,6 +1,5 @@
 package mk.test.gamesbrowser.activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.adapter.ReviewsAdapter;
-import mk.test.gamesbrowser.model.Game;
 import mk.test.gamesbrowser.model.Review;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -38,11 +37,14 @@ public class ReviewsActivity extends AppCompatActivity {
     private Gson gson;
     private ArrayList<Review> reviews = new ArrayList<>();
     private ReviewsAdapter adapter;
+    private TextView noReviewsTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviews);
+
+        noReviewsTV = findViewById(R.id.no_reviews_tv);
 
         int gameId = getIntent().getIntExtra("game_id", 1);
         String gameName = getIntent().getStringExtra("game_name");
@@ -91,14 +93,24 @@ public class ReviewsActivity extends AppCompatActivity {
                     String jsonString = response.body().string();
                     Type listType = new TypeToken<ArrayList<Review>>(){}.getType();
                     reviews = gson.fromJson(jsonString, listType);
-                    adapter.setReviews(reviews);
 
-                    ReviewsActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.notifyDataSetChanged();
-                        }
-                    });
+                    if (reviews.size() != 0) {
+                        adapter.setReviews(reviews);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                    }else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                noReviewsTV.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    }
                 }
             }
         });

@@ -27,6 +27,9 @@ public interface GameDao {
     @Query("DELETE FROM game_table")
     void deleteAllGames();
 
+    /*
     @Query("SELECT * FROM game_table")
-    LiveData<List<Game>> getWantedGames();
+    LiveData<ArrayList<Game>> getWantedGames();
+
+     */
 }

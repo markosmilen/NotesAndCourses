@@ -19,7 +19,7 @@ public class GameRepository {
     public GameRepository(Application application){
         GameDatabase gameDatabase = GameDatabase.getInstance(application);
         gameDao = gameDatabase.gameDao();
-        wantedGames = gameDao.getWantedGames();
+        //wantedGames = gameDao.getWantedGames();
     }
 
     public LiveData<ArrayList<Game>> getWantedGames(){

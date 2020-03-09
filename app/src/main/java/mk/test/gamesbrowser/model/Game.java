@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
@@ -15,23 +16,23 @@ public class Game implements Parcelable {
     @PrimaryKey
     @ColumnInfo(name = "game_id")
     private int id;
-    @ColumnInfo(name = "game_cover")
+    @Ignore
     private Cover cover;
     @ColumnInfo(name = "first_release_date")
     private int first_release_date;
     @ColumnInfo(name = "game_name")
     private String name;
-    @ColumnInfo
+    @Ignore
     private ArrayList<InvolvedCompany> involved_companies;
-    @ColumnInfo
+    @Ignore
     private ArrayList<GamePhrase> game_modes;
-    @ColumnInfo
+    @Ignore
     private ArrayList<GamePhrase> genres;
-    @ColumnInfo
+    @Ignore
     private ArrayList<GamePhrase> player_perspectives;
-    @ColumnInfo
+    @Ignore
     private ArrayList<GamePhrase> themes;
-    @ColumnInfo
+    @Ignore
     private ArrayList<Platform> platforms;
     @ColumnInfo
     private double popularity;
@@ -39,19 +40,19 @@ public class Game implements Parcelable {
     private double rating;
     @ColumnInfo
     private double rating_count;
-    @ColumnInfo
+    @Ignore
     private ArrayList<GameImage> screenshots, artworks;
-    @ColumnInfo
+    @Ignore
     private ArrayList<Game> similar_games;
-    @ColumnInfo
+    @Ignore
     private ArrayList<Game> expansions;
     @ColumnInfo
     private String storyline;
     @ColumnInfo
     private String summary;
-    @ColumnInfo
+    @Ignore
     private ArrayList<GameVideo> videos;
-    @ColumnInfo
+    @Ignore
     private TimeToBeat time_to_beat;
 
     public Game () {}

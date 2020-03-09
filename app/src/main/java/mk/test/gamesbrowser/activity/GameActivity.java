@@ -30,14 +30,16 @@ import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.adapter.ScreenshotAdapter;
 import mk.test.gamesbrowser.adapter.ThemeAdapter;
 import mk.test.gamesbrowser.interfaces.ScreenshotClickInterface;
+import mk.test.gamesbrowser.interfaces.VideoClickInterface;
 import mk.test.gamesbrowser.model.Game;
 import mk.test.gamesbrowser.model.GameImage;
 import mk.test.gamesbrowser.model.GamePhrase;
+import mk.test.gamesbrowser.model.GameVideo;
 import mk.test.gamesbrowser.model.InvolvedCompany;
 import mk.test.gamesbrowser.model.Platform;
 import mk.test.gamesbrowser.viewmodel.GameViewModel;
 
-public class GameActivity extends AppCompatActivity implements ScreenshotClickInterface {
+public class GameActivity extends AppCompatActivity implements ScreenshotClickInterface, VideoClickInterface {
 
     private Game game;
     private GameViewModel gameViewModel;
@@ -201,14 +203,14 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
                 screenshotsRecyclerView.setVisibility(View.GONE);
             }
 
-            /*if (game.getVideos() != null){
+            if (game.getVideos() != null){
                 videosRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
                 ScreenshotAdapter screenshotAdapter = new ScreenshotAdapter(this, game.getScreenshots(), GameActivity.this);
                 videosRecyclerView.setAdapter(screenshotAdapter);
             } else {
                 videosText.setVisibility(View.GONE);
                 videosRecyclerView.setVisibility(View.GONE);
-            }*/
+            }
         }
     }
 
@@ -230,7 +232,7 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
 
     public void onReviewsClick(View view) {
         Intent intent = new Intent(this, ReviewsActivity.class);
-        intent.putExtra("game_id", game.getGameId());
+        intent.putExtra("game_id", game.getId());
         intent.putExtra("game_name", game.getName());
         startActivity(intent);
     }
@@ -279,5 +281,10 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onVideoClick(GameVideo video) {
+
     }
 }

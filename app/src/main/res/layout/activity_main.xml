@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:elevation="5dp"
         app:titleTextColor="@color/text_white"
         android:background="?attr/colorPrimary"
@@ -32,8 +32,8 @@
         android:background="@color/text_white"
         android:padding="5dp"
         app:itemIconSize="30dp"
-        app:itemIconTint="@drawable/background_item"
-        app:itemTextColor="@drawable/background_item"
+        app:itemIconTint="@drawable/background_menu_item"
+        app:itemTextColor="@drawable/background_menu_item"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_menu"/>
 

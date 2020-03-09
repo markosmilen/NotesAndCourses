@@ -27,5 +27,8 @@
     <string name="need_more_ratings">Need more ratings</string>
     <string name="filter">FILTER</string>
     <string name="videos">Videos:</string>
+    <string name="positive_points">Positive points</string>
+    <string name="negative_points">Negative points</string>
+    <string name="there_are_no_available_reviews_at_the_moment">There are no available reviews at the moment</string>
 
 </resources>

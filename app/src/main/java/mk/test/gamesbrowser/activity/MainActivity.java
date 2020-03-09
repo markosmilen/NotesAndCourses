@@ -44,25 +44,34 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (menuItem.getItemId()){
             case R.id.menu_home:
                 ft.replace(R.id.frame_container, HomeFragment.newInstance(new Bundle()), HomeFragment.TAG);
-                ft.addToBackStack(HomeFragment.TAG);
+                //ft.addToBackStack(HomeFragment.TAG);
                 ft.commit();
                 return true;
             case R.id.menu_search:
                 ft.replace(R.id.frame_container, SearchFragment.newInstance(new Bundle()), SearchFragment.TAG);
-                ft.addToBackStack(SearchFragment.TAG);
+                //ft.addToBackStack(SearchFragment.TAG);
                 ft.commit();
                 return true;
             case R.id.menu_platforms:
                 ft.replace(R.id.frame_container, PlatformsFragment.newInstance(new Bundle()), PlatformsFragment.TAG);
-                ft.addToBackStack(PlatformsFragment.TAG);
+                //ft.addToBackStack(PlatformsFragment.TAG);
                 ft.commit();
                 return true;
             case R.id.menu_lists:
                 ft.replace(R.id.frame_container, ListsFragment.newInstance(new Bundle()), ListsFragment.TAG);
-                ft.addToBackStack(ListsFragment.TAG);
+                //ft.addToBackStack(ListsFragment.TAG);
                 ft.commit();
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (bottomNavigationView.getSelectedItemId() == R.id.menu_home) {
+            super.onBackPressed();
+        } else {
+            bottomNavigationView.setSelectedItemId(R.id.menu_home);
+        }
     }
 }

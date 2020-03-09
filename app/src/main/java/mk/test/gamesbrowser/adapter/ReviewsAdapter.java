@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,8 +41,25 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
         Review review = reviews.get(position);
 
-        if (review.getContent() != null) {
-            holder.positive_points.setText(review.getContent());
+        if (!review.getTitle().equals("c")) {
+            holder.title.setText(review.getTitle());
+        }else {
+            holder.title.setVisibility(View.GONE);
+        }
+
+        holder.content.setText(review.getContent());
+
+        if (review.getPositive_points() != null && review.getNegative_points() != null) {
+            holder.positive_points.setText(review.getPositive_points());
+            holder.negative_points.setText(review.getNegative_points());
+        }else {
+            holder.pointsLayout.setVisibility(View.GONE);
+        }
+
+        if (review.getConclusion() != null) {
+            holder.conclusion.setText(review.getConclusion());
+        }else {
+            holder.conclusion.setVisibility(View.GONE);
         }
     }
 
@@ -52,11 +70,18 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
 
     public class ReviewViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView positive_points;
+        private TextView title, content, positive_points, negative_points, conclusion;
+        private LinearLayout pointsLayout;
 
         public ReviewViewHolder(@NonNull View itemView) {
             super(itemView);
+            title = itemView.findViewById(R.id.review_title);
+            content = itemView.findViewById(R.id.review_content);
             positive_points = itemView.findViewById(R.id.positive_points);
+            negative_points = itemView.findViewById(R.id.negative_points);
+            conclusion = itemView.findViewById(R.id.review_conclusion);
+
+            pointsLayout = itemView.findViewById(R.id.review_points_layout);
         }
     }
 }
