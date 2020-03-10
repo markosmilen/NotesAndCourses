@@ -3,6 +3,7 @@ package mk.test.gamesbrowser.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -16,23 +17,23 @@ public class Game implements Parcelable {
     @PrimaryKey
     @ColumnInfo(name = "game_id")
     private int id;
-    @Ignore
+    @ColumnInfo
     private Cover cover;
-    @ColumnInfo(name = "first_release_date")
+    @ColumnInfo
     private int first_release_date;
     @ColumnInfo(name = "game_name")
     private String name;
-    @Ignore
+    @ColumnInfo
     private ArrayList<InvolvedCompany> involved_companies;
-    @Ignore
+    @ColumnInfo
     private ArrayList<GamePhrase> game_modes;
-    @Ignore
+    @ColumnInfo
     private ArrayList<GamePhrase> genres;
-    @Ignore
+    @ColumnInfo
     private ArrayList<GamePhrase> player_perspectives;
-    @Ignore
+    @ColumnInfo
     private ArrayList<GamePhrase> themes;
-    @Ignore
+    @ColumnInfo
     private ArrayList<Platform> platforms;
     @ColumnInfo
     private double popularity;
@@ -40,20 +41,28 @@ public class Game implements Parcelable {
     private double rating;
     @ColumnInfo
     private double rating_count;
-    @Ignore
+    @ColumnInfo
     private ArrayList<GameImage> screenshots, artworks;
-    @Ignore
+    @ColumnInfo
     private ArrayList<Game> similar_games;
-    @Ignore
+    @ColumnInfo
     private ArrayList<Game> expansions;
     @ColumnInfo
     private String storyline;
     @ColumnInfo
     private String summary;
-    @Ignore
+    @ColumnInfo
     private ArrayList<GameVideo> videos;
-    @Ignore
+    @ColumnInfo
     private TimeToBeat time_to_beat;
+    @ColumnInfo
+    private boolean isWanted;
+    @ColumnInfo
+    private boolean isPlaying;
+    @ColumnInfo
+    private boolean isPlayed;
+    @ColumnInfo
+    private boolean isVisited;
 
     public Game () {}
 
@@ -79,6 +88,10 @@ public class Game implements Parcelable {
         summary = in.readString();
         videos = in.createTypedArrayList(GameVideo.CREATOR);
         time_to_beat = in.readParcelable(TimeToBeat.class.getClassLoader());
+        isWanted = in.readByte() != 0;
+        isPlaying = in.readByte() != 0;
+        isPlayed = in.readByte() != 0;
+        isVisited = in.readByte() != 0;
     }
 
     public static final Creator<Game> CREATOR = new Creator<Game>() {
@@ -94,7 +107,7 @@ public class Game implements Parcelable {
     };
 
     public int getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(int id) {
@@ -205,12 +218,28 @@ public class Game implements Parcelable {
         this.screenshots = screenshots;
     }
 
+    public ArrayList<GameImage> getArtworks() {
+        return artworks;
+    }
+
+    public void setArtworks(ArrayList<GameImage> artworks) {
+        this.artworks = artworks;
+    }
+
     public ArrayList<Game> getSimilar_games() {
         return similar_games;
     }
 
     public void setSimilar_games(ArrayList<Game> similar_games) {
         this.similar_games = similar_games;
+    }
+
+    public ArrayList<Game> getExpansions() {
+        return expansions;
+    }
+
+    public void setExpansions(ArrayList<Game> expansions) {
+        this.expansions = expansions;
     }
 
     public String getStoryline() {
@@ -245,20 +274,36 @@ public class Game implements Parcelable {
         this.time_to_beat = time_to_beat;
     }
 
-    public ArrayList<GameImage> getArtworks() {
-        return artworks;
+    public boolean isWanted() {
+        return isWanted;
     }
 
-    public void setArtworks(ArrayList<GameImage> artworks) {
-        this.artworks = artworks;
+    public void setWanted(boolean wanted) {
+        isWanted = wanted;
     }
 
-    public ArrayList<Game> getExpansions() {
-        return expansions;
+    public boolean isPlaying() {
+        return isPlaying;
     }
 
-    public void setExpansions(ArrayList<Game> expansions) {
-        this.expansions = expansions;
+    public void setPlaying(boolean playing) {
+        isPlaying = playing;
+    }
+
+    public boolean isPlayed() {
+        return isPlayed;
+    }
+
+    public void setPlayed(boolean played) {
+        isPlayed = played;
+    }
+
+    public boolean isVisited() {
+        return isVisited;
+    }
+
+    public void setVisited(boolean visited) {
+        isVisited = visited;
     }
 
     @Override
@@ -289,5 +334,9 @@ public class Game implements Parcelable {
         parcel.writeString(summary);
         parcel.writeTypedList(videos);
         parcel.writeParcelable(time_to_beat, i);
+        parcel.writeByte((byte) (isWanted ? 1 : 0));
+        parcel.writeByte((byte) (isPlaying ? 1 : 0));
+        parcel.writeByte((byte) (isPlayed ? 1 : 0));
+        parcel.writeByte((byte) (isVisited ? 1 : 0));
     }
 }

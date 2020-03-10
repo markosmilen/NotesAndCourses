@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mk.test.gamesbrowser.dao.GameDao;
 import mk.test.gamesbrowser.database.GameDatabase;
@@ -14,17 +15,18 @@ import mk.test.gamesbrowser.model.Game;
 public class GameRepository {
 
     private GameDao gameDao;
-    private LiveData<ArrayList<Game>> wantedGames;
+    private LiveData<List<Game>> wantedGames;
 
     public GameRepository(Application application){
         GameDatabase gameDatabase = GameDatabase.getInstance(application);
         gameDao = gameDatabase.gameDao();
-        //wantedGames = gameDao.getWantedGames();
+        wantedGames = gameDao.getWantedGames();
     }
 
-    public LiveData<ArrayList<Game>> getWantedGames(){
-        return wantedGames;
+    public LiveData<List<Game>> getWantedGames(){
+        return gameDao.getWantedGames();
     }
+
 
     public void insert(Game game){
         new InsertAsyncTask(gameDao).execute(game);
@@ -38,7 +40,7 @@ public class GameRepository {
         new DeleteAllAsyncTask(gameDao).execute();
     }
 
-    //-------------INSERT ASYNC TASK
+    //-------------INSERT GAME ASYNC TASK
     private static class InsertAsyncTask extends AsyncTask<Game, Void, Void> {
 
         private GameDao asyncDao;

@@ -13,6 +13,7 @@
         android:layout_margin="10dp"
         android:drawableLeft="@drawable/ic_search"
         android:backgroundTint="@color/button_blue"
+        android:maxLines="2"
         android:drawablePadding="10dp"
         android:hint="@string/search_your_game"/>
 

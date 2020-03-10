@@ -7,12 +7,16 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import mk.test.gamesbrowser.dao.GameDao;
 import mk.test.gamesbrowser.model.Game;
+import mk.test.gamesbrowser.type_converter.Converters;
 
-@Database(entities = Game.class, version = 1, exportSchema = false)
+@Database(entities = Game.class, version = 2, exportSchema = false)
+@TypeConverters({Converters.class})
 public abstract class GameDatabase extends RoomDatabase {
 
     public abstract GameDao gameDao();

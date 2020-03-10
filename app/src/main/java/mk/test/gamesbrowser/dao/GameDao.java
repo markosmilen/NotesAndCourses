@@ -15,11 +15,8 @@ import mk.test.gamesbrowser.model.Game;
 @Dao
 public interface GameDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Game game);
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(ArrayList<Game> games);
 
     @Delete
     void deleteGame(Game game);
@@ -27,9 +24,15 @@ public interface GameDao {
     @Query("DELETE FROM game_table")
     void deleteAllGames();
 
-    /*
-    @Query("SELECT * FROM game_table")
-    LiveData<ArrayList<Game>> getWantedGames();
+    @Query("SELECT * FROM game_table WHERE isWanted")
+    LiveData<List<Game>> getWantedGames();
 
-     */
+    @Query("SELECT * FROM game_table WHERE isPlaying")
+    LiveData<List<Game>> getPlayingGames();
+
+    @Query("SELECT * FROM game_table WHERE isPlayed")
+    LiveData<List<Game>> getPlayedGames();
+
+    @Query("SELECT * FROM game_table WHERE isVisited")
+    LiveData<List<Game>> getVisitedGames();
 }

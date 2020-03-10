@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mk.test.gamesbrowser.model.Game;
 import mk.test.gamesbrowser.repository.GameRepository;
@@ -33,7 +34,7 @@ public class GameViewModel extends AndroidViewModel {
         gameRepository.deleteAll();
     }
 
-    public LiveData<ArrayList<Game>> getWantedGames(){
+    public LiveData<List<Game>> getWantedGames(){
         return gameRepository.getWantedGames();
     }
 }

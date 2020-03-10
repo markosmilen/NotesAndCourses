@@ -35,6 +35,7 @@
             android:layout_height="50dp"
             android:src="@drawable/ic_play"
             android:elevation="5dp"
+            android:layout_marginBottom="10dp"
             android:layout_centerInParent="true"/>
 
 </RelativeLayout>
