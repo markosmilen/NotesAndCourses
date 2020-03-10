@@ -30,5 +30,6 @@
     <string name="positive_points">Positive points</string>
     <string name="negative_points">Negative points</string>
     <string name="there_are_no_available_reviews_at_the_moment">There are no available reviews at the moment</string>
+    <string name="reviews">Reviews</string>
 
 </resources>

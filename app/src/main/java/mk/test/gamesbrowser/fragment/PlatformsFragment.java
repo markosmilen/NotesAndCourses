@@ -63,15 +63,15 @@ public class PlatformsFragment extends Fragment implements PlatformClickInterfac
 
     public void loadPlatforms(){
         Platform pc = new Platform(6, "PC (Microsoft Windows)", "https://images.igdb.com/igdb/image/upload/t_cover_big/irwvwpl023f8y19tidgq.png");
-        Platform mac = new Platform(14, "Mac", "https://images.igdb.com/igdb/image/upload/t_cover_big/jl4t4o64uv2gizj2dxsy.png");
-        Platform ps4 = new Platform(48, "Play Station 4", "https://images.igdb.com/igdb/image/upload/t_cover_big/pl6f.png");
-        Platform ps5 = new Platform(167, "Play Station 5", "https://images.igdb.com/igdb/image/upload/t_cover_big/nocover_qhhlj6.jpg");
-        Platform xboxone = new Platform(49, "Xbox One", "https://images.igdb.com/igdb/image/upload/t_cover_big/pl95.png");
-        Platform xboxx = new Platform(169, "Xbox Series X", "https://images.igdb.com/igdb/image/upload/t_cover_big/plbw.png");
-        Platform android = new Platform(34, "Android", "https://f0.pngfuel.com/png/22/187/android-logo-clip-art-png-clip-art.png");
-        Platform ios = new Platform(39, "iOS", "https://images.igdb.com/igdb/image/upload/t_cover_big/pl6w.png");
-        Platform linux = new Platform(3, "Linux", "https://images.igdb.com/igdb/image/upload/t_cover_big/plak.png");
-        Platform arcade = new Platform(52, "Arcade", "https://www.recroommasters.com/v/vspfiles/photos/RM-XT-ALPHA-JAMMA-2T.jpg");
+        Platform mac = new Platform(14, "Mac", "https://havecamerawilltravel.com/photographer/files/2014/04/mac-logo.png");
+        Platform ps4 = new Platform(48, "Play Station 4", "https://i.ya-webdesign.com/images/ps4-logo-png-3.png");
+        Platform ps5 = new Platform(167, "Play Station 5", "https://pureplaystation.com/wp-content/uploads/2016/04/PSN-New-Logo.jpg");
+        Platform xboxone = new Platform(49, "Xbox One", "https://banner2.cleanpng.com/20180330/uwe/kisspng-black-xbox-360-controller-wii-xbox-5abe8065a63273.7864406015224341496808.jpg");
+        Platform xboxx = new Platform(169, "Xbox Series X", "https://i.ya-webdesign.com/images/xbox-360-buttons-png-5.png");
+        Platform android = new Platform(34, "Android", "https://pngimage.net/wp-content/uploads/2018/05/android-blue-png-6.png");
+        Platform ios = new Platform(39, "iOS", "https://www.pngitem.com/pimgs/m/524-5244551_ios-black-wallpaper-iphone-logo-hd-png-download.png");
+        Platform linux = new Platform(3, "Linux", "https://www.pngkey.com/png/detail/201-2015536_linux-logo-png-tux.png");
+        Platform arcade = new Platform(52, "Arcade", "https://images.vexels.com/media/users/3/157779/isolated/preview/aa0fa749890b5ca747f9ce321aead015-arcade-gaming-machine-by-vexels.png");
 
         if (!platforms.contains(pc)) {
             platforms.add(pc);
