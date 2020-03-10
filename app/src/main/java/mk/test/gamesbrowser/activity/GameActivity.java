@@ -45,6 +45,7 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
 
     private Game game;
     private GameViewModel gameViewModel;
+    private ImageButton wantGame, playingGame, playedGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,6 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
         RecyclerView genresRecyclerView, platformsRecyclerView, themesRecyclerView, gameModesRecyclerView, perspectivesRecyclerView;
         RecyclerView screenshotsRecyclerView, videosRecyclerView;
         LinearLayout genresLayout, themesLayout, gameModesLayout;
-        ImageButton wantGame, playingGame, playedGame;
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         topImage = findViewById(R.id.top_image);
@@ -85,14 +85,6 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
         wantGame = findViewById(R.id.add_want);
         playingGame = findViewById(R.id.add_playing);
         playedGame = findViewById(R.id.add_played);
-
-        wantGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                gameViewModel.insert(game);
-                Toast.makeText(GameActivity.this, "Added", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -151,23 +143,29 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
                 gameRatingCount.setText(getString(R.string.need_more_ratings));
             }
 
+            //BUTTONS
+            if (game.isPlayed()) wantGame.setImageDrawable(getResources().getDrawable(R.drawable.ic_added));
+
             gameDescription.setText(game.getSummary());
 
             ArrayList<String> platforms = getPlatforms(game.getPlatforms());
             platformsRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-            ThemeAdapter platformsAdapter = new ThemeAdapter(this, platforms);
+            ThemeAdapter platformsAdapter = new ThemeAdapter(this);
+            platformsAdapter.setThemes(platforms);
             platformsRecyclerView.setAdapter(platformsAdapter);
 
             ArrayList<String> gamePerspectives = getStrings(game.getPlayer_perspectives());
             perspectivesRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-            ThemeAdapter perspectivesAdapter = new ThemeAdapter(this, gamePerspectives);
+            ThemeAdapter perspectivesAdapter = new ThemeAdapter(this);
+            perspectivesAdapter.setThemes(gamePerspectives);
             perspectivesRecyclerView.setAdapter(perspectivesAdapter);
             perspectivesRecyclerView.setVisibility(View.GONE);//TO BE PLACED ELSEWHERE
 
             if (game.getGenres() != null) {
                 ArrayList<String> genres = getStrings(game.getGenres());
                 genresRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-                ThemeAdapter genresAdapter = new ThemeAdapter(this, genres);
+                ThemeAdapter genresAdapter = new ThemeAdapter(this);
+                genresAdapter.setThemes(genres);
                 genresRecyclerView.setAdapter(genresAdapter);
             } else {
                 genresLayout.setVisibility(View.GONE);
@@ -176,7 +174,8 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
             if (game.getThemes() != null) {
                 ArrayList<String> themes = getStrings(game.getThemes());
                 themesRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-                ThemeAdapter themeAdapter = new ThemeAdapter(this, themes);
+                ThemeAdapter themeAdapter = new ThemeAdapter(this);
+                themeAdapter.setThemes(themes);
                 themesRecyclerView.setAdapter(themeAdapter);
             } else {
                 themesLayout.setVisibility(View.GONE);
@@ -185,7 +184,8 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
             if (game.getGame_modes() != null) {
                 ArrayList<String> gameModes = getStrings(game.getGame_modes());
                 gameModesRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-                ThemeAdapter gameModesAdapter = new ThemeAdapter(this, gameModes);
+                ThemeAdapter gameModesAdapter = new ThemeAdapter(this);
+                gameModesAdapter.setThemes(gameModes);
                 gameModesRecyclerView.setAdapter(gameModesAdapter);
             } else {
                 gameModesLayout.setVisibility(View.GONE);
@@ -198,7 +198,8 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
                 }
 
                 screenshotsRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-                ScreenshotAdapter screenshotAdapter = new ScreenshotAdapter(this, images, GameActivity.this);
+                ScreenshotAdapter screenshotAdapter = new ScreenshotAdapter(this, GameActivity.this);
+                screenshotAdapter.setScreenshots(game.getScreenshots());
                 screenshotsRecyclerView.setAdapter(screenshotAdapter);
             } else {
                 screenshotsText.setVisibility(View.GONE);
@@ -221,15 +222,20 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
         String buttonPressed="";
         switch(view.getId()){
             case R.id.add_want:
+                game.setWanted(true);
+                wantGame.setImageDrawable(getResources().getDrawable(R.drawable.ic_added));
                 buttonPressed = "WANT";
                 break;
             case R.id.add_playing:
+                game.setPlaying(true);
                 buttonPressed = "PLAYING";
                 break;
             case R.id.add_played:
+                game.setPlayed(true);
                 buttonPressed = "PLAYED";
                 break;
         }
+        gameViewModel.insert(game);
         Toast.makeText(this, buttonPressed, Toast.LENGTH_SHORT).show();
     }
 

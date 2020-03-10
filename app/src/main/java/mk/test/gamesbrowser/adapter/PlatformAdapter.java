@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.interfaces.PlatformClickInterface;
@@ -22,14 +23,17 @@ public class PlatformAdapter extends RecyclerView.Adapter<PlatformAdapter.Platfo
 
     private LayoutInflater inflater;
     private Context context;
-    private ArrayList<Platform> platforms;
+    private List<Platform> platforms;
     private PlatformClickInterface clickInterface;
 
-    public PlatformAdapter(Context context, ArrayList<Platform> platforms, PlatformClickInterface clickInterface){
+    public PlatformAdapter(Context context, PlatformClickInterface clickInterface){
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.platforms = platforms;
         this.clickInterface = clickInterface;
+    }
+
+    public void setPlatforms(List<Platform> platforms) {
+        this.platforms = platforms;
     }
 
     @NonNull

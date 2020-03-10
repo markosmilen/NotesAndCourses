@@ -46,7 +46,6 @@ public class SearchFragment extends Fragment implements GameClickInterface {
     private static final String API_KEY = "00c0d1eda626d2b49c0f0b6ecbc90b9e";
 
     private CardView progressBarLayout;
-    private EditText searchEditText;
     private RecyclerView searchRecyclerView;
     private ArrayList<Game> searchedGames = new ArrayList<>();
     private GameListAdapter searchAdapter;
@@ -74,13 +73,14 @@ public class SearchFragment extends Fragment implements GameClickInterface {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        searchEditText = view.findViewById(R.id.search_games_et);
+        EditText searchEditText = view.findViewById(R.id.search_games_et);
         searchRecyclerView = view.findViewById(R.id.search_recycler_view);
         progressBarLayout = view.findViewById(R.id.progress_bar_layout);
 
         loadSearchedGames("hitman");
 
-        searchAdapter = new GameListAdapter(getActivity(), searchedGames, this);
+        searchAdapter = new GameListAdapter(getActivity(), this);
+        searchAdapter.setGames(searchedGames);
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         searchRecyclerView.setAdapter(searchAdapter);
 
@@ -134,7 +134,7 @@ public class SearchFragment extends Fragment implements GameClickInterface {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getActivity(), "Failed request", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
                         progressBarLayout.setVisibility(View.GONE);
                     }
                 });

@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.interfaces.GameClickInterface;
@@ -29,17 +30,16 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameLi
 
     private Context context;
     private LayoutInflater inflater;
-    private ArrayList<Game> games;
+    private List<Game> games = new ArrayList<>();
     private GameClickInterface gameClickInterface;
 
-    public GameListAdapter(Context context, ArrayList<Game> games, GameClickInterface clickInterface){
+    public GameListAdapter(Context context, GameClickInterface clickInterface){
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.games = games;
         this.gameClickInterface = clickInterface;
     }
 
-    public void setGames (ArrayList<Game> games){
+    public void setGames (List<Game> games){
         this.games = games;
     }
 
@@ -83,7 +83,8 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameLi
         }
 
         ArrayList<String> platforms = getPlatforms(game.getPlatforms());
-        ThemeAdapter adapter = new ThemeAdapter(context, platforms);
+        ThemeAdapter adapter = new ThemeAdapter(context);
+        adapter.setThemes(platforms);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
         holder.recyclerView.setAdapter(adapter);
 

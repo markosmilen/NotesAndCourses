@@ -82,7 +82,8 @@ public class PlatformGamesFragment extends Fragment implements GameClickInterfac
         int platformID = getArguments().getInt("platform_id");
         loadPlatformGames(platformID);
 
-        gamesAdapter = new GameListAdapter(getActivity(), platformGames, this);
+        gamesAdapter = new GameListAdapter(getActivity(), this);
+        gamesAdapter.setGames(platformGames);
         gamesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         gamesRecyclerView.setAdapter(gamesAdapter);
 
@@ -136,7 +137,7 @@ public class PlatformGamesFragment extends Fragment implements GameClickInterfac
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getActivity(), "Failed request", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
                         progressBarLayout.setVisibility(View.GONE);
                     }
                 });
@@ -191,7 +192,7 @@ public class PlatformGamesFragment extends Fragment implements GameClickInterfac
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getActivity(), "Failed request", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
                         progressBarLayout.setVisibility(View.GONE);
                     }
                 });

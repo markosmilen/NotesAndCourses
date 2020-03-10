@@ -24,11 +24,14 @@ public class ScreenshotAdapter extends RecyclerView.Adapter<ScreenshotAdapter.Sc
     private LayoutInflater inflater;
     private ScreenshotClickInterface clickInterface;
 
-    public ScreenshotAdapter(Context context, ArrayList<GameImage> screenshots, ScreenshotClickInterface clickInterface) {
+    public ScreenshotAdapter(Context context, ScreenshotClickInterface clickInterface) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.screenshots = screenshots;
         this.clickInterface = clickInterface;
+    }
+
+    public void setScreenshots(ArrayList<GameImage> screenshots){
+        this.screenshots = screenshots;
     }
 
     @NonNull

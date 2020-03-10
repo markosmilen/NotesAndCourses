@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.interfaces.GameClickInterface;
@@ -24,10 +25,9 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
     private ArrayList<Game> games;
     private GameClickInterface clickInterface;
 
-    public GameAdapter(Context context, ArrayList<Game> games, GameClickInterface clickInterface){
+    public GameAdapter(Context context, GameClickInterface clickInterface){
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.games = games;
         this.clickInterface = clickInterface;
     }
 

@@ -1,11 +1,14 @@
 package mk.test.gamesbrowser.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mk.test.gamesbrowser.R;
+import mk.test.gamesbrowser.activity.GameActivity;
 import mk.test.gamesbrowser.adapter.GameListAdapter;
 import mk.test.gamesbrowser.interfaces.GameClickInterface;
 import mk.test.gamesbrowser.model.Game;
@@ -28,14 +32,10 @@ import mk.test.gamesbrowser.viewmodel.GameViewModel;
 public class ListsFragment extends Fragment implements GameClickInterface {
     public static final String TAG = ListsFragment.class.getSimpleName();
 
-    private TabLayout listsTabLayout;
-    private RecyclerView listsRecyclerView;
     private GameListAdapter gameAdapter;
     private ArrayList<Game> wantGames = new ArrayList<>();
     private ArrayList<Game> playingGames = new ArrayList<>();
     private ArrayList<Game> playedGames = new ArrayList<>();
-
-    private GameViewModel gameViewModel;
 
     public ListsFragment() {
         // Required empty public constructor
@@ -58,26 +58,33 @@ public class ListsFragment extends Fragment implements GameClickInterface {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lists, container, false);
 
-        listsTabLayout = view.findViewById(R.id.lists_tab_layout);
-        listsRecyclerView = view.findViewById(R.id.lists_recycler_view);
 
-        listsTabLayout.addTab(listsTabLayout.newTab().setText(getString(R.string.want)));
+
+        TabLayout listsTabLayout = view.findViewById(R.id.lists_tab_layout);
+        RecyclerView listsRecyclerView = view.findViewById(R.id.lists_recycler_view);
+
+        listsTabLayout.addTab(listsTabLayout.newTab().setText(getString(R.string.want)), true);
         listsTabLayout.addTab(listsTabLayout.newTab().setText(getString(R.string.playing)));
         listsTabLayout.addTab(listsTabLayout.newTab().setText(getString(R.string.played)));
         listsTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         listsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-        gameAdapter = new GameListAdapter(getActivity(), wantGames, this);
+        gameAdapter = new GameListAdapter(getActivity(), this);
         listsRecyclerView.setAdapter(gameAdapter);
 
-        TabLayout.Tab tab = listsTabLayout.getTabAt(0);
-        tab.select();
+        GameViewModel gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
+        gameViewModel.getWantedGames().observe(this, new Observer<List<Game>>() {
+            @Override
+            public void onChanged(List<Game> games) {
+                gameAdapter.setGames(games);
+                gameAdapter.notifyDataSetChanged();
+            }
+        });
+
         listsTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Toast.makeText(getActivity(), tab.getText(), Toast.LENGTH_SHORT).show();
-
-                gameAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -95,6 +102,8 @@ public class ListsFragment extends Fragment implements GameClickInterface {
 
     @Override
     public void onGameClick(Game game) {
-        Toast.makeText(getContext(), game.getName(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), GameActivity.class);
+        intent.putExtra("game", game);
+        startActivity(intent);
     }
 }

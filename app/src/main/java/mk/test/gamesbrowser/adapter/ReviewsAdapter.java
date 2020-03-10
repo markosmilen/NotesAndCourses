@@ -21,9 +21,8 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
     private LayoutInflater inflater;
     private ArrayList<Review> reviews;
 
-    public ReviewsAdapter(Context context, ArrayList<Review> reviews){
+    public ReviewsAdapter(Context context){
         this.inflater = LayoutInflater.from(context);
-        this.reviews = reviews;
     }
 
     public void setReviews(ArrayList<Review> reviews){

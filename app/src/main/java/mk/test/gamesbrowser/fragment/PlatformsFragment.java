@@ -55,7 +55,8 @@ public class PlatformsFragment extends Fragment implements PlatformClickInterfac
         RecyclerView platformsRecyclerView = view.findViewById(R.id.platforms_recycler_view);
         platformsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-        PlatformAdapter platformAdapter = new PlatformAdapter(getActivity(), platforms, this);
+        PlatformAdapter platformAdapter = new PlatformAdapter(getActivity(), this);
+        platformAdapter.setPlatforms(platforms);
         platformsRecyclerView.setAdapter(platformAdapter);
 
         return view;

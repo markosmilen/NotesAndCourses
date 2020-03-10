@@ -18,10 +18,13 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ThemeViewHol
     private LayoutInflater inflater;
     private ArrayList<String> themes;
 
-    public ThemeAdapter(Context context, ArrayList<String> data){
+    public ThemeAdapter(Context context){
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.themes = data;
+    }
+
+    public void setThemes(ArrayList<String> themes) {
+        this.themes = themes;
     }
 
     @NonNull

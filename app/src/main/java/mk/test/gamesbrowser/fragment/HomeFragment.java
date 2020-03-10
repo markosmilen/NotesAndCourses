@@ -70,7 +70,8 @@ public class HomeFragment extends Fragment implements GameClickInterface {
         recyclerView = view.findViewById(R.id.home_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
 
-        adapter = new GameAdapter(getContext(), games, this);
+        adapter = new GameAdapter(getContext(), this);
+        adapter.setGames(games);
         recyclerView.setAdapter(adapter);
 
         loadGames();
@@ -102,7 +103,7 @@ public class HomeFragment extends Fragment implements GameClickInterface {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getActivity(), "Failed request", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
                         progressBarLayout.setVisibility(View.GONE);
                     }
                 });

@@ -60,7 +60,8 @@ public class ReviewsActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.reviews_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        adapter = new ReviewsAdapter(this, reviews);
+        adapter = new ReviewsAdapter(this);
+        adapter.setReviews(reviews);
         recyclerView.setAdapter(adapter);
 
         OkHttpClient client = new OkHttpClient();
@@ -82,7 +83,7 @@ public class ReviewsActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(ReviewsActivity.this, "Failed request", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ReviewsActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
