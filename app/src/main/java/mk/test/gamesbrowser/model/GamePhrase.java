@@ -16,14 +16,20 @@ public class GamePhrase implements Parcelable {
     @ColumnInfo
     private String name;
     @ColumnInfo
-    private String url;
+    private int logo;
 
     public GamePhrase() {}
+
+    public GamePhrase(int id, String name, int logoUrl){
+        this.id = id;
+        this.name = name;
+        this.logo = logoUrl;
+    }
 
     protected GamePhrase(Parcel in) {
         id = in.readInt();
         name = in.readString();
-        url = in.readString();
+        logo = in.readInt();
     }
 
     public static final Creator<GamePhrase> CREATOR = new Creator<GamePhrase>() {
@@ -54,12 +60,12 @@ public class GamePhrase implements Parcelable {
         this.name = name;
     }
 
-    public String getUrl() {
-        return url;
+    public int getLogo() {
+        return logo;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setLogo(int logo) {
+        this.logo = logo;
     }
 
     @Override
@@ -71,6 +77,6 @@ public class GamePhrase implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
         parcel.writeString(name);
-        parcel.writeString(url);
+        parcel.writeInt(logo);
     }
 }

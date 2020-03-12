@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -24,9 +25,13 @@ import java.util.ArrayList;
 
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.activity.GameActivity;
+import mk.test.gamesbrowser.activity.GenresActivity;
 import mk.test.gamesbrowser.adapter.GameAdapter;
+import mk.test.gamesbrowser.adapter.GenreAdapter;
 import mk.test.gamesbrowser.interfaces.GameClickInterface;
+import mk.test.gamesbrowser.interfaces.GenreClickInterface;
 import mk.test.gamesbrowser.model.Game;
+import mk.test.gamesbrowser.model.GamePhrase;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -35,14 +40,15 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class HomeFragment extends Fragment implements GameClickInterface {
+public class HomeFragment extends Fragment implements GameClickInterface, GenreClickInterface {
     public static final String TAG = HomeFragment.class.getSimpleName();
     public static final String API_KEY = "00c0d1eda626d2b49c0f0b6ecbc90b9e";
 
     private CardView progressBarLayout;
-    private RecyclerView recyclerView;
     private GameAdapter adapter;
     private ArrayList<Game> games = new ArrayList<>();
+    private ArrayList<GamePhrase> genres = new ArrayList<>();
+    private GenreAdapter genreAdapter;
     private Gson gson;
 
     public HomeFragment() {
@@ -67,14 +73,21 @@ public class HomeFragment extends Fragment implements GameClickInterface {
         gson = new Gson();
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         progressBarLayout = view.findViewById(R.id.progress_bar_layout);
-        recyclerView = view.findViewById(R.id.home_recycler_view);
+        RecyclerView recyclerView = view.findViewById(R.id.home_recycler_view);
+        RecyclerView genresRV = view.findViewById(R.id.genres_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
 
         adapter = new GameAdapter(getContext(), this);
         adapter.setGames(games);
         recyclerView.setAdapter(adapter);
 
+        genreAdapter = new GenreAdapter(getContext(), this);
+        genresRV.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        genresRV.setAdapter(genreAdapter);
+
         loadGames();
+
+        loadGenres();
 
         return view;
     }
@@ -131,10 +144,51 @@ public class HomeFragment extends Fragment implements GameClickInterface {
         });
     }
 
+    public void loadGenres(){
+        GamePhrase tactical = new GamePhrase(24, "Tactical", R.drawable.tactical);
+        GamePhrase fighting = new GamePhrase(4, "Fighting", R.drawable.fighting);
+        GamePhrase simulator = new GamePhrase(13, "Simulator", R.drawable.simulator);
+        GamePhrase strategy = new GamePhrase(15, "Strategy", R.drawable.strategy);
+        GamePhrase quiz = new GamePhrase(26, "Quiz / Trivia", R.drawable.quiz);
+        GamePhrase adventure = new GamePhrase(31, "Adventure", R.drawable.adventure);
+        GamePhrase rpg = new GamePhrase(12, "RPG", R.drawable.rpg);
+        GamePhrase shooter = new GamePhrase(5, "Shooter", R.drawable.shooter);
+        GamePhrase sport = new GamePhrase(14, "Sport", R.drawable.sport);
+        GamePhrase puzzle = new GamePhrase(9, "Puzzle", R.drawable.puzzle);
+        GamePhrase racing = new GamePhrase(10, "Racing", R.drawable.racing);
+        GamePhrase arcade = new GamePhrase(33, "Arcade", R.drawable.arcade);
+        GamePhrase platform = new GamePhrase(8, "Platform", R.drawable.platform);
+
+        genres.add(tactical);
+        genres.add(fighting);
+        genres.add(simulator);
+        genres.add(strategy);
+        genres.add(quiz);
+        genres.add(adventure);
+        genres.add(rpg);
+        genres.add(shooter);
+        genres.add(sport);
+        genres.add(puzzle);
+        genres.add(racing);
+        genres.add(arcade);
+        genres.add(platform);
+
+        genreAdapter.setGenres(genres);
+        genreAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onGameClick(Game game) {
         Intent intent = new Intent(getActivity(), GameActivity.class);
         intent.putExtra("game", game);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onGenreClick(GamePhrase genre) {
+        Toast.makeText(getActivity(), genre.getName(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), GenresActivity.class);
+        intent.putExtra("genre", genre);
         startActivity(intent);
     }
 }

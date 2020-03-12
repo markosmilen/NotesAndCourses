@@ -6,19 +6,29 @@
     android:orientation="vertical"
     tools:context=".fragment.HomeFragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/genres_recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="10dp"/>
+
     <TextView
         android:id="@+id/category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Recommended for you"
+        android:layout_below="@id/genres_recycler_view"
         android:textSize="18sp"
         android:padding="5dp"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/category"/>
+
 
     <include layout="@layout/games_progress_bar"
         android:id="@+id/progress_bar_layout"
