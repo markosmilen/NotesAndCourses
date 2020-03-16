@@ -27,6 +27,7 @@ import mk.test.gamesbrowser.activity.GameActivity;
 import mk.test.gamesbrowser.activity.GamesFromGenreActivity;
 import mk.test.gamesbrowser.adapter.GameAdapter;
 import mk.test.gamesbrowser.adapter.GenreAdapter;
+import mk.test.gamesbrowser.helper.Helper;
 import mk.test.gamesbrowser.interfaces.GameClickInterface;
 import mk.test.gamesbrowser.interfaces.GenreClickInterface;
 import mk.test.gamesbrowser.model.Game;
@@ -41,7 +42,6 @@ import okhttp3.Response;
 
 public class HomeFragment extends Fragment implements GameClickInterface, GenreClickInterface {
     public static final String TAG = HomeFragment.class.getSimpleName();
-    public static final String API_KEY = "00c0d1eda626d2b49c0f0b6ecbc90b9e";
 
     private CardView progressBarLayout;
     private GameAdapter adapter;
@@ -105,7 +105,7 @@ public class HomeFragment extends Fragment implements GameClickInterface, GenreC
 
         final Request request = new Request.Builder()
                 .url("https://api-v3.igdb.com/games")
-                .addHeader("user-key", API_KEY)
+                .addHeader("user-key", Helper.API_KEY)
                 .post(requestBody)
                 .build();
 

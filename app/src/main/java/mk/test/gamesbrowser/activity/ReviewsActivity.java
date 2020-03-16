@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.adapter.ReviewsAdapter;
+import mk.test.gamesbrowser.helper.Helper;
 import mk.test.gamesbrowser.model.Review;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -32,7 +33,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ReviewsActivity extends AppCompatActivity {
-    public static final String API_KEY = "00c0d1eda626d2b49c0f0b6ecbc90b9e";
 
     private Gson gson;
     private ArrayList<Review> reviews = new ArrayList<>();
@@ -73,7 +73,7 @@ public class ReviewsActivity extends AppCompatActivity {
 
         final Request request = new Request.Builder()
                 .url("https://api-v3.igdb.com/private/reviews")
-                .addHeader("user-key", API_KEY)
+                .addHeader("user-key", Helper.API_KEY)
                 .post(requestBody)
                 .build();
 

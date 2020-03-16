@@ -86,7 +86,7 @@ public class PlatformsFragment extends Fragment implements PlatformClickInterfac
             platforms.add(android);
             platforms.add(ios);
             platforms.add(linux);
-            platforms.add(arcade);
+            //platforms.add(arcade);
         }
     }
 

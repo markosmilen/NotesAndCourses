@@ -8,9 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -24,6 +27,7 @@ import java.util.ArrayList;
 
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.adapter.GameListAdapter;
+import mk.test.gamesbrowser.helper.Helper;
 import mk.test.gamesbrowser.interfaces.GameClickInterface;
 import mk.test.gamesbrowser.model.Game;
 import okhttp3.Call;
@@ -35,15 +39,18 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class GamesFromGenreActivity extends AppCompatActivity implements GameClickInterface {
-    public static final String API_KEY = "00c0d1eda626d2b49c0f0b6ecbc90b9e";
+
+    private CardView progressBarLayout;
+    private EditText searchEditText;
 
     private ArrayList<String> platforms = new ArrayList<>();
     private ArrayList<String> genres = new ArrayList<>();
 
     private ArrayList<Game> games = new ArrayList<>();
     private GameListAdapter gamesAdapter;
-    private CardView progressBarLayout;
-    Gson gson;
+
+    private Gson gson;
+    private String queryString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +58,11 @@ public class GamesFromGenreActivity extends AppCompatActivity implements GameCli
         setContentView(R.layout.activity_games_from_genre);
 
         progressBarLayout = findViewById(R.id.progress_bar_layout);
+        searchEditText = findViewById(R.id.search_games_et);
+
         gson = new Gson();
 
-        RecyclerView gamesRecyclerView = findViewById(R.id.games_recycler_view);
+        final RecyclerView gamesRecyclerView = findViewById(R.id.games_recycler_view);
         gamesRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         gamesAdapter = new GameListAdapter(this, this);
         gamesRecyclerView.setAdapter(gamesAdapter);
@@ -79,6 +88,32 @@ public class GamesFromGenreActivity extends AppCompatActivity implements GameCli
                 loadGamesFromPlatform(id);
             }
         }
+
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                getSupportActionBar().setTitle("Search games");
+                queryString = editable.toString();
+                if (queryString.length() > 3){
+                    loadSearchedGames(queryString);
+                } else{
+                    games = new ArrayList<>();
+                    gamesAdapter.setGames(games);
+                    gamesRecyclerView.setAdapter(gamesAdapter);
+                    gamesAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     @Override
@@ -103,7 +138,7 @@ public class GamesFromGenreActivity extends AppCompatActivity implements GameCli
 
         final Request request = new Request.Builder()
                 .url("https://api-v3.igdb.com/games")
-                .addHeader("user-key", API_KEY)
+                .addHeader("user-key", Helper.API_KEY)
                 .post(requestBody)
                 .build();
 
@@ -161,7 +196,7 @@ public class GamesFromGenreActivity extends AppCompatActivity implements GameCli
 
         final Request request = new Request.Builder()
                 .url("https://api-v3.igdb.com/games")
-                .addHeader("user-key", API_KEY)
+                .addHeader("user-key", Helper.API_KEY)
                 .post(requestBody)
                 .build();
 
@@ -206,6 +241,61 @@ public class GamesFromGenreActivity extends AppCompatActivity implements GameCli
         });
     }
 
+    private void loadSearchedGames(String searchString) {
+        OkHttpClient client = new OkHttpClient();
+
+        String bodyString = "fields name, id, cover.*, summary, first_release_date, artworks.*, game_modes.*, genres.*, platforms.*, " +
+                "player_perspectives.*, popularity, rating, rating_count, screenshots.*, game_engines.*, themes.*, videos.*, " +
+                "involved_companies.*, involved_companies.company.*;\n" +
+                " search \"" + searchString + "\"; limit 30; ";
+
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(bodyString, JSON);
+
+        final Request request = new Request.Builder()
+                .url("https://api-v3.igdb.com/games")
+                .addHeader("user-key", Helper.API_KEY)
+                .post(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(GamesFromGenreActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                        progressBarLayout.setVisibility(View.GONE);
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String jsonString = response.body().string();
+                    gson = new Gson();
+                    Type listType = new TypeToken<ArrayList<Game>>() {
+                    }.getType();
+                    //TODO FIX EXCEPTION
+                    try {
+                        games = gson.fromJson(jsonString, listType);
+                        gamesAdapter.setGames(games);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                gamesAdapter.notifyDataSetChanged();
+                                progressBarLayout.setVisibility(View.GONE);
+                            }
+                        });
+                    } catch (Exception e) {
+                        Log.d("LOG", e.toString());
+                    }
+                }
+            }
+        });
+    }
+
     public void loadPlatformNames(){
         platforms.add("PC (Microsoft Windows)");
         platforms.add("Mac");
@@ -216,7 +306,6 @@ public class GamesFromGenreActivity extends AppCompatActivity implements GameCli
         platforms.add("Android");
         platforms.add("iOS");
         platforms.add("Linux");
-        platforms.add("Arcade");
     }
 
     public void loadGenreNames(){

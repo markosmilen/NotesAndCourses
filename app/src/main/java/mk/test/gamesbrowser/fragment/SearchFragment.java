@@ -31,6 +31,7 @@ import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.activity.GameActivity;
 import mk.test.gamesbrowser.activity.MainActivity;
 import mk.test.gamesbrowser.adapter.GameListAdapter;
+import mk.test.gamesbrowser.helper.Helper;
 import mk.test.gamesbrowser.interfaces.GameClickInterface;
 import mk.test.gamesbrowser.model.Game;
 import okhttp3.Call;
@@ -43,7 +44,6 @@ import okhttp3.Response;
 
 public class SearchFragment extends Fragment implements GameClickInterface {
     public static final String TAG = SearchFragment.class.getSimpleName();
-    private static final String API_KEY = "00c0d1eda626d2b49c0f0b6ecbc90b9e";
 
     private CardView progressBarLayout;
     private RecyclerView searchRecyclerView;
@@ -124,7 +124,7 @@ public class SearchFragment extends Fragment implements GameClickInterface {
 
         final Request request = new Request.Builder()
                 .url("https://api-v3.igdb.com/games")
-                .addHeader("user-key", API_KEY)
+                .addHeader("user-key", Helper.API_KEY)
                 .post(requestBody)
                 .build();
 
