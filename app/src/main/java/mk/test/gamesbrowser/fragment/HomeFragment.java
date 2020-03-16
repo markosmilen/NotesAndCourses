@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.activity.GameActivity;
@@ -44,8 +45,9 @@ public class HomeFragment extends Fragment implements GameClickInterface, GenreC
     public static final String TAG = HomeFragment.class.getSimpleName();
 
     private CardView progressBarLayout;
-    private GameAdapter adapter;
-    private ArrayList<Game> games = new ArrayList<>();
+    private GameAdapter comingSoonAdapter, popularAdapter;
+    private ArrayList<Game> comingSoonGames = new ArrayList<>();
+    private ArrayList<Game> popularGames = new ArrayList<>();
     private ArrayList<GamePhrase> genres = new ArrayList<>();
     private GenreAdapter genreAdapter;
     private Gson gson;
@@ -71,34 +73,47 @@ public class HomeFragment extends Fragment implements GameClickInterface, GenreC
         // Inflate the layout for this fragment
         gson = new Gson();
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
         progressBarLayout = view.findViewById(R.id.progress_bar_layout);
-        RecyclerView recyclerView = view.findViewById(R.id.home_recycler_view);
+        RecyclerView popularRV = view.findViewById(R.id.popular_recycler_view);
+        RecyclerView recyclerView = view.findViewById(R.id.coming_soon_recycler_view);
         RecyclerView genresRV = view.findViewById(R.id.genres_recycler_view);
+
+        popularRV.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
 
-        adapter = new GameAdapter(getContext(), this);
-        adapter.setGames(games);
-        recyclerView.setAdapter(adapter);
+        popularAdapter = new GameAdapter(getContext(), this);
+        comingSoonAdapter = new GameAdapter(getContext(), this);
+
+        popularAdapter.setGames(popularGames);
+        comingSoonAdapter.setGames(comingSoonGames);
+
+        popularRV.setAdapter(popularAdapter);
+        recyclerView.setAdapter(comingSoonAdapter);
 
         genreAdapter = new GenreAdapter(getContext(), this);
         genresRV.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         genresRV.setAdapter(genreAdapter);
 
-        loadGames();
+        loadPopularGames();
+        loadComingSoonGames();
 
         loadGenres();
 
         return view;
     }
 
-    public void loadGames() {
+    public void loadComingSoonGames() {
 
         OkHttpClient client = new OkHttpClient();
+
+        Calendar calendar = Calendar.getInstance();
+        long timeinmilis = calendar.getTimeInMillis();
 
         String bodyString = "fields name, id, cover.*, summary, first_release_date, game_modes.*, artworks.*, genres.*, platforms.*, " +
                 "player_perspectives.*, popularity, rating, rating_count, screenshots.*, game_engines.*, " +
                 "involved_companies.*, involved_companies.company.*, themes.*, videos.*;" +
-                " sort first_release_date desc; where id = (1942,15,6166,22,17447,72,114,55);";
+                " sort first_release_date asc; where first_release_date > " + timeinmilis / 1000 + "; limit 25;";
 
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(bodyString, JSON);
@@ -123,23 +138,78 @@ public class HomeFragment extends Fragment implements GameClickInterface, GenreC
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     String jsonString = response.body().string();
                     gson = new Gson();
-                    Type listType = new TypeToken<ArrayList<Game>>(){}.getType();
-                    games = gson.fromJson(jsonString, listType);
-                    adapter.setGames(games);
+                    Type listType = new TypeToken<ArrayList<Game>>() {
+                    }.getType();
+                    comingSoonGames = gson.fromJson(jsonString, listType);
+                    comingSoonAdapter.setGames(comingSoonGames);
 
                     if (getActivity() != null) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                adapter.notifyDataSetChanged();
+                                comingSoonAdapter.notifyDataSetChanged();
                                 progressBarLayout.setVisibility(View.GONE);
                             }
                         });
                     }
-                }}
+                }
+            }
+        });
+    }
+
+    public void loadPopularGames(){
+
+        OkHttpClient client = new OkHttpClient();
+
+        String bodyString = "fields name, id, cover.*, summary, first_release_date, game_modes.*, artworks.*, genres.*, platforms.*, " +
+                "player_perspectives.*, popularity, rating, rating_count, screenshots.*, game_engines.*, " +
+                "involved_companies.*, involved_companies.company.*, themes.*, videos.*;" +
+                " where rating > 0; sort rating desc; limit 25;";
+
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(bodyString, JSON);
+
+        final Request request = new Request.Builder()
+                .url("https://api-v3.igdb.com/games")
+                .addHeader("user-key", Helper.API_KEY)
+                .post(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                        progressBarLayout.setVisibility(View.GONE);
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String jsonString = response.body().string();
+                    gson = new Gson();
+                    Type listType = new TypeToken<ArrayList<Game>>(){}.getType();
+                    popularGames = gson.fromJson(jsonString, listType);
+                    popularAdapter.setGames(popularGames);
+
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                popularAdapter.notifyDataSetChanged();
+                                progressBarLayout.setVisibility(View.GONE);
+                            }
+                        });
+                    }
+                }
+            }
         });
     }
 

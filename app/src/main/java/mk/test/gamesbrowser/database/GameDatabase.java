@@ -42,21 +42,6 @@ public abstract class GameDatabase extends RoomDatabase {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
-            new PopulateAsyncTask(INSTANCE).execute();
         }
     };
-
-    public static class PopulateAsyncTask extends AsyncTask<Void, Void, Void>{
-
-        private final GameDao gameDao;
-
-        public PopulateAsyncTask(GameDatabase gameDatabase){
-            gameDao = gameDatabase.gameDao();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            return null;
-        }
-    }
 }
