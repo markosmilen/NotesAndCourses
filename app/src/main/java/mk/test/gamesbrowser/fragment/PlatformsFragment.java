@@ -1,6 +1,7 @@
 package mk.test.gamesbrowser.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import mk.test.gamesbrowser.R;
+import mk.test.gamesbrowser.activity.GamesFromGenreActivity;
 import mk.test.gamesbrowser.adapter.PlatformAdapter;
 import mk.test.gamesbrowser.interfaces.PlatformClickInterface;
 import mk.test.gamesbrowser.model.Platform;
@@ -65,8 +67,8 @@ public class PlatformsFragment extends Fragment implements PlatformClickInterfac
     public void loadPlatforms(){
         Platform pc = new Platform(6, "PC (Microsoft Windows)", "https://images.igdb.com/igdb/image/upload/t_cover_big/irwvwpl023f8y19tidgq.png");
         Platform mac = new Platform(14, "Mac", "https://havecamerawilltravel.com/photographer/files/2014/04/mac-logo.png");
-        Platform ps4 = new Platform(48, "Play Station 4", "https://i.ya-webdesign.com/images/ps4-logo-png-3.png");
-        Platform ps5 = new Platform(167, "Play Station 5", "https://pureplaystation.com/wp-content/uploads/2016/04/PSN-New-Logo.jpg");
+        Platform ps4 = new Platform(48, "PlayStation 4", "https://i.ya-webdesign.com/images/ps4-logo-png-3.png");
+        Platform ps5 = new Platform(167, "PlayStation 5", "https://pureplaystation.com/wp-content/uploads/2016/04/PSN-New-Logo.jpg");
         Platform xboxone = new Platform(49, "Xbox One", "https://banner2.cleanpng.com/20180330/uwe/kisspng-black-xbox-360-controller-wii-xbox-5abe8065a63273.7864406015224341496808.jpg");
         Platform xboxx = new Platform(169, "Xbox Series X", "https://i.ya-webdesign.com/images/xbox-360-buttons-png-5.png");
         Platform android = new Platform(34, "Android", "https://pngimage.net/wp-content/uploads/2018/05/android-blue-png-6.png");
@@ -91,13 +93,10 @@ public class PlatformsFragment extends Fragment implements PlatformClickInterfac
 
     @Override
     public void onPlatformClick(Platform platform) {
-        if (getActivity() != null) {
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            Bundle bundle = new Bundle();
-            bundle.putInt("platform_id", platform.getId());
-            ft.replace(R.id.frame_container, PlatformGamesFragment.newInstance(bundle), PlatformGamesFragment.TAG);
-            //ft.addToBackStack(SearchFragment.TAG);
-            ft.commit();
-        }
+        Toast.makeText(getActivity(), platform.getName(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), GamesFromGenreActivity.class);
+        intent.putExtra("id", platform.getId());
+        intent.putExtra("name", platform.getName());
+        startActivity(intent);
     }
 }

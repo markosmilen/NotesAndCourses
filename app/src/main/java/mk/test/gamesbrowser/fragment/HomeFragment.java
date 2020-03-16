@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -25,7 +24,7 @@ import java.util.ArrayList;
 
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.activity.GameActivity;
-import mk.test.gamesbrowser.activity.GenresActivity;
+import mk.test.gamesbrowser.activity.GamesFromGenreActivity;
 import mk.test.gamesbrowser.adapter.GameAdapter;
 import mk.test.gamesbrowser.adapter.GenreAdapter;
 import mk.test.gamesbrowser.interfaces.GameClickInterface;
@@ -186,9 +185,9 @@ public class HomeFragment extends Fragment implements GameClickInterface, GenreC
 
     @Override
     public void onGenreClick(GamePhrase genre) {
-        Toast.makeText(getActivity(), genre.getName(), Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getActivity(), GenresActivity.class);
-        intent.putExtra("genre", genre);
+        Intent intent = new Intent(getActivity(), GamesFromGenreActivity.class);
+        intent.putExtra("id", genre.getId());
+        intent.putExtra("name", genre.getName());
         startActivity(intent);
     }
 }
