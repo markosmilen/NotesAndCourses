@@ -15,16 +15,35 @@ import mk.test.gamesbrowser.model.Game;
 public class GameRepository {
 
     private GameDao gameDao;
+
     private LiveData<List<Game>> wantedGames;
+    private LiveData<List<Game>> playingGames;
+    private LiveData<List<Game>> playedGames;
+    private LiveData<List<Game>> visitedGames;
 
     public GameRepository(Application application){
         GameDatabase gameDatabase = GameDatabase.getInstance(application);
         gameDao = gameDatabase.gameDao();
         wantedGames = gameDao.getWantedGames();
+        playingGames = gameDao.getPlayingGames();
+        playedGames = gameDao.getPlayedGames();
+        visitedGames = gameDao.getVisitedGames();
     }
 
     public LiveData<List<Game>> getWantedGames(){
         return gameDao.getWantedGames();
+    }
+
+    public LiveData<List<Game>> getPlayingGames(){
+        return gameDao.getPlayingGames();
+    }
+
+    public LiveData<List<Game>> getPlayedGames(){
+        return gameDao.getPlayedGames();
+    }
+
+    public LiveData<List<Game>> getVisitedGames(){
+        return gameDao.getVisitedGames();
     }
 
 

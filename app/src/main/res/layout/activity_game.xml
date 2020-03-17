@@ -63,6 +63,8 @@
                         android:textColor="@color/text_black"
                         android:textSize="18sp"
                         android:textStyle="bold"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="The Witcher 3: Wild Hunt" />
 
                     <TextView
@@ -72,6 +74,8 @@
                         android:layout_below="@id/game_title"
                         tools:text="EA Sports"
                         android:textSize="15sp"
+                        android:lines="1"
+                        android:ellipsize="end"
                         android:textColor="@color/text_black"
                         android:layout_marginTop="10dp"/>
 

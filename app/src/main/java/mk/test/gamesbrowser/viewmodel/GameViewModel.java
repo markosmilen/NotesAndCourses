@@ -37,4 +37,16 @@ public class GameViewModel extends AndroidViewModel {
     public LiveData<List<Game>> getWantedGames(){
         return gameRepository.getWantedGames();
     }
+
+    public LiveData<List<Game>> getPlayingGames(){
+        return gameRepository.getPlayingGames();
+    }
+
+    public LiveData<List<Game>> getPlayedGames(){
+        return gameRepository.getPlayedGames();
+    }
+
+    public LiveData<List<Game>> getVisitedGames(){
+        return gameRepository.getVisitedGames();
+    }
 }

@@ -145,7 +145,9 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
             }
 
             //BUTTONS
-            if (game.isPlayed()) wantGame.setImageDrawable(getResources().getDrawable(R.drawable.ic_added));
+            if (game.isWanted()) wantGame.setImageDrawable(getResources().getDrawable(R.drawable.ic_added));
+            if (game.isPlaying()) playingGame.setImageDrawable(getResources().getDrawable(R.drawable.ic_added));
+            if (game.isPlayed()) playedGame.setImageDrawable(getResources().getDrawable(R.drawable.ic_added));
 
             gameDescription.setText(game.getSummary());
 
@@ -229,10 +231,12 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
                 break;
             case R.id.add_playing:
                 game.setPlaying(true);
+                playingGame.setImageDrawable(getResources().getDrawable(R.drawable.ic_added));
                 buttonPressed = "PLAYING";
                 break;
             case R.id.add_played:
                 game.setPlayed(true);
+                playedGame.setImageDrawable(getResources().getDrawable(R.drawable.ic_added));
                 buttonPressed = "PLAYED";
                 break;
         }

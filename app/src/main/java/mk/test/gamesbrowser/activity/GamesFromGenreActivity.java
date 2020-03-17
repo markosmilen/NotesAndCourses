@@ -189,7 +189,7 @@ public class GamesFromGenreActivity extends AppCompatActivity implements GameCli
         String bodyString = "fields name, id, cover.*, summary, first_release_date, game_modes.*, genres.*, platforms.*, " +
                 "player_perspectives.*, popularity, rating, rating_count, screenshots.*, themes.*, videos.*, " +
                 "involved_companies.*, involved_companies.company.*; " +
-                "where platforms = (" + platformId + "); limit 100;";
+                "where platforms = (" + platformId + ");  limit 50;";
 
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(bodyString, JSON);
@@ -247,7 +247,7 @@ public class GamesFromGenreActivity extends AppCompatActivity implements GameCli
         String bodyString = "fields name, id, cover.*, summary, first_release_date, artworks.*, game_modes.*, genres.*, platforms.*, " +
                 "player_perspectives.*, popularity, rating, rating_count, screenshots.*, game_engines.*, themes.*, videos.*, " +
                 "involved_companies.*, involved_companies.company.*;\n" +
-                " search \"" + searchString + "\"; limit 30; ";
+                " search \"" + searchString + "\"; limit 50; ";
 
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(bodyString, JSON);

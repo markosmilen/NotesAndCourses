@@ -32,10 +32,9 @@ import mk.test.gamesbrowser.viewmodel.GameViewModel;
 public class ListsFragment extends Fragment implements GameClickInterface {
     public static final String TAG = ListsFragment.class.getSimpleName();
 
+    private GameViewModel gameViewModel;
+
     private GameListAdapter gameAdapter;
-    private ArrayList<Game> wantGames = new ArrayList<>();
-    private ArrayList<Game> playingGames = new ArrayList<>();
-    private ArrayList<Game> playedGames = new ArrayList<>();
 
     public ListsFragment() {
         // Required empty public constructor
@@ -58,8 +57,6 @@ public class ListsFragment extends Fragment implements GameClickInterface {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lists, container, false);
 
-
-
         TabLayout listsTabLayout = view.findViewById(R.id.lists_tab_layout);
         RecyclerView listsRecyclerView = view.findViewById(R.id.lists_recycler_view);
 
@@ -72,7 +69,7 @@ public class ListsFragment extends Fragment implements GameClickInterface {
         gameAdapter = new GameListAdapter(getActivity(), this);
         listsRecyclerView.setAdapter(gameAdapter);
 
-        GameViewModel gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
+        gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
         gameViewModel.getWantedGames().observe(this, new Observer<List<Game>>() {
             @Override
             public void onChanged(List<Game> games) {
@@ -84,7 +81,31 @@ public class ListsFragment extends Fragment implements GameClickInterface {
         listsTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Toast.makeText(getActivity(), tab.getText(), Toast.LENGTH_SHORT).show();
+                if (tab.getText().equals("WANT")){
+                    gameViewModel.getWantedGames().observe(getActivity(), new Observer<List<Game>>() {
+                        @Override
+                        public void onChanged(List<Game> games) {
+                            gameAdapter.setGames(games);
+                            gameAdapter.notifyDataSetChanged();
+                        }
+                    });
+                } else if (tab.getText().equals("PLAYING")){
+                    gameViewModel.getPlayingGames().observe(getActivity(), new Observer<List<Game>>() {
+                        @Override
+                        public void onChanged(List<Game> games) {
+                            gameAdapter.setGames(games);
+                            gameAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }else {
+                    gameViewModel.getPlayedGames().observe(getActivity(), new Observer<List<Game>>() {
+                        @Override
+                        public void onChanged(List<Game> games) {
+                            gameAdapter.setGames(games);
+                            gameAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
             }
 
             @Override
