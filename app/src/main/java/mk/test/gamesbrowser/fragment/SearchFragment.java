@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,14 +28,18 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.activity.GameActivity;
 import mk.test.gamesbrowser.activity.MainActivity;
 import mk.test.gamesbrowser.adapter.GameListAdapter;
+import mk.test.gamesbrowser.adapter.GameVisitedAdapter;
 import mk.test.gamesbrowser.helper.Helper;
 import mk.test.gamesbrowser.interfaces.GameClickInterface;
+import mk.test.gamesbrowser.interfaces.VisitedGameInterface;
 import mk.test.gamesbrowser.model.Game;
+import mk.test.gamesbrowser.viewmodel.GameViewModel;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -42,7 +48,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class SearchFragment extends Fragment implements GameClickInterface {
+public class SearchFragment extends Fragment implements GameClickInterface, VisitedGameInterface {
     public static final String TAG = SearchFragment.class.getSimpleName();
 
     private CardView progressBarLayout;
@@ -51,6 +57,8 @@ public class SearchFragment extends Fragment implements GameClickInterface {
     private GameListAdapter searchAdapter;
     private Gson gson;
     private String queryString;
+
+    private GameViewModel gameViewModel;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -77,7 +85,14 @@ public class SearchFragment extends Fragment implements GameClickInterface {
         searchRecyclerView = view.findViewById(R.id.search_recycler_view);
         progressBarLayout = view.findViewById(R.id.progress_bar_layout);
 
-        loadSearchedGames("hitman");
+        gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
+        gameViewModel.getVisitedGames().observe(this, new Observer<List<Game>>() {
+            @Override
+            public void onChanged(List<Game> games) {
+                searchAdapter.setGames(games);
+                searchAdapter.notifyDataSetChanged();
+            }
+        });
 
         searchAdapter = new GameListAdapter(getActivity(), this);
         searchAdapter.setGames(searchedGames);
@@ -173,7 +188,20 @@ public class SearchFragment extends Fragment implements GameClickInterface {
     @Override
     public void onGameClick(Game game) {
         Intent intent = new Intent(getActivity(), GameActivity.class);
+        game.setVisited(true);
+        gameViewModel.insert(game);
         intent.putExtra("game", game);
         startActivity(intent);
+    }
+
+    @Override
+    public void onGameDelete(Game game) {
+        game.setVisited(false);
+        //visitedAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onVisitedGameClick(Game game) {
+
     }
 }
