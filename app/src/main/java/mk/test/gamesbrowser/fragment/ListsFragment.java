@@ -1,40 +1,36 @@
 package mk.test.gamesbrowser.fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.activity.GameActivity;
-import mk.test.gamesbrowser.adapter.GameListAdapter;
-import mk.test.gamesbrowser.interfaces.GameClickInterface;
+import mk.test.gamesbrowser.adapter.GameVisitedAdapter;
+import mk.test.gamesbrowser.interfaces.VisitedGameInterface;
 import mk.test.gamesbrowser.model.Game;
 import mk.test.gamesbrowser.viewmodel.GameViewModel;
 
-public class ListsFragment extends Fragment implements GameClickInterface {
+public class ListsFragment extends Fragment implements VisitedGameInterface {
     public static final String TAG = ListsFragment.class.getSimpleName();
 
     private GameViewModel gameViewModel;
 
-    private GameListAdapter gameAdapter;
+    private GameVisitedAdapter gameAdapter;
 
     public ListsFragment() {
         // Required empty public constructor
@@ -66,7 +62,8 @@ public class ListsFragment extends Fragment implements GameClickInterface {
         listsTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         listsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-        gameAdapter = new GameListAdapter(getActivity(), this);
+        listsRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        gameAdapter = new GameVisitedAdapter(getActivity(), this);
         listsRecyclerView.setAdapter(gameAdapter);
 
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
@@ -122,7 +119,13 @@ public class ListsFragment extends Fragment implements GameClickInterface {
     }
 
     @Override
-    public void onGameClick(Game game) {
+    public void onGameDelete(Game game) {
+        gameViewModel.deleteGame(game);
+        gameAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onVisitedGameClick(Game game) {
         Intent intent = new Intent(getActivity(), GameActivity.class);
         intent.putExtra("game", game);
         startActivity(intent);

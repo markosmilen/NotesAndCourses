@@ -93,7 +93,6 @@ public class PlatformsFragment extends Fragment implements PlatformClickInterfac
 
     @Override
     public void onPlatformClick(Platform platform) {
-        Toast.makeText(getActivity(), platform.getName(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getActivity(), GamesFromGenreActivity.class);
         intent.putExtra("id", platform.getId());
         intent.putExtra("name", platform.getName());

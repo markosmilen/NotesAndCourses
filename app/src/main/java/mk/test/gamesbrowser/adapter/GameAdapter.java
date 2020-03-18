@@ -22,7 +22,7 @@ import mk.test.gamesbrowser.model.Game;
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder> {
     private Context context;
     private LayoutInflater inflater;
-    private ArrayList<Game> games;
+    private List<Game> games = new ArrayList<>();
     private GameClickInterface clickInterface;
 
     public GameAdapter(Context context, GameClickInterface clickInterface){
@@ -31,7 +31,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
         this.clickInterface = clickInterface;
     }
 
-    public void setGames (ArrayList<Game> games){
+    public void setGames (List<Game> games){
         this.games = games;
     }
 

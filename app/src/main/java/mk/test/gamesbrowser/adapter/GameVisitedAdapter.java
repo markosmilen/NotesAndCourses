@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class GameVisitedAdapter extends RecyclerView.Adapter<GameVisitedAdapter.
 
     private Context context;
     private LayoutInflater inflater;
-    private List<Game> games;
+    private List<Game> games = new ArrayList<>();
 
     private VisitedGameInterface visitedGameInterface;
 

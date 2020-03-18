@@ -2,7 +2,7 @@
     <string name="app_name">GamesBrowser</string>
     <string name="nav_home">Home</string>
     <string name="nav_search">Search</string>
-    <string name="nav_my_lists">My Lists</string>
+    <string name="nav_my_lists">My Games</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="loading_games_please_wait">Loading games... please wait</string>
@@ -31,5 +31,7 @@
     <string name="negative_points">Negative points</string>
     <string name="there_are_no_available_reviews_at_the_moment">There are no available reviews at the moment</string>
     <string name="reviews">Reviews</string>
+    <string name="recently_visited_games">Recently visited games</string>
+    <string name="popular_genres">Popular genres</string>
 
 </resources>

@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +24,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.activity.GameActivity;
@@ -33,6 +36,7 @@ import mk.test.gamesbrowser.interfaces.GameClickInterface;
 import mk.test.gamesbrowser.interfaces.GenreClickInterface;
 import mk.test.gamesbrowser.model.Game;
 import mk.test.gamesbrowser.model.GamePhrase;
+import mk.test.gamesbrowser.viewmodel.GameViewModel;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -45,12 +49,16 @@ public class HomeFragment extends Fragment implements GameClickInterface, GenreC
     public static final String TAG = HomeFragment.class.getSimpleName();
 
     private CardView progressBarLayout;
-    private GameAdapter comingSoonAdapter, popularAdapter;
-    private ArrayList<Game> comingSoonGames = new ArrayList<>();
-    private ArrayList<Game> popularGames = new ArrayList<>();
+    private GameAdapter comingSoonAdapter, popularAdapter, visitedAdapter;
+
+    private List<Game> comingSoonGames = new ArrayList<>();
+    private List<Game> popularGames = new ArrayList<>();
+
     private ArrayList<GamePhrase> genres = new ArrayList<>();
     private GenreAdapter genreAdapter;
     private Gson gson;
+
+    private GameViewModel gameViewModel;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -78,18 +86,31 @@ public class HomeFragment extends Fragment implements GameClickInterface, GenreC
         RecyclerView popularRV = view.findViewById(R.id.popular_recycler_view);
         RecyclerView recyclerView = view.findViewById(R.id.coming_soon_recycler_view);
         RecyclerView genresRV = view.findViewById(R.id.genres_recycler_view);
+        RecyclerView visitedRV = view.findViewById(R.id.recently_visited_recycler_view);
 
         popularRV.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        visitedRV.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
 
         popularAdapter = new GameAdapter(getContext(), this);
         comingSoonAdapter = new GameAdapter(getContext(), this);
+        visitedAdapter = new GameAdapter(getContext(), this);
 
         popularAdapter.setGames(popularGames);
         comingSoonAdapter.setGames(comingSoonGames);
 
         popularRV.setAdapter(popularAdapter);
         recyclerView.setAdapter(comingSoonAdapter);
+        visitedRV.setAdapter(visitedAdapter);
+
+        gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
+        gameViewModel.getVisitedGames().observe(this, new Observer<List<Game>>() {
+            @Override
+            public void onChanged(List<Game> visitedGames) {
+                visitedAdapter.setGames(visitedGames);
+                visitedAdapter.notifyDataSetChanged();
+            }
+        });
 
         genreAdapter = new GenreAdapter(getContext(), this);
         genresRV.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
@@ -127,13 +148,15 @@ public class HomeFragment extends Fragment implements GameClickInterface, GenreC
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getActivity(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
-                        progressBarLayout.setVisibility(View.GONE);
-                    }
-                });
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                            progressBarLayout.setVisibility(View.GONE);
+                        }
+                    });
+                }
             }
 
             @Override
@@ -181,14 +204,15 @@ public class HomeFragment extends Fragment implements GameClickInterface, GenreC
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getActivity(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
-                        progressBarLayout.setVisibility(View.GONE);
-                    }
-                });
-            }
+                if (getActivity() != null)
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                            progressBarLayout.setVisibility(View.GONE);
+                        }
+                    });
+                }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

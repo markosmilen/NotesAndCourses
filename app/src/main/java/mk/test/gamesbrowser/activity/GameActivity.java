@@ -221,36 +221,6 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
         }
     }
 
-    public void onAddButtonClick(View view) {
-        String buttonPressed="";
-        switch(view.getId()){
-            case R.id.add_want:
-                game.setWanted(true);
-                wantGame.setImageDrawable(getResources().getDrawable(R.drawable.ic_added));
-                buttonPressed = "WANT";
-                break;
-            case R.id.add_playing:
-                game.setPlaying(true);
-                playingGame.setImageDrawable(getResources().getDrawable(R.drawable.ic_added));
-                buttonPressed = "PLAYING";
-                break;
-            case R.id.add_played:
-                game.setPlayed(true);
-                playedGame.setImageDrawable(getResources().getDrawable(R.drawable.ic_added));
-                buttonPressed = "PLAYED";
-                break;
-        }
-        gameViewModel.insert(game);
-        Toast.makeText(this, buttonPressed, Toast.LENGTH_SHORT).show();
-    }
-
-    public void onReviewsClick(View view) {
-        Intent intent = new Intent(this, ReviewsActivity.class);
-        intent.putExtra("game_id", game.getId());
-        intent.putExtra("game_name", game.getName());
-        startActivity(intent);
-    }
-
     public ArrayList<String> getStrings(ArrayList<GamePhrase> phrases){
         ArrayList<String> strings = new ArrayList<>();
         if(phrases != null) {
@@ -269,6 +239,54 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
             }
         }
         return strings;
+    }
+
+    public void onAddButtonClick(View view) {
+        String buttonPressed="";
+        switch(view.getId()){
+            case R.id.add_want:
+                if (!game.isWanted()) {
+                    game.setWanted(true);
+                    wantGame.setImageDrawable(getResources().getDrawable(R.drawable.ic_added));
+                    buttonPressed = "WANT";
+                }else {
+                    game.setWanted(false);
+                    wantGame.setImageDrawable(getResources().getDrawable(R.drawable.ic_add));
+                    buttonPressed = "WANT";
+                }
+                break;
+            case R.id.add_playing:
+                if (!game.isPlaying()) {
+                    game.setPlaying(true);
+                    playingGame.setImageDrawable(getResources().getDrawable(R.drawable.ic_added));
+                    buttonPressed = "PLAYING";
+                }else {
+                    game.setPlaying(false);
+                    playingGame.setImageDrawable(getResources().getDrawable(R.drawable.ic_add));
+                    buttonPressed = "PLAYING";
+                }
+                break;
+            case R.id.add_played:
+                if (!game.isPlayed()) {
+                    game.setPlayed(true);
+                    playedGame.setImageDrawable(getResources().getDrawable(R.drawable.ic_added));
+                    buttonPressed = "PLAYED";
+                }else {
+                    game.setPlayed(false);
+                    playedGame.setImageDrawable(getResources().getDrawable(R.drawable.ic_add));
+                    buttonPressed = "PLAYED";
+                }
+                break;
+        }
+        gameViewModel.insert(game);
+        Toast.makeText(this, game.getName() + " added to " + buttonPressed, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onReviewsClick(View view) {
+        Intent intent = new Intent(this, ReviewsActivity.class);
+        intent.putExtra("game_id", game.getId());
+        intent.putExtra("game_name", game.getName());
+        startActivity(intent);
     }
 
     @Override
