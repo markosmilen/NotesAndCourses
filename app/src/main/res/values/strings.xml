@@ -33,5 +33,6 @@
     <string name="reviews">Reviews</string>
     <string name="recently_visited_games">Recently visited games</string>
     <string name="popular_genres">Popular genres</string>
+    <string name="similar_games">Similar games</string>
 
 </resources>

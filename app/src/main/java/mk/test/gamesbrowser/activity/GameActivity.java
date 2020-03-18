@@ -29,9 +29,11 @@ import java.util.Date;
 import java.util.Random;
 
 import mk.test.gamesbrowser.R;
+import mk.test.gamesbrowser.adapter.GameAdapter;
 import mk.test.gamesbrowser.adapter.ScreenshotAdapter;
 import mk.test.gamesbrowser.adapter.ThemeAdapter;
 import mk.test.gamesbrowser.adapter.VideoAdapter;
+import mk.test.gamesbrowser.interfaces.GameClickInterface;
 import mk.test.gamesbrowser.interfaces.ScreenshotClickInterface;
 import mk.test.gamesbrowser.interfaces.VideoClickInterface;
 import mk.test.gamesbrowser.model.Game;
@@ -42,7 +44,7 @@ import mk.test.gamesbrowser.model.InvolvedCompany;
 import mk.test.gamesbrowser.model.Platform;
 import mk.test.gamesbrowser.viewmodel.GameViewModel;
 
-public class GameActivity extends AppCompatActivity implements ScreenshotClickInterface, VideoClickInterface {
+public class GameActivity extends AppCompatActivity implements ScreenshotClickInterface, VideoClickInterface, GameClickInterface {
 
     private Game game;
     private GameViewModel gameViewModel;
@@ -55,9 +57,9 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
 
         ImageView topImage, gameCoverAct;
         TextView gameTitle, gamePublisher, gameReleaseYear, gameRating, gameRatingCount, gameDescription;
-        TextView screenshotsText, videosText;
+        TextView screenshotsText, videosText, similarGamesText;
         RecyclerView genresRecyclerView, platformsRecyclerView, themesRecyclerView, gameModesRecyclerView, perspectivesRecyclerView;
-        RecyclerView screenshotsRecyclerView, videosRecyclerView;
+        RecyclerView screenshotsRecyclerView, videosRecyclerView, similarGamesRecyclerView;
         LinearLayout genresLayout, themesLayout, gameModesLayout;
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -78,6 +80,8 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
         videosRecyclerView = findViewById(R.id.videos_recycler_view);
         screenshotsText = findViewById(R.id.screenshots_text);
         videosText = findViewById(R.id.videos_text);
+        similarGamesText = findViewById(R.id.similar_games_text);
+        similarGamesRecyclerView = findViewById(R.id.similar_games_recycler_view);
 
         genresLayout = findViewById(R.id.layout_genres);
         gameModesLayout = findViewById(R.id.layout_game_modes);
@@ -199,7 +203,6 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
                 if (game.getArtworks() != null) {
                     images.addAll(game.getArtworks());
                 }
-
                 screenshotsRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
                 ScreenshotAdapter screenshotAdapter = new ScreenshotAdapter(this, GameActivity.this);
                 screenshotAdapter.setScreenshots(game.getScreenshots());
@@ -217,6 +220,16 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
             } else {
                 videosText.setVisibility(View.GONE);
                 videosRecyclerView.setVisibility(View.GONE);
+            }
+
+            if (game.getSimilar_games() != null){
+                similarGamesRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+                GameAdapter similarGamesAdapter = new GameAdapter(this, this);
+                similarGamesAdapter.setGames(game.getSimilar_games());
+                similarGamesRecyclerView.setAdapter(similarGamesAdapter);
+            }else {
+                similarGamesText.setVisibility(View.GONE);
+                similarGamesRecyclerView.setVisibility(View.GONE);
             }
         }
     }
@@ -320,5 +333,10 @@ public class GameActivity extends AppCompatActivity implements ScreenshotClickIn
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:"+videoId));
         intent.putExtra("VIDEO_ID", videoId);
         startActivity(intent);
+    }
+
+    @Override
+    public void onGameClick(Game game) {
+        Toast.makeText(this, game.getName(), Toast.LENGTH_SHORT).show();
     }
 }

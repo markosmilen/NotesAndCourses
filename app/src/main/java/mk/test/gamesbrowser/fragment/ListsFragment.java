@@ -78,30 +78,32 @@ public class ListsFragment extends Fragment implements VisitedGameInterface {
         listsTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getText().equals("WANT")){
-                    gameViewModel.getWantedGames().observe(getActivity(), new Observer<List<Game>>() {
-                        @Override
-                        public void onChanged(List<Game> games) {
-                            gameAdapter.setGames(games);
-                            gameAdapter.notifyDataSetChanged();
-                        }
-                    });
-                } else if (tab.getText().equals("PLAYING")){
-                    gameViewModel.getPlayingGames().observe(getActivity(), new Observer<List<Game>>() {
-                        @Override
-                        public void onChanged(List<Game> games) {
-                            gameAdapter.setGames(games);
-                            gameAdapter.notifyDataSetChanged();
-                        }
-                    });
-                }else {
-                    gameViewModel.getPlayedGames().observe(getActivity(), new Observer<List<Game>>() {
-                        @Override
-                        public void onChanged(List<Game> games) {
-                            gameAdapter.setGames(games);
-                            gameAdapter.notifyDataSetChanged();
-                        }
-                    });
+                if (getActivity() != null && tab.getText() != null) {
+                    if (tab.getText().equals("WANT")) {
+                        gameViewModel.getWantedGames().observe(getActivity(), new Observer<List<Game>>() {
+                            @Override
+                            public void onChanged(List<Game> games) {
+                                gameAdapter.setGames(games);
+                                gameAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    } else if (tab.getText().equals("PLAYING")) {
+                        gameViewModel.getPlayingGames().observe(getActivity(), new Observer<List<Game>>() {
+                            @Override
+                            public void onChanged(List<Game> games) {
+                                gameAdapter.setGames(games);
+                                gameAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    } else {
+                        gameViewModel.getPlayedGames().observe(getActivity(), new Observer<List<Game>>() {
+                            @Override
+                            public void onChanged(List<Game> games) {
+                                gameAdapter.setGames(games);
+                                gameAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
                 }
             }
 
