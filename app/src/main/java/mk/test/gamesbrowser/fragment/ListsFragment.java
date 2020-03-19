@@ -21,12 +21,14 @@ import java.util.List;
 import mk.test.gamesbrowser.R;
 import mk.test.gamesbrowser.activity.GameActivity;
 import mk.test.gamesbrowser.adapter.GameVisitedAdapter;
+import mk.test.gamesbrowser.helper.Helper;
 import mk.test.gamesbrowser.interfaces.VisitedGameInterface;
 import mk.test.gamesbrowser.model.Game;
 import mk.test.gamesbrowser.viewmodel.GameViewModel;
 
 public class ListsFragment extends Fragment implements VisitedGameInterface {
     public static final String TAG = ListsFragment.class.getSimpleName();
+    public int selectedTab = Helper.WANT;
 
     private GameViewModel gameViewModel;
 
@@ -80,6 +82,7 @@ public class ListsFragment extends Fragment implements VisitedGameInterface {
             public void onTabSelected(TabLayout.Tab tab) {
                 if (getActivity() != null && tab.getText() != null) {
                     if (tab.getText().equals("WANT")) {
+                        selectedTab = Helper.WANT;
                         gameViewModel.getWantedGames().observe(getActivity(), new Observer<List<Game>>() {
                             @Override
                             public void onChanged(List<Game> games) {
@@ -88,6 +91,7 @@ public class ListsFragment extends Fragment implements VisitedGameInterface {
                             }
                         });
                     } else if (tab.getText().equals("PLAYING")) {
+                        selectedTab = Helper.PLAYING;
                         gameViewModel.getPlayingGames().observe(getActivity(), new Observer<List<Game>>() {
                             @Override
                             public void onChanged(List<Game> games) {
@@ -96,6 +100,7 @@ public class ListsFragment extends Fragment implements VisitedGameInterface {
                             }
                         });
                     } else {
+                        selectedTab = Helper.PLAYED;
                         gameViewModel.getPlayedGames().observe(getActivity(), new Observer<List<Game>>() {
                             @Override
                             public void onChanged(List<Game> games) {
@@ -122,8 +127,14 @@ public class ListsFragment extends Fragment implements VisitedGameInterface {
 
     @Override
     public void onGameDelete(Game game) {
-        gameViewModel.deleteGame(game);
-        gameAdapter.notifyDataSetChanged();
+        if (selectedTab == Helper.WANT){
+            game.setWanted(false);
+        }else if (selectedTab == Helper.PLAYING){
+            game.setPlaying(false);
+        }else if (selectedTab == Helper.PLAYED){
+            game.setPlayed(false);
+        }
+        gameViewModel.insert(game);
     }
 
     @Override

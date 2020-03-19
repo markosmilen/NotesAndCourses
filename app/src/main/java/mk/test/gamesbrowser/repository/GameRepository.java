@@ -31,19 +31,19 @@ public class GameRepository {
     }
 
     public LiveData<List<Game>> getWantedGames(){
-        return gameDao.getWantedGames();
+        return wantedGames;
     }
 
     public LiveData<List<Game>> getPlayingGames(){
-        return gameDao.getPlayingGames();
+        return playingGames;
     }
 
     public LiveData<List<Game>> getPlayedGames(){
-        return gameDao.getPlayedGames();
+        return playedGames;
     }
 
     public LiveData<List<Game>> getVisitedGames(){
-        return gameDao.getVisitedGames();
+        return visitedGames;
     }
 
 

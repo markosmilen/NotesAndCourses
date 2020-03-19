@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -168,7 +169,6 @@ public class HomeFragment extends Fragment implements GameClickInterface, GenreC
                     }.getType();
                     comingSoonGames = gson.fromJson(jsonString, listType);
                     comingSoonAdapter.setGames(comingSoonGames);
-
                     if (getActivity() != null) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -190,7 +190,7 @@ public class HomeFragment extends Fragment implements GameClickInterface, GenreC
         String bodyString = "fields name, id, cover.*, summary, first_release_date, game_modes.*, artworks.*, genres.*, platforms.*, " +
                 "player_perspectives.*, popularity, rating, rating_count, screenshots.*, game_engines.*, " +
                 "involved_companies.*, involved_companies.company.*, themes.*, videos.*;" +
-                " where rating > 0; sort rating desc; limit 25;";
+                " where rating_count > 0; sort rating_count desc; limit 25;";
 
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(bodyString, JSON);
@@ -220,6 +220,7 @@ public class HomeFragment extends Fragment implements GameClickInterface, GenreC
                     String jsonString = response.body().string();
                     gson = new Gson();
                     Type listType = new TypeToken<ArrayList<Game>>(){}.getType();
+
                     popularGames = gson.fromJson(jsonString, listType);
                     popularAdapter.setGames(popularGames);
 

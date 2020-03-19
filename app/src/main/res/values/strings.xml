@@ -34,5 +34,9 @@
     <string name="recently_visited_games">Recently visited games</string>
     <string name="popular_genres">Popular genres</string>
     <string name="similar_games">Similar games</string>
+    <string name="my_lists">MY LISTS</string>
+    <string name="clear_all">CLEAR ALL</string>
+    <string name="recommended_games">Recommended games</string>
+    <string name="coming_soon">Coming soon</string>
 
 </resources>
