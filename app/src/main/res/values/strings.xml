@@ -38,5 +38,7 @@
     <string name="clear_all">CLEAR ALL</string>
     <string name="recommended_games">Recommended games</string>
     <string name="coming_soon">Coming soon</string>
+    <string name="recent_searches">RECENT SEARCHES</string>
+    <string name="clear_searches">CLEAR</string>
 
 </resources>

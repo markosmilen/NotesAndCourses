@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_width="280dp"
-    android:layout_height="160dp">
+    android:layout_width="240dp"
+    android:layout_height="140dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

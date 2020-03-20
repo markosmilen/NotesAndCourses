@@ -34,6 +34,8 @@ public class GameViewModel extends AndroidViewModel {
         gameRepository.deleteAll();
     }
 
+    public void DeleteVisitedGames(){ gameRepository.deleteVisitedGames();}
+
     public LiveData<List<Game>> getWantedGames(){
         return gameRepository.getWantedGames();
     }

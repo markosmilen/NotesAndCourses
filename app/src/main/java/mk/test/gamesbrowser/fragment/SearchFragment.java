@@ -16,10 +16,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -48,10 +51,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class SearchFragment extends Fragment implements GameClickInterface, VisitedGameInterface {
+public class SearchFragment extends Fragment implements GameClickInterface {
     public static final String TAG = SearchFragment.class.getSimpleName();
 
     private CardView progressBarLayout;
+    private RelativeLayout clearSearchesLayout;
     private RecyclerView searchRecyclerView;
     private ArrayList<Game> searchedGames = new ArrayList<>();
     private GameListAdapter searchAdapter;
@@ -85,6 +89,9 @@ public class SearchFragment extends Fragment implements GameClickInterface, Visi
         searchRecyclerView = view.findViewById(R.id.search_recycler_view);
         progressBarLayout = view.findViewById(R.id.progress_bar_layout);
 
+        clearSearchesLayout = view.findViewById(R.id.clear_searches_layout);
+        Button clearSearchButton = view.findViewById(R.id.clear_searches_button);
+
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
         gameViewModel.getVisitedGames().observe(this, new Observer<List<Game>>() {
             @Override
@@ -99,6 +106,14 @@ public class SearchFragment extends Fragment implements GameClickInterface, Visi
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         searchRecyclerView.setAdapter(searchAdapter);
 
+        clearSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gameViewModel.DeleteVisitedGames();
+                Toast.makeText(getActivity(), "ALL SEARCHED GAMES ARE CLEARED", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -112,14 +127,21 @@ public class SearchFragment extends Fragment implements GameClickInterface, Visi
 
             @Override
             public void afterTextChanged(Editable editable) {
+                clearSearchesLayout.setVisibility(View.GONE);
                 queryString = editable.toString();
                 if (queryString.length() > 3){
                     loadSearchedGames(queryString);
-                } else{
-                    searchedGames = new ArrayList<>();
-                    searchAdapter.setGames(searchedGames);
-                    searchRecyclerView.setAdapter(searchAdapter);
-                    searchAdapter.notifyDataSetChanged();
+                } else {
+                    clearSearchesLayout.setVisibility(View.VISIBLE);
+                    if (getActivity() != null) {
+                        gameViewModel.getVisitedGames().observe(getActivity(), new Observer<List<Game>>() {
+                            @Override
+                            public void onChanged(List<Game> games) {
+                                searchAdapter.setGames(games);
+                                searchAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
                 }
             }
         });
@@ -177,12 +199,9 @@ public class SearchFragment extends Fragment implements GameClickInterface, Visi
                     }catch (Exception e){
                         Log.d("LOG", e.toString());
                     }
-                }}
+                }
+            }
         });
-    }
-
-    private void loadSearchedGamesFromDB() {
-
     }
 
     @Override
@@ -192,16 +211,5 @@ public class SearchFragment extends Fragment implements GameClickInterface, Visi
         gameViewModel.insert(game);
         intent.putExtra("game", game);
         startActivity(intent);
-    }
-
-    @Override
-    public void onGameDelete(Game game) {
-        game.setVisited(false);
-        //visitedAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onVisitedGameClick(Game game) {
-
     }
 }

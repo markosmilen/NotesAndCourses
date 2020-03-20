@@ -35,4 +35,7 @@ public interface GameDao {
 
     @Query("SELECT * FROM game_table WHERE isVisited")
     LiveData<List<Game>> getVisitedGames();
+
+    @Query("DELETE FROM game_table WHERE isVisited")
+    void deleteVisitedGames();
 }

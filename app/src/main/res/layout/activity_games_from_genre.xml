@@ -37,7 +37,8 @@
         android:layout_marginRight="10dp"
         android:layout_below="@id/search_games_et"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginBottom="5dp"
+        android:visibility="gone"/> <!-- TO BE MADE VISIBLE LATER -->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/games_recycler_view"
