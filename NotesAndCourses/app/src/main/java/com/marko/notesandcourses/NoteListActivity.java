@@ -17,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 public class NoteListActivity extends AppCompatActivity {
+    private NoteRecyclerAdapter mNoteRecyclerAdapter;
 
     //private ArrayAdapter<NoteInfo> mAdapterNotes;
 
@@ -41,13 +42,14 @@ public class NoteListActivity extends AppCompatActivity {
 
         final RecyclerView recyclerNotes = findViewById(R.id.list_notes);
         recyclerNotes.setLayoutManager(new LinearLayoutManager(this));
-        final NoteRecyclerAdapter noteRecyclerAdapter =  new NoteRecyclerAdapter(this, notes);
-        recyclerNotes.setAdapter(noteRecyclerAdapter);
+        mNoteRecyclerAdapter = new NoteRecyclerAdapter(this, notes);
+        recyclerNotes.setAdapter(mNoteRecyclerAdapter);
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
+        mNoteRecyclerAdapter.notifyDataSetChanged();
        // mAdapterNotes.notifyDataSetChanged();
     }
 }
