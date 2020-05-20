@@ -57,7 +57,6 @@ public class NoteActivity extends AppCompatActivity {
         if (!mIsNewNote){
             displayNotes(mSpinnerCourses, mTextNoteTitle, mTextNoteText);
         }
-
     }
 
     private void saveOriginalNoteValues() {
@@ -92,7 +91,6 @@ public class NoteActivity extends AppCompatActivity {
         mNotePosition = dm.createNewNote();
         mNote = dm.getNotes().get(mNotePosition);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

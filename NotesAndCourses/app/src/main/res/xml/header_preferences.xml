@@ -1,0 +1,15 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:fragment="com.marko.notesandcourses.SettingsActivity$MessagesFragment"
+        app:icon="@android:drawable/ic_lock_power_off"
+        app:key="messages_header"
+        app:title="@string/general_header" />
+
+    <Preference
+        app:fragment="com.marko.notesandcourses.SettingsActivity$SyncFragment"
+        app:icon="@drawable/sync"
+        app:key="sync_header"
+        app:title="@string/sync_header" />
+
+</PreferenceScreen>
